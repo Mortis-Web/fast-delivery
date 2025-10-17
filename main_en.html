@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fast Delivery</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/css-main-en.css" />
+  </head>
+
+  <body>
+    <header class="header" role="banner">
+      <a href="#" class="logo-container" aria-label="Fast Delivery - Home Page">
+        <img src="logo.png" alt="Fast Delivery Logo" class="logo" />
+      </a>
+
+      <nav class="nav-links">
+        <a href="#" data-key="header_link_1">Restaurants</a>
+        <a href="#" data-key="header_link_2">Offers</a>
+        <a href="#" data-key="header_link_3">Become a Partner</a>
+      </nav>
+
+      <div class="action-buttons">
+        <a href="./html_web.html" class="lang-btn">
+          <i class="fa fa-globe"></i> AR
+        </a>
+        <button class="icon-btn" aria-label="Basket" role="button">
+          <i class="fa fa-shopping-basket"></i>
+        </button>
+        <button
+          class="icon-btn"
+          aria-label="Login"
+          data-key="login_btn"
+          id="login-modal-btn"
+        >
+          <i class="fa fa-user"></i>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero-section" role="region">
+      <div class="container">
+        <h1 data-key="hero_title">
+          Fastest Delivery for Food, Groceries & More
+        </h1>
+        <p data-key="hero_desc">
+          Order your favorite food online from thousands of restaurants and
+          stores in your area.
+        </p>
+
+        <div class="search-wrapper">
+          <div class="search-box">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Enter your area or street"
+              aria-label="Enter your area to search"
+            />
+
+            <button
+              id="location-btn"
+              type="button"
+              aria-label="Find your current location"
+              title="Find your current location"
+            >
+              <i class="fa fa-map-marker-alt"></i>
+            </button>
+
+            <button
+              id="final-search-btn"
+              type="button"
+              aria-label="Search for restaurants in the selected location"
+            >
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="hero-section-fade-out"></div>
+    </section>
+
+    <section
+      class="categories-section gray-bg"
+      role="region"
+      aria-labelledby="section_1_title"
+    >
+      <div class="content-container">
+        <h2 id="section_1_title" data-key="section_1_title">
+          Order everything you need
+        </h2>
+        <div class="categories-grid">
+          <div class="category-card" role="link" tabindex="0">
+            <div
+              class="category-card-bg"
+              style="background-image: url('food.jpg')"
+            ></div>
+            <div class="card-content">
+              <h3 style="font-size: 30px">Food</h3>
+              <p data-key="food_summary">
+                The best restaurants in the city are ready to fulfill your
+                order.
+              </p>
+            </div>
+          </div>
+          <div class="category-card" role="link" tabindex="0">
+            <div
+              class="category-card-bg"
+              style="background-image: url('grocery.jpg')"
+            ></div>
+            <div class="card-content">
+              <h3 style="font-size: 30px">Groceries</h3>
+              <p data-key="grocery_summary">
+                Supermarkets and groceries delivered in the shortest time.
+              </p>
+            </div>
+          </div>
+          <div class="category-card" role="link" tabindex="0">
+            <div
+              class="category-card-bg"
+              style="background-image: url('medicine.png')"
+            ></div>
+            <div class="card-content">
+              <h3 style="font-size: 30px">Medicine</h3>
+              <p>Pharmacies near you to deliver medicines.</p>
+            </div>
+          </div>
+          <div class="category-card" role="link" tabindex="0">
+            <div
+              class="category-card-bg"
+              style="background-image: url('beauty.jpg')"
+            ></div>
+            <div class="card-content">
+              <h3 style="font-size: 30px">Skincare Products</h3>
+              <p>Products delivered to you in the shortest time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="categories-section"
+      role="region"
+      aria-labelledby="section_2_title"
+    >
+      <div class="content-container">
+        <h2 id="section_2_title" data-key="section_2_title">Join Us</h2>
+        <div class="categories-grid">
+          <div class="category-card plain-bg" role="link" tabindex="0">
+            <div
+              class="category-card-bg"
+              style="background-color: #e8e8e8; background-image: none"
+            ></div>
+            <div class="card-content">
+              <div class="card-icon"><i class="fa fa-store"></i></div>
+              <h3 data-key="partner_title">Become a Restaurant Partner</h3>
+              <p data-key="partner_desc">
+                Connect with more customers and achieve remarkable growth.
+              </p>
+              <a href="#" data-key="partner_link"
+                >Discover More <i class="fa fa-chevron-right"></i
+              ></a>
+            </div>
+          </div>
+          <div class="category-card plain-bg" role="link" tabindex="0">
+            <div
+              class="category-card-bg"
+              style="
+                background-image: url('PLACEHOLDER_FOR_DELIVERY_IMAGE.jpg');
+              "
+            ></div>
+            <div class="card-content">
+              <div class="card-icon"><i class="fa fa-motorcycle"></i></div>
+              <h3 data-key="delivery_title">Join the Delivery Team</h3>
+              <p data-key="delivery_desc">
+                Start working with us and earn an extra income.
+              </p>
+              <a href="#" data-key="delivery_link"
+                >Register Now <i class="fa fa-chevron-right"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="cities-section"
+      role="region"
+      aria-labelledby="cities_title"
+    >
+      <div class="content-container">
+        <div class="section-icon"><i class="fa fa-map-marked-alt"></i></div>
+        <h2 id="cities_title" data-key="cities_title">
+          Cities we serve in Egypt
+        </h2>
+        <div class="cities-grid">
+          <a href="/egypt/city/cairo" class="city-card">Cairo</a>
+          <a href="/egypt/city/alexandria" class="city-card">Alexandria</a>
+          <a href="/egypt/city/giza" class="city-card">Giza</a>
+          <a href="/egypt/city/mansoura" class="city-card">Mansoura</a>
+          <a href="/egypt/city/tanta" class="city-card">Tanta</a>
+          <a href="/egypt/city/zagazig" class="city-card">Zagazig</a>
+          <a href="/egypt/city/ismailia" class="city-card">Ismailia</a>
+          <a href="/egypt/city/port-said" class="city-card">Port Said</a>
+          <a href="/egypt/city/suez" class="city-card">Suez</a>
+          <a href="/egypt/city/assiut" class="city-card">Assiut</a>
+          <a href="/egypt/city/minya" class="city-card">Minya</a>
+          <a href="/egypt/city/luxor" class="city-card">Luxor</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer" role="contentinfo">
+      <div class="content-container">
+        <div class="footer-grid">
+          <div class="footer-column">
+            <h4 data-key="footer_col_1_title">Fast Delivery</h4>
+            <a href="#" data-key="footer_col_1_link_1">Careers</a>
+            <a href="#" data-key="footer_col_1_link_2">Terms and Conditions</a>
+            <a href="#" data-key="footer_col_1_link_3">Privacy Policy</a>
+            <a href="#" data-key="footer_col_1_link_4">FAQ</a>
+          </div>
+          <div class="footer-column">
+            <h4 data-key="footer_col_2_title">Popular Restaurants</h4>
+            <a href="#">McDonald's</a>
+            <a href="#">KFC</a>
+            <a href="#">Pizza Hut</a>
+            <a href="#">Burger King</a>
+          </div>
+          <div class="footer-column">
+            <h4 data-key="footer_col_3_title">Egypt Cities</h4>
+            <a href="#">Damanhour</a>
+            <a href="#">Tanta</a>
+            <a href="#">Cairo</a>
+            <a href="#">Alexandria</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div>© 2025 Fast Delivery</div>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div
+      id="login-modal-overlay"
+      class="modal-overlay"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="login-heading"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close-btn" aria-label="Close" id="close-modal-btn">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="">
+            <p class="login-heading" id="login-heading">Log In</p>
+            <div class="social-buttons">
+              <button
+                class="google"
+                type="button"
+                onclick="window.location.href='#'"
+                aria-label="Continue with Google"
+              >
+                <i class="fab fa-google"></i><span>Continue with Google</span>
+              </button>
+              <button
+                class="facebook"
+                type="button"
+                onclick="window.location.href='#'"
+                aria-label="Continue with Facebook"
+              >
+                <i class="fab fa-facebook-f"></i
+                ><span>Continue with Facebook</span>
+              </button>
+            </div>
+            <div class="line"><span>or</span></div>
+            <form data-testid="form-login">
+              <div class="login-form-row">
+                <i class="fa fa-envelope"></i>
+                <input
+                  placeholder="Email"
+                  type="email"
+                  autocomplete="username"
+                  data-testid="input-email"
+                  name="username"
+                />
+              </div>
+              <div class="login-form-row">
+                <i class="fa fa-lock"></i>
+                <div class="password-input-wrapper">
+                  <input
+                    placeholder="Password"
+                    class="password-input"
+                    type="password"
+                    autocomplete="current-password"
+                    data-testid="input-password"
+                    name="password"
+                    id="password-input-field"
+                  />
+                  <span class="showPassword" id="toggle-password">Show</span>
+                </div>
+              </div>
+              <div class="form-options">
+                <div class="forgot-password" data-testid="link-forgot-password">
+                  Forgot password?
+                </div>
+              </div>
+              <button class="login-button" data-testid="btn-login">
+                Log In
+              </button>
+              <div class="register-text">
+                <span data-testid="text-no-account"
+                  >Don't have an account?</span
+                >
+                <a href="#" class="link-register" data-testid="link-register"
+                  >Create account</a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul
+      id="userDropDown"
+      class="dropdown-overlay"
+      aria-modal="true"
+      role="combobox"
+      aria-labelledby="login-dropdown"
+    >
+      <li tabindex="0">
+        <a href="#"><i class="fa-solid fa-credit-card"></i> EGP 0.00</a>
+      </li>
+      <li tabindex="0">
+        <a href="#"><i class="fa-solid fa-cart-shopping"></i> My Orders</a>
+      </li>
+      <li tabindex="0">
+        <a href="#"><i class="fa-solid fa-user"></i> Account Information</a>
+      </li>
+      <li tabindex="0">
+        <a href="#"
+          ><i class="fa-solid fa-map-location-dot"></i> Delivery Addresses</a
+        >
+      </li>
+      <li tabindex="0" id="logOut">
+        <i class="fa-solid fa-right-from-bracket"></i> Log Out
+      </li>
+    </ul>
+
+    <script src="java_scrpit/main-en.js"></script>
+  </body>
+</html>

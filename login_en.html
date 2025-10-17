@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fast Delivery</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="css/css_web.css" />
+  </head>
+  <body>
+    <header class="header" role="banner">
+      <a
+        href="html_web.html"
+        class="logo-container"
+        aria-label="Fast Delivery - Home Page"
+      >
+        <img src="logo.png" alt="Fast Delivery Logo" class="logo" />
+      </a>
+
+      <nav class="nav-links">
+        <a href="#" data-key="header_link_1">Restaurants</a>
+        <a href="#" data-key="header_link_2">Offers</a>
+        <a href="#" data-key="header_link_3">Become a Partner</a>
+      </nav>
+
+      <div class="action-buttons">
+        <a href="./login_web.html" class="lang-btn" >
+          <i class="fa fa-globe"></i> AR
+        </a>
+        <button class="icon-btn" aria-label="Cart" role="button">
+          <i class="fa fa-shopping-basket"></i>
+        </button>
+        <button
+          class="icon-btn"
+          aria-label="Login"
+          data-key="login_btn"
+          id="login-modal-btn"
+        >
+          <i class="fa fa-user"></i>
+        </button>
+      </div>
+    </header>
+
+    <section class="login_form">
+      <div class="modal-body">
+        <div class="">
+          <p class="login-heading" id="login-heading">Sign Up Now</p>
+          <div class="social-buttons">
+            <button
+              class="google"
+              type="button"
+              onclick="window.location.href='#'"
+              aria-label="Continue with Google"
+            >
+              <i class="fab fa-google"></i><span>Continue with Google</span>
+            </button>
+            <button
+              class="facebook"
+              type="button"
+              onclick="window.location.href='#'"
+              aria-label="Continue with Facebook"
+            >
+              <i class="fab fa-facebook-f"></i
+              ><span>Continue with Facebook</span>
+            </button>
+          </div>
+          <div class="line"><span>OR</span></div>
+          <form data-testid="form-login">
+            <div class="login-form-row">
+              <i class="fa-solid fa-user"></i>
+              <input
+                placeholder="First Name"
+                type="text"
+                autocomplete="username"
+                data-testid="input-fname"
+                name="username"
+                required
+                id="firstName-input"
+              />
+            </div>
+            <div class="login-form-row">
+              <i class="fa-solid fa-users"></i>
+              <input
+                placeholder="Last Name"
+                type="text"
+                autocomplete="username"
+                data-testid="input-lname"
+                required
+                name="username"
+                id="lastName-input"
+              />
+            </div>
+            <div class="login-form-row">
+              <i class="fa fa-envelope"></i>
+              <input
+                placeholder="Email"
+                type="email"
+                autocomplete="email"
+                data-testid="input-email"
+                required
+                name="email"
+                id="emailLoginPage-input"
+              />
+            </div>
+            <div class="login-form-row">
+              <i class="fa fa-lock"></i>
+              <div class="password-input-wrapper">
+                <input
+                  placeholder="Password"
+                  class="password-input"
+                  type="password"
+                  autocomplete="current-password"
+                  required
+                  data-testid="input-password"
+                  name="password"
+                  id="password-input-field-loginPage"
+                />
+                <span class="showPassword" id="toggle-password">Show</span>
+              </div>
+            </div>
+            <div class="service_subscribe">
+              <input type="checkbox" aria-label="Subscribe to newsletter" />
+              Subscribe to our newsletter
+            </div>
+            <div>
+              By creating an account, you agree to our
+              <a href="#" style="color: var(--fd-blue)">Privacy Policy</a> and
+              <a href="#" style="color: var(--fd-red)">Terms of Use</a>.
+            </div>
+            <div class="form-options"></div>
+
+            <button class="login-button" type="submit" data-testid="btn-login">
+              Register New User
+            </button>
+            <div class="register-text">
+              <span data-testid="text-no-account"
+                >Already have an account?</span
+              >
+              <a
+                class="link-register"
+                data-testid="link-register"
+                id="loginPage-modal-btn"
+                >Log In</a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer" role="contentinfo">
+      <div class="content-container">
+        <div class="footer-grid">
+          <div class="footer-column">
+            <h4 data-key="footer_col_1_title">Fast Delivery</h4>
+            <a href="#" data-key="footer_col_1_link_1">Careers</a>
+            <a href="#" data-key="footer_col_1_link_2">Terms & Conditions</a>
+            <a href="#" data-key="footer_col_1_link_3">Privacy Policy</a>
+            <a href="#" data-key="footer_col_1_link_4">FAQ</a>
+          </div>
+          <div class="footer-column">
+            <h4 data-key="footer_col_2_title">Popular Restaurants</h4>
+            <a href="#">McDonald's</a>
+            <a href="#">KFC</a>
+            <a href="#">Pizza Hut</a>
+            <a href="#">Burger King</a>
+          </div>
+          <div class="footer-column">
+            <h4 data-key="footer_col_3_title">Egypt Cities</h4>
+            <a href="#">Damanhour</a>
+            <a href="#">Tanta</a>
+            <a href="#">Cairo</a>
+            <a href="#">Alexandria</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div>© 2025 Fast Delivery</div>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div
+      id="login-modal-overlay"
+      class="modal-overlay"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="login-heading"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close-btn" aria-label="Close" id="close-modal-btn">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="">
+            <p class="login-heading" id="login-heading">Login</p>
+            <div class="social-buttons">
+              <button
+                class="google"
+                type="button"
+                onclick="window.location.href='#'"
+                aria-label="Continue with Google"
+              >
+                <i class="fab fa-google"></i><span>Continue with Google</span>
+              </button>
+              <button
+                class="facebook"
+                type="button"
+                onclick="window.location.href='#'"
+                aria-label="Continue with Facebook"
+              >
+                <i class="fab fa-facebook-f"></i
+                ><span>Continue with Facebook</span>
+              </button>
+            </div>
+            <div class="line"><span>OR</span></div>
+            <form data-testid="form-login">
+              <div class="login-form-row">
+                <i class="fa fa-envelope"></i>
+                <input
+                  placeholder="Email"
+                  type="email"
+                  autocomplete="username"
+                  data-testid="input-email"
+                  name="username"
+                />
+              </div>
+              <div class="login-form-row">
+                <i class="fa fa-lock"></i>
+                <div class="password-input-wrapper">
+                  <input
+                    placeholder="Password"
+                    class="password-input"
+                    type="password"
+                    autocomplete="current-password"
+                    data-testid="input-password"
+                    name="password"
+                    id="password-input-field"
+                  />
+                  <span class="showPassword" id="toggle-password">Show</span>
+                </div>
+              </div>
+              <div class="form-options">
+                <div class="forgot-password" data-testid="link-forgot-password">
+                  Forgot your password?
+                </div>
+              </div>
+              <button class="login-button" data-testid="btn-login">
+                Login
+              </button>
+              <div class="register-text">
+                <span data-testid="text-no-account"
+                  >Don’t have an account?</span
+                >
+                <a
+                  href="./login_web.html"
+                  class="link-register"
+                  data-testid="link-register"
+                  >Create Account</a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<ul id="userDropDown"
+  class="dropdown-overlay"
+  aria-modal="true"
+  role="combobox"
+  aria-labelledby="login-dropdown">
+    <li tabindex="0"><a href="#"><i class="fa-solid fa-credit-card"></i> EGP 0.00</a></li>
+    <li tabindex="0"><a href="#"><i class="fa-solid fa-cart-shopping"></i> My Orders</a></li>
+    <li tabindex="0"><a href="#"><i class="fa-solid fa-user"></i> Account Information</a></li>
+    <li tabindex="0"><a href="#"><i class="fa-solid fa-map-location-dot"></i> Delivery Addresses</a></li>
+    <li tabindex="0" id="logOut"><i class="fa-solid fa-right-from-bracket"></i> Log Out</li>
+</ul>
+
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./java_scrpit/main-en.js"></script>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fast Delivery</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="css/css_web.css" />
+  </head>
+
+  <body>
+    <header class="header" role="banner">
+      <a
+        href="#"
+        class="logo-container"
+        aria-label="Fast Delivery - الصفحة الرئيسية"
+      >
+        <img src="logo.png" alt="Fast Delivery Logo" class="logo" />
+      </a>
+
+      <nav class="nav-links">
+        <a href="#" data-key="header_link_1">مطاعم</a>
+        <a href="#" data-key="header_link_2">عروض</a>
+        <a href="#" data-key="header_link_3">كن شريكاً</a>
+      </nav>
+
+      <div class="action-buttons">
+        <button class="lang-btn" onclick="switchLanguage('en')">
+          <i class="fa fa-globe"></i> EN
+        </button>
+        <button class="icon-btn" aria-label="السلة" role="button">
+          <i class="fa fa-shopping-basket"></i>
+        </button>
+        <button
+          class="icon-btn"
+          aria-label="تسجيل الدخول"
+          data-key="login_btn"
+          id="login-modal-btn"
+        >
+          <i class="fa fa-user"></i>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero-section" role="region">
+      <div class="container">
+        <h1 data-key="hero_title">أسرع توصيل للمأكولات، البقالة والمزيد</h1>
+        <p data-key="hero_desc">
+          اطلب طعامك المفضل عبر الإنترنت من آلاف المطاعم والمتاجر في منطقتك.
+        </p>
+
+        <div class="search-wrapper">
+          <div class="search-box">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="أدخل منطقتك أو الشارع"
+              aria-label="أدخل منطقتك للبحث"
+            />
+
+            <button
+              id="location-btn"
+              type="button"
+              aria-label="ابحث عن موقعك الحالي"
+              title="ابحث عن موقعك الحالي"
+            >
+              <i class="fa fa-map-marker-alt"></i>
+            </button>
+
+            <button
+              id="final-search-btn"
+              type="button"
+              aria-label="البحث عن مطاعم في الموقع المحدد"
+            >
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="hero-section-fade-out"></div>
+    </section>
+
+    <section
+      class="categories-section gray-bg"
+      role="region"
+      aria-labelledby="section_1_title"
+    >
+      <div class="content-container">
+        <h2 id="section_1_title" data-key="section_1_title">
+          اطلب كل ما تحتاجه
+        </h2>
+        <div class="categories-grid">
+          <div class="category-card" role="link" tabindex="0">
+            <div
+              class="category-card-bg"
+              style="background-image: url('food.jpg')"
+            ></div>
+            <div class="card-content">
+              <h3 style="font-size: 30px">طعام</h3>
+              <p data-key="food_summary">
+                أفضل مطاعم المدينة جاهزة لتلبية طلبك.
+              </p>
+            </div>
+          </div>
+          <div class="category-card" role="link" tabindex="0">
+            <div
+              class="category-card-bg"
+              style="background-image: url('grocery.jpg')"
+            ></div>
+            <div class="card-content">
+              <h3 style="font-size: 30px">بقالة</h3>
+              <p data-key="grocery_summary">
+                سوبرماركت و بقالة تصلك في أقل وقت.
+              </p>
+            </div>
+          </div>
+          <div class="category-card" role="link" tabindex="0">
+            <div
+              class="category-card-bg"
+              style="background-image: url('medicine.png')"
+            ></div>
+            <div class="card-content">
+              <h3 style="font-size: 30px">دواء</h3>
+              <p>صيدليات قريبة منك لتوصيل الأدوية.</p>
+            </div>
+          </div>
+          <div class="category-card" role="link" tabindex="0">
+            <div
+              class="category-card-bg"
+              style="background-image: url('beauty.jpg')"
+            ></div>
+            <div class="card-content">
+              <h3 style="font-size: 30px">مستحضرات العناية بالبشرة</h3>
+              <p>مستحضرات تصلك في أقل وقت.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="categories-section"
+      role="region"
+      aria-labelledby="section_2_title"
+    >
+      <div class="content-container">
+        <h2 id="section_2_title" data-key="section_2_title">انضم إلينا</h2>
+        <div class="categories-grid">
+          <div class="category-card plain-bg" role="link" tabindex="0">
+            <div
+              class="category-card-bg"
+              style="background-color: #e8e8e8; background-image: none"
+            ></div>
+            <div class="card-content">
+              <div class="card-icon"><i class="fa fa-store"></i></div>
+              <h3 data-key="partner_title">كن شريك مطعم</h3>
+              <p data-key="partner_desc">
+                تواصل مع المزيد من العملاء وحقق نموًا ملحوظًا.
+              </p>
+              <a href="#" data-key="partner_link"
+                >اكتشف المزيد <i class="fa fa-chevron-left"></i
+              ></a>
+            </div>
+          </div>
+          <div class="category-card plain-bg" role="link" tabindex="0">
+            <div
+              class="category-card-bg"
+              style="
+                background-image: url('PLACEHOLDER_FOR_DELIVERY_IMAGE.jpg');
+              "
+            ></div>
+            <div class="card-content">
+              <div class="card-icon"><i class="fa fa-motorcycle"></i></div>
+              <h3 data-key="delivery_title">انضم إلى فريق التوصيل</h3>
+              <p data-key="delivery_desc">
+                ابدأ العمل معنا واكسب دخلاً إضافياً.
+              </p>
+              <a href="#" data-key="delivery_link"
+                >سجل الآن <i class="fa fa-chevron-left"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="cities-section"
+      role="region"
+      aria-labelledby="cities_title"
+    >
+      <div class="content-container">
+        <div class="section-icon"><i class="fa fa-map-marked-alt"></i></div>
+        <h2 id="cities_title" data-key="cities_title">
+          المدن التي نخدمها في مصر
+        </h2>
+        <div class="cities-grid">
+          <a href="/egypt/city/cairo" class="city-card">القاهرة</a>
+          <a href="/egypt/city/alexandria" class="city-card">الإسكندرية</a>
+          <a href="/egypt/city/giza" class="city-card">الجيزة</a>
+          <a href="/egypt/city/mansoura" class="city-card">المنصورة</a>
+          <a href="/egypt/city/tanta" class="city-card">طنطا</a>
+          <a href="/egypt/city/zagazig" class="city-card">الزقازيق</a>
+          <a href="/egypt/city/ismailia" class="city-card">الإسماعيلية</a>
+          <a href="/egypt/city/port-said" class="city-card">بورسعيد</a>
+          <a href="/egypt/city/suez" class="city-card">السويس</a>
+          <a href="/egypt/city/assiut" class="city-card">أسيوط</a>
+          <a href="/egypt/city/minya" class="city-card">المنيا</a>
+          <a href="/egypt/city/luxor" class="city-card">الأقصر</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer" role="contentinfo">
+      <div class="content-container">
+        <div class="footer-grid">
+          <div class="footer-column">
+            <h4 data-key="footer_col_1_title">Fast Delivery</h4>
+            <a href="#" data-key="footer_col_1_link_1">وظائف</a>
+            <a href="#" data-key="footer_col_1_link_2">الشروط والأحكام</a>
+            <a href="#" data-key="footer_col_1_link_3">سياسة الخصوصية</a>
+            <a href="#" data-key="footer_col_1_link_4">الأسئلة الشائعة</a>
+          </div>
+          <div class="footer-column">
+            <h4 data-key="footer_col_2_title">مطاعم شهيرة</h4>
+            <a href="#">ماكدونالدز</a>
+            <a href="#">كنتاكي</a>
+            <a href="#">بيتزا هت</a>
+            <a href="#">برجر كنج</a>
+          </div>
+          <div class="footer-column">
+            <h4 data-key="footer_col_3_title">مدن مصر</h4>
+            <a href="#">دمنهور</a>
+            <a href="#">طنطا</a>
+            <a href="#">القاهره</a>
+            <a href="#">الاسكندريه</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div>© 2025 Fast Delivery</div>
+          <div class="social-links">
+            <a href="#" aria-label="فيسبوك"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="تويتر"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="إنستغرام"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div
+      id="login-modal-overlay"
+      class="modal-overlay"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="login-heading"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close-btn" aria-label="إغلاق" id="close-modal-btn">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="">
+            <p class="login-heading" id="login-heading">تسجيل الدخول</p>
+            <div class="social-buttons">
+              <button
+                class="google"
+                type="button"
+                onclick="window.location.href='#'"
+                aria-label="تابع باستخدام جوجل"
+              >
+                <i class="fab fa-google"></i><span>تابع باستخدام جوجل</span>
+              </button>
+              <button
+                class="facebook"
+                type="button"
+                onclick="window.location.href='#'"
+                aria-label="تابع باستخدام فيسبوك"
+              >
+                <i class="fab fa-facebook-f"></i
+                ><span>تابع باستخدام فيسبوك</span>
+              </button>
+            </div>
+            <div class="line"><span>أو</span></div>
+            <form data-testid="form-login">
+              <div class="login-form-row">
+                <i class="fa fa-envelope"></i>
+                <input
+                  placeholder="البريد الإلكتروني"
+                  type="email"
+                  autocomplete="username"
+                  data-testid="input-email"
+                  name="username"
+                />
+              </div>
+              <div class="login-form-row">
+                <i class="fa fa-lock"></i>
+                <div class="password-input-wrapper">
+                  <input
+                    placeholder="كلمة المرور"
+                    class="password-input"
+                    type="password"
+                    autocomplete="current-password"
+                    data-testid="input-password"
+                    name="password"
+                    id="password-input-field"
+                  />
+                  <span class="showPassword" id="toggle-password">إظهار</span>
+                </div>
+              </div>
+              <div class="form-options">
+                <div class="forgot-password" data-testid="link-forgot-password">
+                  نسيت كلمة المرور؟
+                </div>
+              </div>
+              <button class="login-button" data-testid="btn-login">
+                تسجيل الدخول
+              </button>
+              <div class="register-text">
+                <span data-testid="text-no-account">ليس لديك حساب؟</span>
+                <a
+                  href="./login_web.html"
+                  class="link-register"
+                  data-testid="link-register"
+                  >إنشاء حساب</a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+        <ul id="userDropDown"
+     class="dropdown-overlay"
+      aria-modal="true"
+      role="combobox
+      aria-labelledby="login-dropdown">
+        <li tabindex="0"><a href="#"> <i class="fa-solid fa-credit-card"></i> EGP 0.00</a></li>
+        <li tabindex="0"><a href="#"><i class="fa-solid fa-cart-shopping"></i>طلباتي السابقة</a></li>
+        <li tabindex="0"><a href="#"><i class="fa-solid fa-user"></i> معلومات الحساب</a></li>
+        <li tabindex="0"><a href="#"><i class="fa-solid fa-map-location-dot"></i> عناوين التوصيل </a></li>
+        <li tabindex="0" id="logOut"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج </li>
+    </ul>
+  </body>
+  <script src="java_scrpit/java_scrpit_web.js"></script>
+</html>
