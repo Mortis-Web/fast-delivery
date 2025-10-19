@@ -12,6 +12,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
+    <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
     <link rel="stylesheet" href="css/css-main-en.css" />
   </head>
 
@@ -55,8 +59,8 @@
           stores in your area.
         </p>
 
-        <div class="search-wrapper">
-          <div class="search-box">
+        <div class="search-wrapper ">
+          <div class="search-box search-container">
             <input
               type="text"
               id="search-input"
@@ -332,7 +336,7 @@
                 <span data-testid="text-no-account"
                   >Don't have an account?</span
                 >
-                <a href="#" class="link-register" data-testid="link-register"
+                <a href="./login_en.html" class="link-register" data-testid="link-register"
                   >Create account</a
                 >
               </div>
@@ -343,7 +347,6 @@
     </div>
     <ul
       id="userDropDown"
-      class="dropdown-overlay"
       aria-modal="true"
       role="combobox"
       aria-labelledby="login-dropdown"
@@ -366,7 +369,39 @@
         <i class="fa-solid fa-right-from-bracket"></i> Log Out
       </li>
     </ul>
+  <article id="mapModal">
+  <div class="map-title">
+    <span id="closeMapModal" class="close">&times;</span>
+    <h2>Delivery Address</h2>
+  </div>
 
-    <script src="java_scrpit/main-en.js"></script>
+  <!-- ✅ Search Bar Inside Map Modal -->
+  <div class="map-search-box">
+    <input
+      type="text"
+      id="map-search-input"
+      placeholder="Search inside the map (city, street...)"
+      aria-label="Search for a location inside the map"
+    />
+    <button id="map-search-btn"><i class="fa fa-search"></i></button>
+  </div>
+
+  <div class="map-content">
+    <div id="center-pin"></div>
+    <div id="map"></div>
+
+    <button id="confirmLocationBtn"><i class="fa-solid fa-truck"></i> Deliver Here </button>
+
+    <button id="goToCurrentLocation" class="current-location-btn">
+      📍 My Current Location
+    </button>
+  </div>
+</article>
+
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script src="java_scrpit/main-en.js" defer></script>
+  <script src="./java_scrpit/map_en.js"></script>
 </html>

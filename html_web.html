@@ -12,7 +12,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
     <link rel="stylesheet" href="css/css_web.css" />
   </head>
 
@@ -33,9 +36,9 @@
       </nav>
 
       <div class="action-buttons">
-        <button class="lang-btn" onclick="switchLanguage('en')">
+        <a href="./main_en.html" class="lang-btn">
           <i class="fa fa-globe"></i> EN
-        </button>
+        </a>
         <button class="icon-btn" aria-label="السلة" role="button">
           <i class="fa fa-shopping-basket"></i>
         </button>
@@ -58,7 +61,7 @@
         </p>
 
         <div class="search-wrapper">
-          <div class="search-box">
+          <div class="search-box search-container">
             <input
               type="text"
               id="search-input"
@@ -344,7 +347,6 @@
       </div>
     </div>
         <ul id="userDropDown"
-     class="dropdown-overlay"
       aria-modal="true"
       role="combobox
       aria-labelledby="login-dropdown">
@@ -354,6 +356,38 @@
         <li tabindex="0"><a href="#"><i class="fa-solid fa-map-location-dot"></i> عناوين التوصيل </a></li>
         <li tabindex="0" id="logOut"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج </li>
     </ul>
+<article id="mapModal">
+  <div class="map-title">
+    <span id="closeMapModal" class="close">&times;</span>
+    <h2>عنوان التوصيل</h2>
+  </div>
+
+  <!-- ✅ Search Bar Inside Map Modal -->
+  <div class="map-search-box">
+    <input
+      type="text"
+      id="map-search-input"
+      placeholder="ابحث داخل الخريطة (مدينة، شارع...)"
+      aria-label="ابحث عن موقع داخل الخريطة"
+    />
+    <button id="map-search-btn"><i class="fa fa-search"></i></button>
+  </div>
+
+  <div class="map-content">
+    <div id="center-pin"></div>
+    <div id="map"></div>
+
+    <button id="confirmLocationBtn"><i class="fa-solid fa-truck"></i> وصِّل هنا </button>
+
+    <button id="goToCurrentLocation" class="current-location-btn">
+      📍 موقعي الحالي
+    </button>
+  </div>
+</article>
+
   </body>
-  <script src="java_scrpit/java_scrpit_web.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="java_scrpit/java_scrpit_web.js" defer ></script>
+  <script src="./java_scrpit/map.js" defer></script>
 </html>

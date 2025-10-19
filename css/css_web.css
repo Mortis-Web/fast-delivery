@@ -36,9 +36,9 @@ a {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 15px 50px;
-  background-color: transparent;
-  position: sticky;
+  padding: 10px 50px;
+  background: linear-gradient(135deg, #fffbe6 0%, #ffffff 0%, #fffbe6 10%);
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -47,7 +47,7 @@ a {
 }
 
 .header.scrolled {
-  background-color: var(--fd-white);
+  background: var(--fd-white);
   border-bottom: 1px solid #eee;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -215,7 +215,7 @@ a {
 
 .search-wrapper {
   padding: 0;
-  max-width: 800px;
+  max-width: 700px;
   width: 100%;
   margin: 0 auto;
 }
@@ -224,7 +224,7 @@ a {
   height: 60px;
   display: flex;
   align-items: center;
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   border-radius: 50px;
@@ -234,13 +234,14 @@ a {
 }
 
 .search-box input {
-  padding: 16px 25px;
+  padding: 0px 25px;
+  height: 100%;
   flex-grow: 1;
   border: none;
   font-size: 19px;
   outline: none;
-  background-color: transparent;
-  border-radius: 0;
+  background-color: transparent !important;
+  border-radius: 2rem;
 }
 
 .search-box button {
@@ -588,9 +589,6 @@ a {
   }
   .hero-section p {
     font-size: 18px;
-  }
-  .search-wrapper {
-    width: 338px;
   }
   .search-box {
     height: 60px;
@@ -988,7 +986,7 @@ button {
 .login_form {
   min-height: calc(100vh - 100px);
   padding: 50px;
-  padding-top: 25px !important;
+  padding-top: 125px;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -1009,3 +1007,325 @@ button {
   background-color: #fff5f5;
 }
 
+html[dir="ltr"] {
+  .login-form-row {
+    input {
+      text-align: left;
+    }
+    i {
+      margin-right: 10px;
+    }
+  }
+}
+
+#userDropDown {
+  position: fixed;
+  top: 100px;
+  left: 20px;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  border-radius: 0.25rem;
+  padding: 25px 50px;
+  display: none;
+  transition: 0.5s all ease;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  scale: 0.99;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  isolation: isolate;
+  gap: 2rem;
+  list-style-type: none;
+  li {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    cursor: pointer;
+    align-items: center;
+  }
+  a {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font: bold;
+    font-size: 1rem;
+    width: 100%;
+  }
+  i {
+    color: var(--fd-blue);
+    font-size: 1.25rem;
+  }
+}
+#userDropDown::after {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  position: absolute;
+  top: -11px;
+  border-left: 1px solid rgba(0, 0, 0, 0.25);
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+  rotate: 45deg;
+  display: block;
+  left: 40px;
+  content: "";
+  z-index: -1;
+}
+
+#userDropDown.showDropDown {
+  opacity: 1 !important;
+  scale: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.header i {
+  pointer-events: none;
+}
+
+#mapModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  flex-direction: column;
+  padding-inline: 25px;
+  padding-block: 25px;
+}
+
+.map-content {
+  width: 100%;
+  background: #fff;
+  position: relative;
+  max-width: 700px;
+  height: 80vh;
+  max-height: 700px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  border-top: 0;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.close {
+  position: absolute;
+  top: 0px;
+  right: 8px;
+  font-size: 40px;
+  cursor: pointer;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  transition: 0.3s color ease;
+  &:hover {
+    color: red;
+  }
+}
+.map-title {
+  background-color: whitesmoke;
+  position: relative;
+  z-index: 1000;
+  max-width: 700px;
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: block;
+
+  padding-block: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  right: 0;
+  left: 0;
+  font-size: 1rem;
+
+  text-align: center;
+}
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+#center-pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  background: url("pin.png") no-repeat center / contain;
+  transform: translate(-50%, -100%); /* shifts pin to look natural */
+  pointer-events: none;
+}
+
+/* Text under map */
+
+#confirmLocationBtn {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background: #db4437;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+#map-center-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+#map-center-indicator .pin {
+  width: 15px;
+  height: 15px;
+  background: red;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+#map-center-indicator .pin::after {
+  content: "";
+  position: absolute;
+  height: 6px;
+  width: 2px;
+  background-color: red;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#deliverToText {
+  margin-top: 10px;
+  background: white;
+  padding: 5px 10px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 13px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+#suggestionsBox li:hover,
+.map-title ul li:hover {
+  background: #f0f0f0;
+}
+.no-result {
+  color: #777;
+  cursor: default;
+}
+.search-container {
+  position: relative; /* So autocomplete is positioned under the input */
+  overflow: visible !important; /* Ensure it's not clipped */
+}
+
+#suggestionsBox {
+  position: absolute;
+  top: calc(100% + 10px); /* Just under the input box */
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  z-index: 9999;
+  max-height: 220px;
+  border-radius: 0.5rem;
+  overflow-y: auto;
+  display: none; /* Will turn to block in JS */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#suggestionsBox li {
+  padding: 8px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid #eee;
+}
+
+#suggestionsBox li:hover {
+  background: #f5f5f5;
+}
+
+.current-location-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 9999;
+}
+.current-location-btn:hover {
+  background: #0056b3;
+}
+.map-search-box {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 700px;
+  padding: 10px;
+  background: #fff;
+  border-top: 0 !important;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  position: relative;
+  z-index: 9999;
+}
+
+#map-search-input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+#map-search-btn {
+  padding: 8px 12px;
+  background: var(--fd-blue);
+  color: #1a1a1a;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.map-title ul {
+  top: calc(100% + 70px);
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  #confirmLocationBtn {
+    left: 15px;
+    transform: none;
+  }
+  #mapModal {
+    padding-inline: 10px;
+  }
+  #location-btn,
+  #final-search-btn {
+    scale: 0.9;
+    transform-origin: top;
+  }
+}

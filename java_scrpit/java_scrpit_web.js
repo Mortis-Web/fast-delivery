@@ -1,26 +1,41 @@
 // ✅ التعامل مع تغيير حالة الهيدر عند التمرير
 function handleScroll() {
   const header = document.querySelector(".header");
-  if (window.scrollY > 50) {
-    header.classList.add("scrolled");
-  } else {
-    header.classList.remove("scrolled");
-  }
+  if (window.scrollY > 50) header.classList.add("scrolled");
+  else header.classList.remove("scrolled");
 }
 
 // ✅ تحديث روابط الأزرار بالعربية
-function updateLinkIcons() {
-  const partnerLink = document.querySelector('[data-key="partner_link"]');
-  const deliveryLink = document.querySelector('[data-key="delivery_link"]');
-  const icon = `<i class="fa fa-chevron-left"></i>`;
+function updateLoginBtnBehavior() {
+  const storedUser = localStorage.getItem("fastDeliveryUser");
+  const loginBtn = document.getElementById("login-modal-btn");
 
-  if (partnerLink) partnerLink.innerHTML = `اكتشف المزيد ${icon}`;
-  if (deliveryLink) deliveryLink.innerHTML = `سجّل الآن ${icon}`;
+  // ✅ stop if button not found
+  if (!loginBtn) return;
+
+  // ✅ safely clone and replace button
+  const clone = loginBtn.cloneNode(true);
+  loginBtn.parentNode.replaceChild(clone, loginBtn);
+  const btn = document.getElementById("login-modal-btn");
+  const userDropDown = document.getElementById("userDropDown");
+
+  if (storedUser) {
+    const userData = JSON.parse(storedUser);
+    console.log(`👋 مرحبًا بعودتك يا ${userData.firstName}`);
+
+    btn.addEventListener("click", () => {
+      if (userDropDown) userDropDown.classList.toggle("showDropDown");
+    });
+
+    if (userDropDown) userDropDown.style.display = "flex";
+  } else {
+    btn.addEventListener("click", openModal);
+    if (userDropDown) userDropDown.style.display = "none";
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   handleScroll();
-  updateLinkIcons();
   window.addEventListener("scroll", handleScroll);
 
   const loginBtn = document.getElementById("login-modal-btn");
@@ -30,15 +45,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const userDropDown = document.getElementById("userDropDown");
 
   // ✅ دوال فتح وإغلاق المودال
-  const openModal = () => {
+  window.openModal = function () {
     modalOverlay.classList.add("is-visible");
     document.body.style.overflow = "hidden";
   };
 
-  const closeModal = () => {
+  function closeModal() {
     modalOverlay.classList.remove("is-visible");
     document.body.style.overflow = "";
-  };
+  }
 
   if (loginLink) loginLink.addEventListener("click", openModal);
   if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
@@ -50,9 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modalOverlay?.classList.contains("is-visible")) {
+    if (e.key === "Escape" && modalOverlay?.classList.contains("is-visible"))
       closeModal();
-    }
   });
 
   // ✅ إظهار أو إخفاء كلمة المرور
@@ -166,36 +180,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }).then(() => {
       form.reset();
       closeModal();
-      if (userDropDown) userDropDown.classList.add("showDropDown");
-      updateLoginBtnBehavior(); // ✅ تحديث سلوك الزر بعد تسجيل الدخول
+      updateLoginBtnBehavior();
       window.location.href = "html_web.html";
     });
   });
 
-  // ✅ تحديث سلوك زر تسجيل الدخول حسب حالة المستخدم
-  function updateLoginBtnBehavior() {
-    const storedUser = localStorage.getItem("fastDeliveryUser");
-    if (!loginBtn) return;
-
-    loginBtn.replaceWith(loginBtn.cloneNode(true)); // إزالة الأحداث القديمة
-    const newLoginBtn = document.getElementById("login-modal-btn");
-
-    if (storedUser) {
-      // إذا كان المستخدم مسجلاً الدخول ✅
-      const userData = JSON.parse(storedUser);
-      console.log(`👋 مرحبًا بعودتك يا ${userData.firstName}`);
-
-      newLoginBtn.addEventListener("click", () => {
-        if (userDropDown) userDropDown.classList.toggle("showDropDown");
-      });
-
-      if (userDropDown) userDropDown.style.display = "flex"; // start hidden
-    } else {
-      // إذا لم يكن مسجلاً الدخول ❌
-      newLoginBtn.addEventListener("click", openModal);
-      if (userDropDown) userDropDown.style.display = "none";
-    }
-  }
   document.addEventListener("click", (e) => {
     if (
       userDropDown &&
@@ -207,9 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const logOut = document.getElementById('logOut')
-
-  // ✅ زر تسجيل الخروج
+  const logOut = document.getElementById("logOut");
   if (logOut) {
     logOut.addEventListener("click", () => {
       Swal.fire({
@@ -229,7 +216,6 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "تم تسجيل الخروج بنجاح ✅",
             confirmButtonText: "حسنًا",
           }).then(() => {
-            updateLoginBtnBehavior(); // تحديث السلوك
             window.location.reload();
           });
         }

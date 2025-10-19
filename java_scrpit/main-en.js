@@ -1,26 +1,41 @@
-// ✅ Handle header state on scroll
+// ✅ Handle header style when scrolling
 function handleScroll() {
   const header = document.querySelector(".header");
-  if (window.scrollY > 50) {
-    header.classList.add("scrolled");
-  } else {
-    header.classList.remove("scrolled");
-  }
+  if (window.scrollY > 50) header.classList.add("scrolled");
+  else header.classList.remove("scrolled");
 }
 
-// ✅ Update Arabic button links
-function updateLinkIcons() {
-  const partnerLink = document.querySelector('[data-key="partner_link"]');
-  const deliveryLink = document.querySelector('[data-key="delivery_link"]');
-  const icon = `<i class="fa fa-chevron-left"></i>`;
+// ✅ Update login button behavior
+function updateLoginBtnBehavior() {
+  const storedUser = localStorage.getItem("fastDeliveryUser");
+  const loginBtn = document.getElementById("login-modal-btn");
 
-  if (partnerLink) partnerLink.innerHTML = `Learn More ${icon}`;
-  if (deliveryLink) deliveryLink.innerHTML = `Sign Up Now ${icon}`;
+  // ✅ Stop if button not found
+  if (!loginBtn) return;
+
+  // ✅ Safely clone and replace button (remove old listeners)
+  const clone = loginBtn.cloneNode(true);
+  loginBtn.parentNode.replaceChild(clone, loginBtn);
+  const btn = document.getElementById("login-modal-btn");
+  const userDropDown = document.getElementById("userDropDown");
+
+  if (storedUser) {
+    const userData = JSON.parse(storedUser);
+    console.log(`👋 Welcome back, ${userData.firstName}!`);
+
+    btn.addEventListener("click", () => {
+      if (userDropDown) userDropDown.classList.toggle("showDropDown");
+    });
+
+    if (userDropDown) userDropDown.style.display = "flex";
+  } else {
+    btn.addEventListener("click", openModal);
+    if (userDropDown) userDropDown.style.display = "none";
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   handleScroll();
-  updateLinkIcons();
   window.addEventListener("scroll", handleScroll);
 
   const loginBtn = document.getElementById("login-modal-btn");
@@ -30,15 +45,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const userDropDown = document.getElementById("userDropDown");
 
   // ✅ Modal open/close functions
-  const openModal = () => {
+  window.openModal = function () {
     modalOverlay.classList.add("is-visible");
     document.body.style.overflow = "hidden";
   };
 
-  const closeModal = () => {
+  function closeModal() {
     modalOverlay.classList.remove("is-visible");
     document.body.style.overflow = "";
-  };
+  }
 
   if (loginLink) loginLink.addEventListener("click", openModal);
   if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
@@ -50,12 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modalOverlay?.classList.contains("is-visible")) {
+    if (e.key === "Escape" && modalOverlay?.classList.contains("is-visible"))
       closeModal();
-    }
   });
 
-  // ✅ Show or hide password
+  // ✅ Show/hide password
   document.querySelectorAll(".showPassword").forEach((toggle) => {
     toggle.addEventListener("click", () => {
       const wrapper = toggle.closest(".password-input-wrapper");
@@ -112,8 +126,8 @@ document.addEventListener("DOMContentLoaded", () => {
       message = "Please enter your email";
       isValid = false;
     } else if (isValid && !isValidEmail(emailInputLoginPage.value.trim())) {
-      setInvalid(emailInputLoginPage, "Invalid email address");
-      message = "Invalid email address";
+      setInvalid(emailInputLoginPage, "Invalid email format");
+      message = "Invalid email format";
       isValid = false;
     } else clearInvalid(emailInputLoginPage);
 
@@ -124,9 +138,9 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (isValid && passwordInputLoginPage.value.trim().length < 6) {
       setInvalid(
         passwordInputLoginPage,
-        "Password must be at least 6 characters long"
+        "Password must be at least 6 characters"
       );
-      message = "Password must be at least 6 characters long";
+      message = "Password must be at least 6 characters";
       isValid = false;
     } else clearInvalid(passwordInputLoginPage);
 
@@ -143,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return isValid;
   };
 
-  // ✅ Handle form submit (register user)
+  // ✅ On form submit (register user)
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     if (!validateInputs()) return;
@@ -166,36 +180,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }).then(() => {
       form.reset();
       closeModal();
-      if (userDropDown) userDropDown.classList.add("showDropDown");
-      updateLoginBtnBehavior(); // ✅ Update login button behavior
-      window.location.href = "main_en.html";
+      updateLoginBtnBehavior();
+      window.location.href = "html_web.html";
     });
   });
-
-  // ✅ Update login button behavior based on user state
-  function updateLoginBtnBehavior() {
-    const storedUser = localStorage.getItem("fastDeliveryUser");
-    if (!loginBtn) return;
-
-    loginBtn.replaceWith(loginBtn.cloneNode(true)); // Remove old listeners
-    const newLoginBtn = document.getElementById("login-modal-btn");
-
-    if (storedUser) {
-      // ✅ User is logged in
-      const userData = JSON.parse(storedUser);
-      console.log(`👋 Welcome back, ${userData.firstName}`);
-
-      newLoginBtn.addEventListener("click", () => {
-        if (userDropDown) userDropDown.classList.toggle("showDropDown");
-      });
-
-      if (userDropDown) userDropDown.style.display = "flex";
-    } else {
-      // ❌ User is not logged in
-      newLoginBtn.addEventListener("click", openModal);
-      if (userDropDown) userDropDown.style.display = "none";
-    }
-  }
 
   // ✅ Close dropdown when clicking outside
   document.addEventListener("click", (e) => {
@@ -209,16 +197,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const logOut = document.getElementById("logOut");
-
   // ✅ Logout button
+  const logOut = document.getElementById("logOut");
   if (logOut) {
     logOut.addEventListener("click", () => {
       Swal.fire({
         icon: "question",
         title: "Are you sure you want to log out?",
         showCancelButton: true,
-        confirmButtonText: "Yes, log out",
+        confirmButtonText: "Yes, Log Out",
         cancelButtonText: "Cancel",
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
@@ -231,7 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Logged out successfully ✅",
             confirmButtonText: "OK",
           }).then(() => {
-            updateLoginBtnBehavior(); // Refresh behavior
             window.location.reload();
           });
         }
@@ -239,6 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ✅ Call on page load
+  // ✅ Run when page loads
   updateLoginBtnBehavior();
 });
