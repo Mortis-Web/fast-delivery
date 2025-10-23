@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fast Delivery</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="css/css_web.css" />
+  </head>
+
+  <body>
+    <header class="header" role="banner">
+      <a
+        href="./index.html"
+        class="logo-container"
+        aria-label="Fast Delivery - Home"
+      >
+        <img src="logo.png" alt="Fast Delivery Logo" class="logo" />
+      </a>
+
+      <nav class="nav-links">
+        <a href="#" data-key="header_link_1">Restaurants</a>
+        <a href="#" data-key="header_link_2">Offers</a>
+        <a href="#" data-key="header_link_3">Become a Partner</a>
+      </nav>
+
+      <div class="action-buttons">
+        <a href="./userlocations.html" class="lang-btn">
+          <i class="fa fa-globe"></i> AR
+        </a>
+        <button class="icon-btn" aria-label="Cart" role="button">
+          <i class="fa fa-shopping-basket"></i>
+        </button>
+        <button
+          class="icon-btn"
+          aria-label="Login"
+          data-key="login_btn"
+          id="login-modal-btn"
+        >
+          <i class="fa fa-user"></i>
+        </button>
+      </div>
+    </header>
+    <section id="userDashboard">
+      <div class="userProfileField">
+        <span class="route">
+          <a href="./index.html">Home</a>
+          <i class="fa-solid fa-angles-left"></i> My Account</span
+        >
+        <div class="profile-head">
+          My Account<i id="dropDownBtn" class="fa-solid fa-angles-down"></i>
+        </div>
+        <article class="profileContainer">
+          <ul class="profileSettings">
+            <li><a href="userprofile_en.html">Account Info</a></li>
+            <li class="active">
+              <a href="userlocations.html">Delivery Addresses</a>
+            </li>
+            <li><a href="userprofile_en.html">Previous Orders</a></li>
+            <li><a href="userprofile_en.html">Saved Cards</a></li>
+            <li><a href="userprofile_en.html">Talabat Pay</a></li>
+          </ul>
+
+          <div id="emptyLocations">
+            <i class="fa-solid fa-location-dot"></i>
+            <p>No saved address</p>
+            <button id="userLocationBtn">Add New Address</button>
+          </div>
+
+          <figure id="locationList"></figure>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer" role="contentinfo">
+      <div class="content-container">
+        <div class="footer-grid">
+          <div class="footer-column">
+            <h4 data-key="footer_col_1_title">Fast Delivery</h4>
+            <a href="#" data-key="footer_col_1_link_1">Jobs</a>
+            <a href="#" data-key="footer_col_1_link_2">Terms & Conditions</a>
+            <a href="#" data-key="footer_col_1_link_3">Privacy Policy</a>
+            <a href="#" data-key="footer_col_1_link_4">FAQ</a>
+          </div>
+          <div class="footer-column">
+            <h4 data-key="footer_col_2_title">Popular Restaurants</h4>
+            <a href="#">McDonald's</a>
+            <a href="#">KFC</a>
+            <a href="#">Pizza Hut</a>
+            <a href="#">Burger King</a>
+          </div>
+          <div class="footer-column">
+            <h4 data-key="footer_col_3_title">Egyptian Cities</h4>
+            <a href="#">Damanhur</a>
+            <a href="#">Tanta</a>
+            <a href="#">Cairo</a>
+            <a href="#">Alexandria</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div>© 2025 Fast Delivery</div>
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div
+      id="login-modal-overlay"
+      class="modal-overlay"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="login-heading"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close-btn" aria-label="Close" id="close-modal-btn">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <p class="login-heading" id="login-heading">Login</p>
+            <div class="social-buttons">
+              <button
+                class="google"
+                type="button"
+                onclick="window.location.href='#'"
+                aria-label="Continue with Google"
+              >
+                <i class="fab fa-google"></i><span>Continue with Google</span>
+              </button>
+              <button
+                class="facebook"
+                type="button"
+                onclick="window.location.href='#'"
+                aria-label="Continue with Facebook"
+              >
+                <i class="fab fa-facebook-f"></i
+                ><span>Continue with Facebook</span>
+              </button>
+            </div>
+            <div class="line"><span>or</span></div>
+            <form data-testid="form-login">
+              <div class="login-form-row">
+                <i class="fa fa-envelope"></i>
+                <input
+                  placeholder="Email"
+                  type="email"
+                  autocomplete="username"
+                  data-testid="input-email"
+                  name="username"
+                />
+              </div>
+              <div class="login-form-row">
+                <i class="fa fa-lock"></i>
+                <div class="password-input-wrapper">
+                  <input
+                    placeholder="Password"
+                    class="password-input"
+                    type="password"
+                    autocomplete="current-password"
+                    data-testid="input-password"
+                    name="password"
+                    id="password-input-field"
+                  />
+                  <span class="showPassword" id="toggle-password">Show</span>
+                </div>
+              </div>
+              <div class="form-options">
+                <div class="forgot-password" data-testid="link-forgot-password">
+                  Forgot Password?
+                </div>
+              </div>
+              <button class="login-button" data-testid="btn-login">
+                Login
+              </button>
+              <div class="register-text">
+                <span data-testid="text-no-account"
+                  >Don't have an account?</span
+                >
+                <a
+                  href="./login_web.html"
+                  class="link-register"
+                  data-testid="link-register"
+                  >Create Account</a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ul
+      id="userDropDown"
+      aria-modal="true"
+      role="combobox"
+      aria-labelledby="login-dropdown"
+    >
+      <li tabindex="0">
+        <a href="./userprofile_en.html">
+          <i class="fa-solid fa-credit-card"></i> EGP 0.00</a
+        >
+      </li>
+      <li tabindex="0">
+        <a href="./userprofile_en.html"
+          ><i class="fa-solid fa-cart-shopping"></i> Previous Orders</a
+        >
+      </li>
+      <li tabindex="0">
+        <a href="./userprofile_en.html"
+          ><i class="fa-solid fa-user"></i> Account Info</a
+        >
+      </li>
+      <li tabindex="0">
+        <a href="./userlocations.html"
+          ><i class="fa-solid fa-map-location-dot"></i> Delivery Addresses
+        </a>
+      </li>
+      <li tabindex="0" id="logOut">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </li>
+    </ul>
+
+    <article id="mapModal">
+      <figure id="map-figure">
+        <div class="map-title">
+          <span id="closeMapModal" class="close">&times;</span>
+          <h2 id="maptitle">Add New Address</h2>
+        </div>
+
+        <figure id="map-shower">
+          <div class="map-search-box">
+            <input
+              type="text"
+              id="map-search-input"
+              placeholder="Search on the map (City, Street...)"
+              aria-label="Search location on the map"
+            />
+            <button id="map-search-btn"><i class="fa fa-search"></i></button>
+          </div>
+
+          <div class="map-content">
+            <div id="center-pin"></div>
+            <div id="map"></div>
+          </div>
+          <div class="mapBtns" id="mapLocationBtns">
+            <button id="goToCurrentLocation" class="current-location-btn">
+              📍 My Location
+            </button>
+            <button id="confirmLocationBtn">
+              <i class="fa-solid fa-location"></i> Confirm Location
+            </button>
+          </div>
+        </figure>
+
+        <figure id="locationFormShower">
+          <form id="locationDetails">
+            <div class="dataField">
+              <label for="mobile">Contact Info</label>
+              <div class="locationDataField">
+                <div class="inputHolder">
+                  <input
+                    type="tel"
+                    name="mobile"
+                    id="mobile"
+                    placeholder="Mobile Number"
+                    required
+                  />
+                  <span class="egyptNum"> | 20+</span>
+                </div>
+                <input
+                  type="tel"
+                  name="phone"
+                  id="phone"
+                  placeholder="Landline Number (Optional)"
+                />
+              </div>
+            </div>
+
+            <div class="dataField">
+              <label for="state">Delivery Address</label>
+              <div class="locationDataField">
+                <select name="state" id="state" required></select>
+                <select name="landmark" id="landmark" required>
+                  <option value="">Select City</option>
+                </select>
+
+                <div class="gender-selection">
+                  <input
+                    type="radio"
+                    name="locationType"
+                    id="apartmentType"
+                    value="apartment"
+                    hidden
+                    checked
+                  />
+                  <label for="apartmentType" class="gender-btn"
+                    ><i class="fa-solid fa-building"></i> Apartment</label
+                  >
+
+                  <input
+                    type="radio"
+                    name="locationType"
+                    id="houseType"
+                    value="house"
+                    hidden
+                  />
+                  <label for="houseType" class="gender-btn"
+                    ><i class="fa-solid fa-house"></i> House</label
+                  >
+
+                  <input
+                    type="radio"
+                    name="locationType"
+                    id="officeType"
+                    value="office"
+                    hidden
+                  />
+                  <label for="officeType" class="gender-btn"
+                    ><i class="fa-solid fa-city"></i> Office</label
+                  >
+                </div>
+
+                <input
+                  type="text"
+                  name="address"
+                  id="address"
+                  placeholder="Address Name (Optional)"
+                />
+                <input
+                  type="text"
+                  name="street"
+                  id="street"
+                  placeholder="Street Name"
+                  required
+                />
+                <input
+                  type="text"
+                  name="building"
+                  id="building"
+                  placeholder="Building Name"
+                />
+                <input
+                  type="tel"
+                  name="floorNumber"
+                  id="floorNumber"
+                  placeholder="Floor Number"
+                />
+                <input
+                  type="tel"
+                  name="apartmentNumber"
+                  id="apartmentNumber"
+                  placeholder="Apartment Number"
+                />
+                <input
+                  type="text"
+                  name="house"
+                  id="house"
+                  placeholder="House Name"
+                />
+                <input
+                  type="tel"
+                  name="departmentNumber"
+                  id="departmentNumber"
+                  placeholder="Office"
+                />
+                <textarea
+                  name="instructions"
+                  id="instructions"
+                  placeholder="Additional Instructions (Optional)"
+                ></textarea>
+              </div>
+            </div>
+          </form>
+          <div class="mapBtns" id="locationSetBtns">
+            <button id="backToMap" class="current-location-btn">
+              <i class="fa-solid fa-location-dot"></i> Show Map
+            </button>
+            <button id="setLocationBtn" type="submit" form="locationDetails">
+              <i class="fa-solid fa-location"></i> Save Address
+            </button>
+          </div>
+        </figure>
+      </figure>
+    </article>
+  </body>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    flatpickr("#date", {
+      dateFormat: "Y-m-d",
+    });
+  </script>
+
+  <script src="./script/index.js" defer></script>
+  <script src="./script/userLocationsMap.js" defer></script>
+  <script defer>
+    // user profile settings
+    const profileHead = document.querySelector(".profile-head");
+    const dropDownBtn = document.querySelector("#dropDownBtn");
+    const dropDownMenu = document.querySelector(".profileSettings");
+    if (dropDownBtn) {
+      dropDownBtn.addEventListener("click", () => {
+        document.querySelector(".profile-head")?.classList.toggle("active");
+        dropDownMenu?.classList.toggle("active");
+        dropDownBtn.style.pointerEvents = "none";
+        setTimeout(() => {
+          dropDownBtn.style.pointerEvents = "auto";
+        }, 500);
+      });
+    }
+  </script>
+</html>

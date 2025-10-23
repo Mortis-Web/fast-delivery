@@ -1,35 +1,37 @@
-// ✅ Handle header style when scrolling
+// ✅ التعامل مع تغيير حالة الهيدر عند التمرير
 function handleScroll() {
   const header = document.querySelector(".header");
   if (window.scrollY > 50) header.classList.add("scrolled");
   else header.classList.remove("scrolled");
 }
 
-// ✅ Update login button behavior
+// ✅ تحديث روابط الأزرار بالعربية
 function updateLoginBtnBehavior() {
   const storedUser = localStorage.getItem("fastDeliveryUser");
   const loginBtn = document.getElementById("login-modal-btn");
 
-  // ✅ Stop if button not found
+  // ✅ stop if button not found
   if (!loginBtn) return;
 
-  // ✅ Safely clone and replace button (remove old listeners)
+  // ✅ safely clone and replace button
   const clone = loginBtn.cloneNode(true);
   loginBtn.parentNode.replaceChild(clone, loginBtn);
-  const btn = document.getElementById("login-modal-btn");
+
+  const newLoginBtn = document.getElementById("login-modal-btn"); // ✅ get the new element
   const userDropDown = document.getElementById("userDropDown");
 
   if (storedUser) {
     const userData = JSON.parse(storedUser);
-    console.log(`👋 Welcome back, ${userData.firstName}!`);
+    console.log(`👋 مرحبًا بعودتك يا ${userData.firstName}`);
 
-    btn.addEventListener("click", () => {
+    // ✅ apply on new element, not old (deleted one!)
+    newLoginBtn.addEventListener("click", () => {
       if (userDropDown) userDropDown.classList.toggle("showDropDown");
     });
 
     if (userDropDown) userDropDown.style.display = "flex";
   } else {
-    btn.addEventListener("click", openModal);
+    newLoginBtn.addEventListener("click", openModal);
     if (userDropDown) userDropDown.style.display = "none";
   }
 }
@@ -44,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalOverlay = document.getElementById("login-modal-overlay");
   const userDropDown = document.getElementById("userDropDown");
 
-  // ✅ Modal open/close functions
+  // ✅ دوال فتح وإغلاق المودال
   window.openModal = function () {
     modalOverlay.classList.add("is-visible");
     document.body.style.overflow = "hidden";
@@ -69,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       closeModal();
   });
 
-  // ✅ Show/hide password
+  // ✅ إظهار أو إخفاء كلمة المرور
   document.querySelectorAll(".showPassword").forEach((toggle) => {
     toggle.addEventListener("click", () => {
       const wrapper = toggle.closest(".password-input-wrapper");
@@ -78,11 +80,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const isPassword = input.type === "password";
       input.type = isPassword ? "text" : "password";
-      toggle.textContent = isPassword ? "Hide" : "Show";
+      toggle.textContent = isPassword ? "إخفاء" : "إظهار";
     });
   });
 
-  // ✅ Validate registration form
+  // ✅ التحقق من صحة بيانات التسجيل
   const form = document.querySelector('form[data-testid="form-login"]');
   if (!form) return;
 
@@ -110,46 +112,46 @@ document.addEventListener("DOMContentLoaded", () => {
     let message = "";
 
     if (!firstNameInput.value.trim()) {
-      setInvalid(firstNameInput, "Please enter your first name");
-      message = "Please enter your first name";
+      setInvalid(firstNameInput, "من فضلك أدخل الاسم الأول");
+      message = "من فضلك أدخل الاسم الأول";
       isValid = false;
     } else clearInvalid(firstNameInput);
 
     if (isValid && !lastNameInput.value.trim()) {
-      setInvalid(lastNameInput, "Please enter your last name");
-      message = "Please enter your last name";
+      setInvalid(lastNameInput, "من فضلك أدخل اسم العائلة");
+      message = "من فضلك أدخل اسم العائلة";
       isValid = false;
     } else clearInvalid(lastNameInput);
 
     if (isValid && !emailInputLoginPage.value.trim()) {
-      setInvalid(emailInputLoginPage, "Please enter your email");
-      message = "Please enter your email";
+      setInvalid(emailInputLoginPage, "من فضلك أدخل البريد الإلكتروني");
+      message = "من فضلك أدخل البريد الإلكتروني";
       isValid = false;
     } else if (isValid && !isValidEmail(emailInputLoginPage.value.trim())) {
-      setInvalid(emailInputLoginPage, "Invalid email format");
-      message = "Invalid email format";
+      setInvalid(emailInputLoginPage, "البريد الإلكتروني غير صالح");
+      message = "البريد الإلكتروني غير صالح";
       isValid = false;
     } else clearInvalid(emailInputLoginPage);
 
     if (isValid && !passwordInputLoginPage.value.trim()) {
-      setInvalid(passwordInputLoginPage, "Please enter your password");
-      message = "Please enter your password";
+      setInvalid(passwordInputLoginPage, "من فضلك أدخل كلمة المرور");
+      message = "من فضلك أدخل كلمة المرور";
       isValid = false;
     } else if (isValid && passwordInputLoginPage.value.trim().length < 6) {
       setInvalid(
         passwordInputLoginPage,
-        "Password must be at least 6 characters"
+        "كلمة المرور يجب أن تكون 6 أحرف على الأقل"
       );
-      message = "Password must be at least 6 characters";
+      message = "كلمة المرور يجب أن تكون 6 أحرف على الأقل";
       isValid = false;
     } else clearInvalid(passwordInputLoginPage);
 
     if (!isValid && message) {
       Swal.fire({
         icon: "error",
-        title: "⚠️ Input Error",
+        title: "⚠️ خطأ في الإدخال",
         text: message,
-        confirmButtonText: "OK",
+        confirmButtonText: "حسنًا",
         confirmButtonColor: "#d33",
       });
     }
@@ -157,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return isValid;
   };
 
-  // ✅ On form submit (register user)
+  // ✅ عند إرسال النموذج (تسجيل المستخدم)
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     if (!validateInputs()) return;
@@ -173,19 +175,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     Swal.fire({
       icon: "success",
-      title: "🎉 Registration Successful",
-      text: `Welcome, ${user.firstName}!`,
-      confirmButtonText: "Continue",
+      title: "🎉 تم التسجيل بنجاح",
+      text: `مرحبًا بك يا ${user.firstName}`,
+      confirmButtonText: "استمرار",
       confirmButtonColor: "#3085d6",
     }).then(() => {
       form.reset();
       closeModal();
       updateLoginBtnBehavior();
-      window.location.href = "html_web.html";
+      window.location.href = "index.html";
     });
   });
 
-  // ✅ Close dropdown when clicking outside
   document.addEventListener("click", (e) => {
     if (
       userDropDown &&
@@ -197,16 +198,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ✅ Logout button
   const logOut = document.getElementById("logOut");
   if (logOut) {
     logOut.addEventListener("click", () => {
       Swal.fire({
         icon: "question",
-        title: "Are you sure you want to log out?",
+        title: "هل أنت متأكد من تسجيل الخروج؟",
         showCancelButton: true,
-        confirmButtonText: "Yes, Log Out",
-        cancelButtonText: "Cancel",
+        confirmButtonText: "نعم، خروج",
+        cancelButtonText: "إلغاء",
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
       }).then((result) => {
@@ -215,16 +215,16 @@ document.addEventListener("DOMContentLoaded", () => {
           userDropDown.classList.remove("showDropDown");
           Swal.fire({
             icon: "success",
-            title: "Logged out successfully ✅",
-            confirmButtonText: "OK",
+            title: "تم تسجيل الخروج بنجاح ✅",
+            confirmButtonText: "حسنًا",
           }).then(() => {
-            window.location.reload();
+            window.location.href = "index.html";
           });
         }
       });
     });
   }
 
-  // ✅ Run when page loads
+  // ✅ استدعاء عند تحميل الصفحة
   updateLoginBtnBehavior();
 });

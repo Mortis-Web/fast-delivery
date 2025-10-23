@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,35 +12,39 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <link
+<link
   rel="stylesheet"
   href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
 />
-    <link rel="stylesheet" href="css/css-main-en.css" />
+    <link rel="stylesheet" href="css/css_web.css" />
   </head>
 
   <body>
     <header class="header" role="banner">
-      <a href="#" class="logo-container" aria-label="Fast Delivery - Home Page">
+      <a
+        href="./index.html"
+        class="logo-container"
+        aria-label="Fast Delivery - الصفحة الرئيسية"
+      >
         <img src="logo.png" alt="Fast Delivery Logo" class="logo" />
       </a>
 
       <nav class="nav-links">
-        <a href="#" data-key="header_link_1">Restaurants</a>
-        <a href="#" data-key="header_link_2">Offers</a>
-        <a href="#" data-key="header_link_3">Become a Partner</a>
+        <a href="#" data-key="header_link_1">مطاعم</a>
+        <a href="#" data-key="header_link_2">عروض</a>
+        <a href="#" data-key="header_link_3">كن شريكاً</a>
       </nav>
 
       <div class="action-buttons">
-        <a href="./html_web.html" class="lang-btn">
-          <i class="fa fa-globe"></i> AR
+        <a href="./index_en.html" class="lang-btn">
+          <i class="fa fa-globe"></i> EN
         </a>
-        <button class="icon-btn" aria-label="Basket" role="button">
+        <button class="icon-btn" aria-label="السلة" role="button">
           <i class="fa fa-shopping-basket"></i>
         </button>
         <button
           class="icon-btn"
-          aria-label="Login"
+          aria-label="تسجيل الدخول"
           data-key="login_btn"
           id="login-modal-btn"
         >
@@ -51,28 +55,25 @@
 
     <section class="hero-section" role="region">
       <div class="container">
-        <h1 data-key="hero_title">
-          Fastest Delivery for Food, Groceries & More
-        </h1>
+        <h1 data-key="hero_title">أسرع توصيل للمأكولات، البقالة والمزيد</h1>
         <p data-key="hero_desc">
-          Order your favorite food online from thousands of restaurants and
-          stores in your area.
+          اطلب طعامك المفضل عبر الإنترنت من آلاف المطاعم والمتاجر في منطقتك.
         </p>
 
-        <div class="search-wrapper ">
+        <div class="search-wrapper">
           <div class="search-box search-container">
             <input
               type="text"
               id="search-input"
-              placeholder="Enter your area or street"
-              aria-label="Enter your area to search"
+              placeholder="أدخل منطقتك أو الشارع"
+              aria-label="أدخل منطقتك للبحث"
             />
 
             <button
               id="location-btn"
               type="button"
-              aria-label="Find your current location"
-              title="Find your current location"
+              aria-label="ابحث عن موقعك الحالي"
+              title="ابحث عن موقعك الحالي"
             >
               <i class="fa fa-map-marker-alt"></i>
             </button>
@@ -80,7 +81,7 @@
             <button
               id="final-search-btn"
               type="button"
-              aria-label="Search for restaurants in the selected location"
+              aria-label="البحث عن مطاعم في الموقع المحدد"
             >
               <i class="fa fa-search"></i>
             </button>
@@ -97,7 +98,7 @@
     >
       <div class="content-container">
         <h2 id="section_1_title" data-key="section_1_title">
-          Order everything you need
+          اطلب كل ما تحتاجه
         </h2>
         <div class="categories-grid">
           <div class="category-card" role="link" tabindex="0">
@@ -106,10 +107,9 @@
               style="background-image: url('food.jpg')"
             ></div>
             <div class="card-content">
-              <h3 style="font-size: 30px">Food</h3>
+              <h3 style="font-size: 30px">طعام</h3>
               <p data-key="food_summary">
-                The best restaurants in the city are ready to fulfill your
-                order.
+                أفضل مطاعم المدينة جاهزة لتلبية طلبك.
               </p>
             </div>
           </div>
@@ -119,9 +119,9 @@
               style="background-image: url('grocery.jpg')"
             ></div>
             <div class="card-content">
-              <h3 style="font-size: 30px">Groceries</h3>
+              <h3 style="font-size: 30px">بقالة</h3>
               <p data-key="grocery_summary">
-                Supermarkets and groceries delivered in the shortest time.
+                سوبرماركت و بقالة تصلك في أقل وقت.
               </p>
             </div>
           </div>
@@ -131,8 +131,8 @@
               style="background-image: url('medicine.png')"
             ></div>
             <div class="card-content">
-              <h3 style="font-size: 30px">Medicine</h3>
-              <p>Pharmacies near you to deliver medicines.</p>
+              <h3 style="font-size: 30px">دواء</h3>
+              <p>صيدليات قريبة منك لتوصيل الأدوية.</p>
             </div>
           </div>
           <div class="category-card" role="link" tabindex="0">
@@ -141,8 +141,8 @@
               style="background-image: url('beauty.jpg')"
             ></div>
             <div class="card-content">
-              <h3 style="font-size: 30px">Skincare Products</h3>
-              <p>Products delivered to you in the shortest time.</p>
+              <h3 style="font-size: 30px">مستحضرات العناية بالبشرة</h3>
+              <p>مستحضرات تصلك في أقل وقت.</p>
             </div>
           </div>
         </div>
@@ -155,7 +155,7 @@
       aria-labelledby="section_2_title"
     >
       <div class="content-container">
-        <h2 id="section_2_title" data-key="section_2_title">Join Us</h2>
+        <h2 id="section_2_title" data-key="section_2_title">انضم إلينا</h2>
         <div class="categories-grid">
           <div class="category-card plain-bg" role="link" tabindex="0">
             <div
@@ -164,12 +164,12 @@
             ></div>
             <div class="card-content">
               <div class="card-icon"><i class="fa fa-store"></i></div>
-              <h3 data-key="partner_title">Become a Restaurant Partner</h3>
+              <h3 data-key="partner_title">كن شريك مطعم</h3>
               <p data-key="partner_desc">
-                Connect with more customers and achieve remarkable growth.
+                تواصل مع المزيد من العملاء وحقق نموًا ملحوظًا.
               </p>
               <a href="#" data-key="partner_link"
-                >Discover More <i class="fa fa-chevron-right"></i
+                >اكتشف المزيد <i class="fa fa-chevron-left"></i
               ></a>
             </div>
           </div>
@@ -182,12 +182,12 @@
             ></div>
             <div class="card-content">
               <div class="card-icon"><i class="fa fa-motorcycle"></i></div>
-              <h3 data-key="delivery_title">Join the Delivery Team</h3>
+              <h3 data-key="delivery_title">انضم إلى فريق التوصيل</h3>
               <p data-key="delivery_desc">
-                Start working with us and earn an extra income.
+                ابدأ العمل معنا واكسب دخلاً إضافياً.
               </p>
               <a href="#" data-key="delivery_link"
-                >Register Now <i class="fa fa-chevron-right"></i
+                >سجل الآن <i class="fa fa-chevron-left"></i
               ></a>
             </div>
           </div>
@@ -203,21 +203,21 @@
       <div class="content-container">
         <div class="section-icon"><i class="fa fa-map-marked-alt"></i></div>
         <h2 id="cities_title" data-key="cities_title">
-          Cities we serve in Egypt
+          المدن التي نخدمها في مصر
         </h2>
         <div class="cities-grid">
-          <a href="/egypt/city/cairo" class="city-card">Cairo</a>
-          <a href="/egypt/city/alexandria" class="city-card">Alexandria</a>
-          <a href="/egypt/city/giza" class="city-card">Giza</a>
-          <a href="/egypt/city/mansoura" class="city-card">Mansoura</a>
-          <a href="/egypt/city/tanta" class="city-card">Tanta</a>
-          <a href="/egypt/city/zagazig" class="city-card">Zagazig</a>
-          <a href="/egypt/city/ismailia" class="city-card">Ismailia</a>
-          <a href="/egypt/city/port-said" class="city-card">Port Said</a>
-          <a href="/egypt/city/suez" class="city-card">Suez</a>
-          <a href="/egypt/city/assiut" class="city-card">Assiut</a>
-          <a href="/egypt/city/minya" class="city-card">Minya</a>
-          <a href="/egypt/city/luxor" class="city-card">Luxor</a>
+          <a href="/egypt/city/cairo" class="city-card">القاهرة</a>
+          <a href="/egypt/city/alexandria" class="city-card">الإسكندرية</a>
+          <a href="/egypt/city/giza" class="city-card">الجيزة</a>
+          <a href="/egypt/city/mansoura" class="city-card">المنصورة</a>
+          <a href="/egypt/city/tanta" class="city-card">طنطا</a>
+          <a href="/egypt/city/zagazig" class="city-card">الزقازيق</a>
+          <a href="/egypt/city/ismailia" class="city-card">الإسماعيلية</a>
+          <a href="/egypt/city/port-said" class="city-card">بورسعيد</a>
+          <a href="/egypt/city/suez" class="city-card">السويس</a>
+          <a href="/egypt/city/assiut" class="city-card">أسيوط</a>
+          <a href="/egypt/city/minya" class="city-card">المنيا</a>
+          <a href="/egypt/city/luxor" class="city-card">الأقصر</a>
         </div>
       </div>
     </section>
@@ -227,34 +227,34 @@
         <div class="footer-grid">
           <div class="footer-column">
             <h4 data-key="footer_col_1_title">Fast Delivery</h4>
-            <a href="#" data-key="footer_col_1_link_1">Careers</a>
-            <a href="#" data-key="footer_col_1_link_2">Terms and Conditions</a>
-            <a href="#" data-key="footer_col_1_link_3">Privacy Policy</a>
-            <a href="#" data-key="footer_col_1_link_4">FAQ</a>
+            <a href="#" data-key="footer_col_1_link_1">وظائف</a>
+            <a href="#" data-key="footer_col_1_link_2">الشروط والأحكام</a>
+            <a href="#" data-key="footer_col_1_link_3">سياسة الخصوصية</a>
+            <a href="#" data-key="footer_col_1_link_4">الأسئلة الشائعة</a>
           </div>
           <div class="footer-column">
-            <h4 data-key="footer_col_2_title">Popular Restaurants</h4>
-            <a href="#">McDonald's</a>
-            <a href="#">KFC</a>
-            <a href="#">Pizza Hut</a>
-            <a href="#">Burger King</a>
+            <h4 data-key="footer_col_2_title">مطاعم شهيرة</h4>
+            <a href="#">ماكدونالدز</a>
+            <a href="#">كنتاكي</a>
+            <a href="#">بيتزا هت</a>
+            <a href="#">برجر كنج</a>
           </div>
           <div class="footer-column">
-            <h4 data-key="footer_col_3_title">Egypt Cities</h4>
-            <a href="#">Damanhour</a>
-            <a href="#">Tanta</a>
-            <a href="#">Cairo</a>
-            <a href="#">Alexandria</a>
+            <h4 data-key="footer_col_3_title">مدن مصر</h4>
+            <a href="#">دمنهور</a>
+            <a href="#">طنطا</a>
+            <a href="#">القاهره</a>
+            <a href="#">الاسكندريه</a>
           </div>
         </div>
         <div class="footer-bottom">
           <div>© 2025 Fast Delivery</div>
           <div class="social-links">
-            <a href="#" aria-label="Facebook"
+            <a href="#" aria-label="فيسبوك"
               ><i class="fab fa-facebook-f"></i
             ></a>
-            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" aria-label="Instagram"
+            <a href="#" aria-label="تويتر"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="إنستغرام"
               ><i class="fab fa-instagram"></i
             ></a>
           </div>
@@ -271,38 +271,38 @@
     >
       <div class="modal-content">
         <div class="modal-header">
-          <button class="close-btn" aria-label="Close" id="close-modal-btn">
+          <button class="close-btn" aria-label="إغلاق" id="close-modal-btn">
             <i class="fa fa-times"></i>
           </button>
         </div>
         <div class="modal-body">
           <div class="">
-            <p class="login-heading" id="login-heading">Log In</p>
+            <p class="login-heading" id="login-heading">تسجيل الدخول</p>
             <div class="social-buttons">
               <button
                 class="google"
                 type="button"
                 onclick="window.location.href='#'"
-                aria-label="Continue with Google"
+                aria-label="تابع باستخدام جوجل"
               >
-                <i class="fab fa-google"></i><span>Continue with Google</span>
+                <i class="fab fa-google"></i><span>تابع باستخدام جوجل</span>
               </button>
               <button
                 class="facebook"
                 type="button"
                 onclick="window.location.href='#'"
-                aria-label="Continue with Facebook"
+                aria-label="تابع باستخدام فيسبوك"
               >
                 <i class="fab fa-facebook-f"></i
-                ><span>Continue with Facebook</span>
+                ><span>تابع باستخدام فيسبوك</span>
               </button>
             </div>
-            <div class="line"><span>or</span></div>
+            <div class="line"><span>أو</span></div>
             <form data-testid="form-login">
               <div class="login-form-row">
                 <i class="fa fa-envelope"></i>
                 <input
-                  placeholder="Email"
+                  placeholder="البريد الإلكتروني"
                   type="email"
                   autocomplete="username"
                   data-testid="input-email"
@@ -313,7 +313,7 @@
                 <i class="fa fa-lock"></i>
                 <div class="password-input-wrapper">
                   <input
-                    placeholder="Password"
+                    placeholder="كلمة المرور"
                     class="password-input"
                     type="password"
                     autocomplete="current-password"
@@ -321,23 +321,24 @@
                     name="password"
                     id="password-input-field"
                   />
-                  <span class="showPassword" id="toggle-password">Show</span>
+                  <span class="showPassword" id="toggle-password">إظهار</span>
                 </div>
               </div>
               <div class="form-options">
                 <div class="forgot-password" data-testid="link-forgot-password">
-                  Forgot password?
+                  نسيت كلمة المرور؟
                 </div>
               </div>
               <button class="login-button" data-testid="btn-login">
-                Log In
+                تسجيل الدخول
               </button>
               <div class="register-text">
-                <span data-testid="text-no-account"
-                  >Don't have an account?</span
-                >
-                <a href="./login_en.html" class="link-register" data-testid="link-register"
-                  >Create account</a
+                <span data-testid="text-no-account">ليس لديك حساب؟</span>
+                <a
+                  href="./login_web.html"
+                  class="link-register"
+                  data-testid="link-register"
+                  >إنشاء حساب</a
                 >
               </div>
             </form>
@@ -345,34 +346,23 @@
         </div>
       </div>
     </div>
-    <ul
-      id="userDropDown"
+        <ul id="userDropDown"
       aria-modal="true"
-      role="combobox"
-      aria-labelledby="login-dropdown"
-    >
-      <li tabindex="0">
-        <a href="#"><i class="fa-solid fa-credit-card"></i> EGP 0.00</a>
-      </li>
-      <li tabindex="0">
-        <a href="#"><i class="fa-solid fa-cart-shopping"></i> My Orders</a>
-      </li>
-      <li tabindex="0">
-        <a href="#"><i class="fa-solid fa-user"></i> Account Information</a>
-      </li>
-      <li tabindex="0">
-        <a href="#"
-          ><i class="fa-solid fa-map-location-dot"></i> Delivery Addresses</a
-        >
-      </li>
-      <li tabindex="0" id="logOut">
-        <i class="fa-solid fa-right-from-bracket"></i> Log Out
-      </li>
+      role="combobox
+      aria-labelledby="login-dropdown">
+        <li tabindex="0"><a href="#"> <i class="fa-solid fa-credit-card"></i> EGP 0.00</a></li>
+        <li tabindex="0"><a href="#"><i class="fa-solid fa-cart-shopping"></i>طلباتي السابقة</a></li>
+        <li tabindex="0"><a href="./userprofile.html"><i class="fa-solid fa-user"></i> معلومات الحساب</a></li>
+        <li tabindex="0"><a href="./userlocations.html"><i class="fa-solid fa-map-location-dot"></i> عناوين التوصيل </a></li>
+        <li tabindex="0" id="logOut"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج </li>
     </ul>
-  <article id="mapModal">
+ <article id="mapModal">
+  <figure id="map-figure">
   <div class="map-title">
     <span id="closeMapModal" class="close">&times;</span>
-    <h2>Delivery Address</h2>
+    <h2> إضافة عنوان جديد
+
+</h2>
   </div>
 
   <!-- ✅ Search Bar Inside Map Modal -->
@@ -380,8 +370,8 @@
     <input
       type="text"
       id="map-search-input"
-      placeholder="Search inside the map (city, street...)"
-      aria-label="Search for a location inside the map"
+      placeholder="ابحث داخل الخريطة (مدينة، شارع...)"
+      aria-label="ابحث عن موقع داخل الخريطة"
     />
     <button id="map-search-btn"><i class="fa fa-search"></i></button>
   </div>
@@ -389,19 +379,23 @@
   <div class="map-content">
     <div id="center-pin"></div>
     <div id="map"></div>
+</div>
+<div class="mapBtns">
 
-    <button id="confirmLocationBtn"><i class="fa-solid fa-truck"></i> Deliver Here </button>
 
     <button id="goToCurrentLocation" class="current-location-btn">
-      📍 My Current Location
+        📍 موقعي الحالي
     </button>
-  </div>
+    <button id="confirmLocationBtn"><i class="fa-solid fa-location"></i>  تأكيد الموقع </button>
+
+</div>
+  </figure>
 </article>
 
   </body>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="./script/index.js" defer ></script>
+  <script src="./script/homeMap.js" defer ></script>
 
-  <script src="java_scrpit/main-en.js" defer></script>
-  <script src="./java_scrpit/map_en.js"></script>
 </html>

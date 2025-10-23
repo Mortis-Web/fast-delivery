@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+ <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fast Delivery</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+    <link rel="stylesheet" href="css/css_web.css" />
+    <style>
+      section#userDashboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-inline: 25px;
+}
+.userProfileField {
+  padding: 25px;
+  padding-top: 120px;
+  margin-bottom: 25px;
+  max-width: 1024px;
+  width: 100%;
+  margin-inline: auto;
+  box-shadow: var(--shadow);
+  border-radius: 0.5rem;
+}
+.profile-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 2rem;
+  font-weight: bold;
+  i {
+    cursor: pointer;
+    font-size: 1.75rem;
+    transition: 0.5s all ease;
+    display: none;
+    &:hover {
+      color: var(--fd-blue);
+      rotate: 180deg;
+    }
+  }
+}
+
+.profile-head.active {
+  i {
+    rotate: 180deg;
+    color: var(--fd-blue);
+  }
+}
+
+.profileContainer {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  margin-top: 20px;
+  padding: 25px 0px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.profileSettings {
+  list-style-type: none;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  height: fit-content;
+
+  li {
+    padding: 10px;
+    transition: 0.3s color ease;
+    &:hover {
+      a {
+        color: var(--fd-blue);
+      }
+    }
+    a {
+      transition: inherit;
+    }
+  }
+}
+
+.profileSettings li.active {
+  a {
+    color: var(--fd-blue);
+  }
+  border-right: 2px solid var(--fd-blue);
+}
+
+.route {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  color: #777;
+  i {
+    color: var(--fd-blue);
+    scale: 1.125;
+  }
+  a {
+    color: black !important;
+  }
+}
+
+.profileContainer form {
+  padding-block: 10px;
+  padding-right: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  input {
+    border-radius: 0.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 0.2rem 1rem;
+    width: 100%;
+    max-width: 300px;
+    background-color: transparent;
+    font-size: 0.9rem;
+  }
+  label,
+  button {
+    white-space: nowrap;
+  }
+  label {
+    min-width: 113px;
+  }
+  button {
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    background-color: transparent;
+    transition: var(--transition);
+    font-weight: bold;
+    &:hover {
+      background-color: var(--fd-blue);
+      color: white;
+      border-color: transparent;
+    }
+  }
+
+  .service_subscribe {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    input[type="checkbox"] {
+      width: fit-content;
+      scale: 1.5;
+      accent-color: var(--fd-blue);
+    }
+  }
+}
+
+button[type="submit"] {
+  background-color: var(--fd-blue) !important;
+  color: white;
+  font-size: 1rem !important;
+  max-width: 250px;
+  width: 100%;
+  margin: auto;
+  border-width: 2px;
+  transition: var(--transition);
+  border-color: transparent !important;
+
+  &:hover {
+    border-color: var(--fd-blue) !important;
+    background-color: transparent !important;
+    color: var(--fd-blue) !important;
+  }
+}
+
+.editBtns {
+  align-items: center;
+  flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
+}
+
+.gender-btn {
+  padding: 10px 68px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.gender-btn:last-child {
+  border-radius: 0;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.gender-btn:hover {
+  background-color: #f0f0f0;
+}
+
+input[type="radio"]:checked + label {
+  background-color: var(--fd-blue);
+  color: white;
+  border-color: var(--fd-blue);
+}
+
+input[type="radio"] {
+  width: 150px;
+}
+
+.birthday {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 300px;
+  svg {
+    position: absolute;
+    left: 0.5rem;
+    top: 0.5rem;
+    width: 16px;
+  }
+}
+
+.inputHolder {
+  position: relative;
+  width: 100%;
+  border-radius: 0.25rem;
+  max-width: 300px;
+  isolation: isolate;
+  background-color: #e9ecef;
+  overflow: hidden;
+  input {
+    cursor: not-allowed;
+    color: rgb(74, 71, 71);
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.labelTag {
+  font-size: 1.5rem;
+  color: var(--fd-blue);
+}
+
+.dataField {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+#dataEditorPopup {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: var(--transition);
+  padding-inline: 50px;
+  padding-block: 25px;
+}
+#dataEditorPopup.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+#dataEditorPopup .dataEditContainer {
+  height: 100%;
+  width: 100%;
+  max-height: 600px;
+  max-width: 700px;
+  scale: 0.9;
+  transition: var(--transition);
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  box-shadow: var(--shadow);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+#dataEditorPopup.is-visible .dataEditContainer {
+  scale: 1;
+}
+
+.editor-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  background-color: rgba(220, 220, 220, 0.6);
+  color: var(--fd-blue);
+}
+
+.dataEditContainer form {
+  padding-inline: 10px;
+  padding-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  input {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    padding: 0.25rem 1rem;
+  }
+  .password-input-wrapper {
+    width: 100%;
+    max-width: 300px;
+    position: relative;
+    isolation: isolate;
+  }
+  .showPassword {
+    position: absolute;
+    left: 0;
+  }
+  label {
+    min-width: 178px;
+  }
+  button {
+    outline: 0;
+    border-radius: 2rem;
+    width: 150px;
+    padding-block: 0.35rem !important;
+  }
+}
+#removeFormChange {
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  transition: var(--transition);
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
+  &:hover {
+    background-color: var(--fd-blue);
+    color: white;
+    border-color: transparent;
+  }
+}
+#sendChange {
+  margin: 0;
+}
+.submitEdit {
+  display: flex;
+  position: relative;
+  isolation: isolate;
+  padding-block: 25px;
+  justify-content: end;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.submitEdit::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 1px;
+}
+
+    </style>
+  </head>
+<body>
+      <header class="header" role="banner">
+      <a
+        href="./index.html"
+        class="logo-container"
+        aria-label="Fast Delivery - الصفحة الرئيسية"
+      >
+        <img src="logo.png" alt="Fast Delivery Logo" class="logo" />
+      </a>
+
+      <nav class="nav-links">
+        <a href="#" data-key="header_link_1">مطاعم</a>
+        <a href="#" data-key="header_link_2">عروض</a>
+        <a href="#" data-key="header_link_3">كن شريكاً</a>
+      </nav>
+
+      <div class="action-buttons">
+        <a href="./userprofile_en.html" class="lang-btn">
+          <i class="fa fa-globe"></i> EN
+        </a>
+        <button class="icon-btn" aria-label="السلة" role="button">
+          <i class="fa fa-shopping-basket"></i>
+        </button>
+        <button
+          class="icon-btn"
+          aria-label="تسجيل الدخول"
+          data-key="login_btn"
+          id="login-modal-btn"
+        >
+          <i class="fa fa-user"></i>
+        </button>
+      </div>
+    </header>
+    <section id="userDashboard">
+        <div class="userProfileField">
+        <span class="route"> <a href="./index.html">الرئيسية</a> <i  class="fa-solid fa-angles-left"></i> حسابي</span>
+        <div class="profile-head"> حسابي<i id="dropDownBtn" class="fa-solid fa-angles-down"></i></div>
+        <article class="profileContainer">
+<ul class="profileSettings">
+<li class="active"><a href="userprofile.html">معلومات الحساب</a></li>
+<li><a href="userlocations.html">عناوين التوصيل</a></li>
+<li><a href="userprofile.html"> طلباتي السابقة</a></li>
+<li><a href="userprofile.html">  البطاقات المحفوظة</a></li>
+<li><a href="userprofile.html">  talabat Pay </a></li>
+</ul>
+
+
+<form>
+<div class="dataField">
+    <label for="useremail">البريد الإلكتروني
+<span class="labelTag">*</span></label>
+<div class="inputHolder">
+
+    <input type="email" name="useremail" id="useremail"  readonly tabindex="-1">
+
+</div>
+
+<div class="editBtns">
+
+    <button type="button" id="changeEmail">تعديل البريد الالكتروني</button>
+    <button type="button" id="changePassword">تعديل كلمة المرور
+</div>
+</div>
+<div class="dataField">
+    <label for="userFname"> الإسم الأول
+<span class="labelTag">*</span></label>
+
+    <input type="text" name="userFname"  id="userFname" >
+
+
+
+</div>
+<div class="dataField">
+    <label for="userLname"> إسم العائلة
+<span class="labelTag">*</span></label>
+
+    <input type="text" name="userLname"  id="userLname" >
+</div>
+<div class="dataField">
+    <label for="gender"> الجنس
+<span class="labelTag">*</span></label>
+
+   <div class="gender-selection">
+  <input type="radio" name="gender" id="male" value="male" hidden>
+  <label for="male" class="gender-btn">ذكر
+</label>
+
+  <input type="radio" name="gender" id="female" value="female" hidden>
+  <label for="female" class="gender-btn">أنثى
+</label>
+</div>
+
+
+
+</div>
+<div class="dataField">
+    <label for="date">  تاريخ الميلاد
+
+
+<span class="labelTag">*</span></label>
+<div class="birthday">
+
+    <input type="text" name="date" id="date" placeholder="تحديد تاريخ" />
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="calendar-alt" class="svg-inline--fa fa-calendar-alt fa-w-14 f-15" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z"></path></svg>
+</div>
+
+</div>
+ <div class="service_subscribe">
+              <input
+                type="checkbox"
+                aria-label="subscribe in publish service"
+              />
+              إشترك في خدمة النشرة الالكترونية
+            </div>
+             <div class="service_subscribe">
+              <input
+                type="checkbox"
+                checked
+                aria-label="subscribe in publish service"
+              />
+إشترك في خدمة الرسائل القصيرة            </div>
+
+
+<button type="submit">
+    تحديث
+</button>
+</form>
+
+</article>
+</div>
+    </section>
+
+
+
+
+
+        <footer class="footer" role="contentinfo">
+      <div class="content-container">
+        <div class="footer-grid">
+          <div class="footer-column">
+            <h4 data-key="footer_col_1_title">Fast Delivery</h4>
+            <a href="#" data-key="footer_col_1_link_1">وظائف</a>
+            <a href="#" data-key="footer_col_1_link_2">الشروط والأحكام</a>
+            <a href="#" data-key="footer_col_1_link_3">سياسة الخصوصية</a>
+            <a href="#" data-key="footer_col_1_link_4">الأسئلة الشائعة</a>
+          </div>
+          <div class="footer-column">
+            <h4 data-key="footer_col_2_title">مطاعم شهيرة</h4>
+            <a href="#">ماكدونالدز</a>
+            <a href="#">كنتاكي</a>
+            <a href="#">بيتزا هت</a>
+            <a href="#">برجر كنج</a>
+          </div>
+          <div class="footer-column">
+            <h4 data-key="footer_col_3_title">مدن مصر</h4>
+            <a href="#">دمنهور</a>
+            <a href="#">طنطا</a>
+            <a href="#">القاهره</a>
+            <a href="#">الاسكندريه</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div>© 2025 Fast Delivery</div>
+          <div class="social-links">
+            <a href="#" aria-label="فيسبوك"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="تويتر"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="إنستغرام"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+     <div
+      id="login-modal-overlay"
+      class="modal-overlay"
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="login-heading"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close-btn" aria-label="إغلاق" id="close-modal-btn">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="">
+            <p class="login-heading" id="login-heading">تسجيل الدخول</p>
+            <div class="social-buttons">
+              <button
+                class="google"
+                type="button"
+                onclick="window.location.href='#'"
+                aria-label="تابع باستخدام جوجل"
+              >
+                <i class="fab fa-google"></i><span>تابع باستخدام جوجل</span>
+              </button>
+              <button
+                class="facebook"
+                type="button"
+                onclick="window.location.href='#'"
+                aria-label="تابع باستخدام فيسبوك"
+              >
+                <i class="fab fa-facebook-f"></i
+                ><span>تابع باستخدام فيسبوك</span>
+              </button>
+            </div>
+            <div class="line"><span>أو</span></div>
+            <form data-testid="form-login">
+              <div class="login-form-row">
+                <i class="fa fa-envelope"></i>
+                <input
+                  placeholder="البريد الإلكتروني"
+                  type="email"
+                  autocomplete="username"
+                  data-testid="input-email"
+                  name="username"
+                />
+              </div>
+              <div class="login-form-row">
+                <i class="fa fa-lock"></i>
+                <div class="password-input-wrapper">
+                  <input
+                    placeholder="كلمة المرور"
+                    class="password-input"
+                    type="password"
+                    autocomplete="current-password"
+                    data-testid="input-password"
+                    name="password"
+                    id="password-input-field"
+                  />
+                  <span class="showPassword" id="toggle-password">إظهار</span>
+                </div>
+              </div>
+              <div class="form-options">
+                <div class="forgot-password" data-testid="link-forgot-password">
+                  نسيت كلمة المرور؟
+                </div>
+              </div>
+              <button class="login-button" data-testid="btn-login">
+                تسجيل الدخول
+              </button>
+              <div class="register-text">
+                <span data-testid="text-no-account">ليس لديك حساب؟</span>
+                <a
+                  href="./login_web.html"
+                  class="link-register"
+                  data-testid="link-register"
+                  >إنشاء حساب</a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+        <ul id="userDropDown"
+      aria-modal="true"
+      role="combobox
+      aria-labelledby="login-dropdown">
+        <li tabindex="0"><a href="./userprofile.html"> <i class="fa-solid fa-credit-card"></i> EGP 0.00</a></li>
+        <li tabindex="0"><a href="./userprofile.html"><i class="fa-solid fa-cart-shopping"></i>طلباتي السابقة</a></li>
+        <li tabindex="0"><a href="./userprofile.html"><i class="fa-solid fa-user"></i> معلومات الحساب</a></li>
+        <li tabindex="0"><a href="./userlocations.html"><i class="fa-solid fa-map-location-dot"></i> عناوين التوصيل </a></li>
+        <li tabindex="0" id="logOut"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج </li>
+    </ul>
+
+<article id="dataEditorPopup">
+  <div class="dataEditContainer">
+
+    <div class="editor-head">
+
+        <h3>تعديل البريد الالكتروني
+        </h3>
+        <button class="close-btn" aria-label="إغلاق" id="close-editor-btn">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <form id="emailEditor">
+        <div class="dataField">
+          <label for="savedpassword-input">كلمة المرور الحالية
+            <span class="labelTag">*</span>
+          </label>
+         <div class="password-input-wrapper ">
+                  <input
+                    placeholder="كلمة المرور"
+                    class="password-input"
+                    type="password"
+                    autocomplete="current-password"
+                    data-testid="input-password"
+                    name="savedpassword-input"
+                    id="savedpassword-input"
+                  />
+                  <span class="showPassword" id="toggle-password">إظهار</span>
+                </div>
+                </div>
+        <figure class="editorContainer" data-form="emailEditor">
+      <div class="dataField">
+         <label for="newEmail"> بريد الكتروني جديد
+<span class="labelTag">*</span></label>
+<input type="email" name="newEmail" id="newEmail" placeholder="بريد الكتروني جديد">
+      </div>
+       <div class="dataField">
+         <label for="checkNewEmail"> أعد كتابة البريد الإلكتروني
+
+<span class="labelTag">*</span></label>
+<input type="email" name="checkNewEmail" id="checkNewEmail" placeholder="أعد كتابة البريد الإلكتروني">
+      </div>
+      </figure>
+       <figure class="editorContainer" data-form="passwordEditor">
+
+             <div class="dataField">
+          <label for="newPassword-input">كلمة المرور الجديدة
+            <span class="labelTag">*</span>
+          </label>
+         <div class="password-input-wrapper ">
+                  <input
+                    placeholder=" كلمة المرور الجديدة"
+                    class="password-input"
+                    type="password"
+                    autocomplete="current-password"
+                    data-testid="input-password"
+                    name="newPassword-input"
+                    id="newPassword-input"
+                  />
+                  <span class="showPassword" id="toggle-password">إظهار</span>
+                </div>
+                </div>
+                        <div class="dataField">
+          <label for="checkNewPassword-input">أعد كتابة كلمة المرور
+            <span class="labelTag">*</span>
+          </label>
+         <div class="password-input-wrapper ">
+                  <input
+                    placeholder="أعد كتابة كلمة المرور"
+                    class="password-input"
+                    type="password"
+                    autocomplete="current-password"
+                    data-testid="input-password"
+                    name="checkNewPassword-input"
+                    id="checkNewPassword-input"
+                  />
+                  <span class="showPassword" id="toggle-password">إظهار</span>
+                </div>
+                </div>
+      </figure>
+
+
+<div class="submitEdit">
+  <button type="button" id="removeFormChange" >الغاء</button>
+  <button type="submit" id="sendChange">إرسال</button>
+
+
+</div>
+
+      </form>
+
+    </div>
+</article>
+
+</body>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  flatpickr("#date", {
+    dateFormat: "Y-m-d"
+  });
+</script>
+
+  <script src="./script/index.js" defer ></script>
+  <script>
+    // user profile settings
+const profileHead = document.querySelector(".profile-head");
+const dropDownBtn = document.querySelector("#dropDownBtn");
+const dropDownMenu = document.querySelector(".profileSettings");
+if (dropDownBtn) {
+  dropDownBtn.addEventListener("click", () => {
+    document.querySelector(".profile-head")?.classList.toggle("active");
+    dropDownMenu?.classList.toggle("active");
+    dropDownBtn.style.pointerEvents = "none";
+    setTimeout(() => {
+      dropDownBtn.style.pointerEvents = "auto";
+    }, 500);
+  });
+}
+// Function to populate profile fields from localStorage
+function populateUserProfile() {
+  const storedUser = localStorage.getItem("fastDeliveryUser");
+  if (!storedUser) return;
+
+  const user = JSON.parse(storedUser);
+
+  // Populate the form fields
+  const emailInput = document.getElementById("useremail");
+  const firstNameInput = document.getElementById("userFname");
+  const lastNameInput = document.getElementById("userLname");
+  const genderRadios = document.querySelectorAll('input[name="gender"]');
+  const birthdayInput = document.getElementById("date");
+
+  if (emailInput) emailInput.value = user.email || "";
+  if (firstNameInput) firstNameInput.value = user.firstName || "";
+  if (lastNameInput) lastNameInput.value = user.lastName || "";
+  if (genderRadios) genderRadios.forEach((radio) => (radio.checked = false));
+  if (birthdayInput) birthdayInput.value = "";
+}
+
+// Call it on page load
+document.addEventListener("DOMContentLoaded", populateUserProfile);
+
+const profileForm = document.querySelector("#userDashboard form");
+
+if (profileForm) {
+  profileForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("useremail")?.value.trim();
+    const firstName = document.getElementById("userFname")?.value.trim();
+    const lastName = document.getElementById("userLname")?.value.trim();
+    const gender =
+      document.querySelector('input[name="gender"]:checked')?.value || "";
+    const birthday = document.getElementById("date")?.value || "";
+
+    // Get existing user data or create new object
+    const storedUser =
+      JSON.parse(localStorage.getItem("fastDeliveryUser")) || {};
+    storedUser.email = email;
+    storedUser.firstName = firstName;
+    storedUser.lastName = lastName;
+    storedUser.gender = gender;
+    storedUser.birthday = birthday;
+
+    // Save back to localStorage
+    localStorage.setItem("fastDeliveryUser", JSON.stringify(storedUser));
+
+    Swal.fire({
+      icon: "success",
+      title: "تم حفظ البيانات بنجاح ✅",
+      confirmButtonText: "حسنًا",
+      confirmButtonColor: "#3085d6",
+    });
+  });
+}
+
+// ✅ On page load, populate profile with stored values
+function populateUserProfile() {
+  const storedUser = localStorage.getItem("fastDeliveryUser");
+  if (!storedUser) return;
+
+  const user = JSON.parse(storedUser);
+
+  document.getElementById("useremail").value = user.email || "";
+  document.getElementById("userFname").value = user.firstName || "";
+  document.getElementById("userLname").value = user.lastName || "";
+  document.getElementById("date").value = user.birthday || "";
+
+  // Set gender radio if stored
+  if (user.gender) {
+    const genderRadio = document.querySelector(
+      `input[name="gender"][value="${user.gender}"]`
+    );
+    if (genderRadio) genderRadio.checked = true;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", populateUserProfile);
+
+const dataEditorPopup = document.getElementById("dataEditorPopup");
+const editorContainers = document.querySelectorAll(".editorContainer");
+const showEditPopupBtns = document.querySelectorAll(
+  "#changeEmail, #changePassword"
+);
+const closeEditorBtn = document.getElementById("close-editor-btn");
+const editorForm = document.getElementById("sendChange");
+const removeFormChange = document.getElementById("removeFormChange");
+
+// ✅ Function to show the popup and the correct container
+function openEditor(formName) {
+  dataEditorPopup.classList.add("is-visible");
+  document.body.style.overflow = "hidden";
+
+  editorContainers.forEach((container) => {
+    container.style.display =
+      container.dataset.form === formName ? "block" : "none";
+  });
+
+  const headerTitle = dataEditorPopup.querySelector(".editor-head h3");
+  headerTitle.textContent =
+    formName === "emailEditor"
+      ? "تعديل البريد الالكتروني"
+      : "تعديل كلمة المرور";
+
+  // ✅ Reset inputs whenever opening
+  if (editorForm) editorForm.reset();
+}
+
+// ✅ Event listeners for buttons
+showEditPopupBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const formName =
+      btn.id === "changeEmail" ? "emailEditor" : "passwordEditor";
+    openEditor(formName);
+  });
+});
+
+// ✅ Close popup function (with reset)
+function closeEditPopup() {
+  dataEditorPopup.classList.remove("is-visible");
+  document.body.style.overflow = "";
+  if (editorForm) editorForm.reset(); // Reset form on close
+}
+
+// ✅ Close button
+if (closeEditorBtn) closeEditorBtn.addEventListener("click", closeEditPopup);
+if (removeFormChange)
+  removeFormChange.addEventListener("click", closeEditPopup);
+// ✅ Close if click outside container
+const dataEditContainer = document.querySelector(".dataEditContainer");
+if (dataEditorPopup) {
+  dataEditorPopup.addEventListener("click", (e) => {
+    if (!dataEditContainer?.contains(e.target)) closeEditPopup();
+  });
+}
+
+// ✅ Handle form submission
+if (editorForm) {
+  editorForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const storedUser =
+      JSON.parse(localStorage.getItem("fastDeliveryUser")) || {};
+    const currentPasswordInput = document.getElementById(
+      "savedpassword-input"
+    )?.value;
+
+    const emailContainer = document.querySelector(
+      'figure[data-form="sendChange"]'
+    );
+    const passwordContainer = document.querySelector(
+      'figure[data-form="passwordEditor"]'
+    );
+
+    // --- Email update ---
+    if (emailContainer.style.display === "block") {
+      const newEmail = document.getElementById("newEmail")?.value.trim();
+      const confirmEmail = document
+        .getElementById("checkNewEmail")
+        ?.value.trim();
+
+      if (!currentPasswordInput) {
+        Swal.fire({ icon: "error", title: "⚠️ أدخل كلمة المرور الحالية" });
+        return;
+      }
+      if (currentPasswordInput !== storedUser.password) {
+        Swal.fire({ icon: "error", title: "⚠️ كلمة المرور الحالية خاطئة" });
+        return;
+      }
+      if (!newEmail || !confirmEmail) {
+        Swal.fire({ icon: "error", title: "⚠️ أدخل البريد الجديد وأكدّه" });
+        return;
+      }
+      if (newEmail !== confirmEmail) {
+        Swal.fire({ icon: "error", title: "⚠️ البريد الجديد غير متطابق" });
+        return;
+      }
+
+      storedUser.email = newEmail;
+      localStorage.setItem("fastDeliveryUser", JSON.stringify(storedUser));
+      document.getElementById("useremail").value = newEmail;
+
+      Swal.fire({ icon: "success", title: "تم تحديث البريد بنجاح ✅" });
+      closeEditPopup(); // ✅ closes popup AND resets form
+      return;
+    }
+
+    // --- Password update ---
+    if (passwordContainer.style.display === "block") {
+      const newPassword = document
+        .getElementById("newPassword-input")
+        ?.value.trim();
+      const confirmPassword = document
+        .getElementById("checkNewPassword-input")
+        ?.value.trim();
+
+      if (!currentPasswordInput) {
+        Swal.fire({ icon: "error", title: "⚠️ أدخل كلمة المرور الحالية" });
+        return;
+      }
+      if (currentPasswordInput !== storedUser.password) {
+        Swal.fire({ icon: "error", title: "⚠️ كلمة المرور الحالية خاطئة" });
+        return;
+      }
+      if (!newPassword || !confirmPassword) {
+        Swal.fire({
+          icon: "error",
+          title: "⚠️ أدخل كلمة المرور الجديدة وأكدها",
+        });
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        Swal.fire({
+          icon: "error",
+          title: "⚠️ كلمة المرور الجديدة غير متطابقة",
+        });
+        return;
+      }
+
+      storedUser.password = newPassword;
+      localStorage.setItem("fastDeliveryUser", JSON.stringify(storedUser));
+
+      Swal.fire({ icon: "success", title: "تم تحديث كلمة المرور بنجاح ✅" });
+      closeEditPopup(); // ✅ closes popup AND resets form
+      return;
+    }
+  });
+}
+
+  </script>
+
+</html>

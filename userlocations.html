@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fast Delivery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/css_web.css" />
+  <style>
+    /* user profile styles */
+section#userDashboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-inline: 25px;
+}
+.userProfileField {
+  padding: 25px;
+  padding-top: 120px;
+  margin-bottom: 25px;
+  max-width: 1024px;
+  width: 100%;
+  margin-inline: auto;
+  box-shadow: var(--shadow);
+  border-radius: 0.5rem;
+}
+.profile-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 2rem;
+  font-weight: bold;
+  i {
+    cursor: pointer;
+    font-size: 1.75rem;
+    transition: 0.5s all ease;
+    display: none;
+    &:hover {
+      color: var(--fd-blue);
+      rotate: 180deg;
+    }
+  }
+}
+
+.profile-head.active {
+  i {
+    rotate: 180deg;
+    color: var(--fd-blue);
+  }
+}
+
+.profileContainer {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  margin-top: 20px;
+  padding: 25px 0px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.profileSettings {
+  list-style-type: none;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  height: fit-content;
+
+  li {
+    padding: 10px;
+    transition: 0.3s color ease;
+    &:hover {
+      a {
+        color: var(--fd-blue);
+      }
+    }
+    a {
+      transition: inherit;
+    }
+  }
+}
+
+.profileSettings li.active {
+  a {
+    color: var(--fd-blue);
+  }
+  border-right: 2px solid var(--fd-blue);
+}
+
+.route {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  color: #777;
+  i {
+    color: var(--fd-blue);
+    scale: 1.125;
+  }
+  a {
+    color: black !important;
+  }
+}
+
+.profileContainer form {
+  padding-block: 10px;
+  padding-right: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  input {
+    border-radius: 0.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 0.2rem 1rem;
+    width: 100%;
+    max-width: 300px;
+    background-color: transparent;
+    font-size: 0.9rem;
+  }
+  label,
+  button {
+    white-space: nowrap;
+  }
+  label {
+    min-width: 113px;
+  }
+  button {
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    background-color: transparent;
+    transition: var(--transition);
+    font-weight: bold;
+    &:hover {
+      background-color: var(--fd-blue);
+      color: white;
+      border-color: transparent;
+    }
+  }
+
+  .service_subscribe {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    input[type="checkbox"] {
+      width: fit-content;
+      scale: 1.5;
+      accent-color: var(--fd-blue);
+    }
+  }
+}
+
+button[type="submit"] {
+  background-color: var(--fd-blue) !important;
+  color: white;
+  font-size: 1rem !important;
+  max-width: 250px;
+  width: 100%;
+  margin: auto;
+  border-width: 2px;
+  transition: var(--transition);
+  border-color: transparent !important;
+
+  &:hover {
+    border-color: var(--fd-blue) !important;
+    background-color: transparent !important;
+    color: var(--fd-blue) !important;
+  }
+}
+
+.editBtns {
+  align-items: center;
+  flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
+}
+
+.gender-btn {
+  padding: 10px 68px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.gender-btn:last-child {
+  border-radius: 0;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.gender-btn:hover {
+  background-color: #f0f0f0;
+}
+
+input[type="radio"]:checked + label {
+  background-color: var(--fd-blue);
+  color: white;
+  border-color: var(--fd-blue);
+}
+
+input[type="radio"] {
+  width: 150px;
+}
+
+.birthday {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 300px;
+  svg {
+    position: absolute;
+    left: 0.5rem;
+    top: 0.5rem;
+    width: 16px;
+  }
+}
+
+.inputHolder {
+  position: relative;
+  width: 100%;
+  border-radius: 0.25rem;
+  max-width: 300px;
+  isolation: isolate;
+  background-color: #e9ecef;
+  overflow: hidden;
+  input {
+    cursor: not-allowed;
+    color: rgb(74, 71, 71);
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.labelTag {
+  font-size: 1.5rem;
+  color: var(--fd-blue);
+}
+
+.dataField {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+#emptyLocations {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  min-height: 300px;
+  color: #777;
+  i {
+    font-size: 3rem;
+    position: relative;
+  }
+  i::after {
+    content: "";
+    border-radius: 8px;
+    rotate: 45deg;
+    inset: 0;
+    margin: auto;
+    width: 8px;
+    height: calc(100% + 24px);
+    background: linear-gradient(to right, #777 50%, white 50%);
+    position: absolute;
+  }
+  button {
+    background-color: var(--fd-blue);
+    color: white;
+    padding: 0.5rem 1rem;
+    outline: 0;
+    font-size: 1rem;
+    border: 2px solid transparent;
+    border-radius: 0.5rem;
+    transition: var(--transition);
+    &:hover {
+      background-color: transparent;
+      color: var(--fd-blue);
+      border-color: currentColor;
+    }
+  }
+}
+#locationFormShower {
+  width: 100%;
+  position: absolute;
+  display: none;
+  interpolate-size: allow-keywords;
+  top: 60px;
+  left: 0;
+  flex-direction: column;
+  z-index: -1000;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: var(--transition);
+}
+
+#locationFormShower.is-visible {
+  z-index: 10000;
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+#map-shower.hidden {
+  z-index: -1000;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.addLocationBtn {
+  margin-block: 1rem;
+  margin-inline: auto;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  padding: 0.25rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid #0056b3;
+  transition: var(--transition);
+  background-color: #0056b3;
+  color: white;
+  &:hover {
+    background-color: transparent;
+    color: #0056b3;
+  }
+}
+.user-location {
+  padding-right: 20px;
+  padding-block: 20px;
+}
+.user-location:nth-child(even) {
+  background-color: whitesmoke;
+}
+
+.editLocationBtn {
+  margin-top: 0.5rem;
+
+  padding: 0.25rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--fd-blue);
+  transition: var(--transition);
+  background-color: var(--fd-blue);
+  color: white;
+  &:hover {
+    background-color: transparent;
+    color: var(--fd-blue);
+  }
+}
+
+.deleteLocationBtn {
+  margin-top: 0.5rem;
+  padding: 0.25rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--fd-red);
+  transition: var(--transition);
+  background-color: var(--fd-red);
+  color: white;
+  &:hover {
+    background-color: transparent;
+    color: var(--fd-red);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+  </style>
+</head>
+
+<body>
+  <header class="header" role="banner">
+    <a href="./index.html" class="logo-container" aria-label="Fast Delivery - الصفحة الرئيسية">
+      <img src="logo.png" alt="Fast Delivery Logo" class="logo" />
+    </a>
+
+    <nav class="nav-links">
+      <a href="#" data-key="header_link_1">مطاعم</a>
+      <a href="#" data-key="header_link_2">عروض</a>
+      <a href="#" data-key="header_link_3">كن شريكاً</a>
+    </nav>
+
+    <div class="action-buttons">
+      <a href="./userlocations_en.html" class="lang-btn">
+        <i class="fa fa-globe"></i> EN
+      </a>
+      <button class="icon-btn" aria-label="السلة" role="button">
+        <i class="fa fa-shopping-basket"></i>
+      </button>
+      <button class="icon-btn" aria-label="تسجيل الدخول" data-key="login_btn" id="login-modal-btn">
+        <i class="fa fa-user"></i>
+      </button>
+    </div>
+  </header>
+  <section id="userDashboard">
+    <div class="userProfileField">
+      <span class="route"> <a href="./index.html">الرئيسية</a> <i class="fa-solid fa-angles-left"></i> حسابي</span>
+      <div class="profile-head"> حسابي<i id="dropDownBtn" class="fa-solid fa-angles-down"></i></div>
+      <article class="profileContainer">
+        <ul class="profileSettings">
+          <li><a href="userprofile.html">معلومات الحساب</a></li>
+          <li class="active"><a href="userlocations.html">عناوين التوصيل</a></li>
+          <li><a href="userprofile.html"> طلباتي السابقة</a></li>
+          <li><a href="userprofile.html"> البطاقات المحفوظة</a></li>
+          <li><a href="userprofile.html"> talabat Pay </a></li>
+        </ul>
+
+
+        <div id="emptyLocations">
+          <i class="fa-solid fa-location-dot"></i>
+          <p>لا يوجد عنوان مسجل
+
+          </p>
+          <button id='userLocationBtn'>إضافة عنوان جديد</button>
+        </div>
+
+
+        <figure id="locationList"></figure>
+
+
+
+
+
+
+
+
+
+      </article>
+    </div>
+  </section>
+
+
+
+
+
+  <footer class="footer" role="contentinfo">
+    <div class="content-container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h4 data-key="footer_col_1_title">Fast Delivery</h4>
+          <a href="#" data-key="footer_col_1_link_1">وظائف</a>
+          <a href="#" data-key="footer_col_1_link_2">الشروط والأحكام</a>
+          <a href="#" data-key="footer_col_1_link_3">سياسة الخصوصية</a>
+          <a href="#" data-key="footer_col_1_link_4">الأسئلة الشائعة</a>
+        </div>
+        <div class="footer-column">
+          <h4 data-key="footer_col_2_title">مطاعم شهيرة</h4>
+          <a href="#">ماكدونالدز</a>
+          <a href="#">كنتاكي</a>
+          <a href="#">بيتزا هت</a>
+          <a href="#">برجر كنج</a>
+        </div>
+        <div class="footer-column">
+          <h4 data-key="footer_col_3_title">مدن مصر</h4>
+          <a href="#">دمنهور</a>
+          <a href="#">طنطا</a>
+          <a href="#">القاهره</a>
+          <a href="#">الاسكندريه</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2025 Fast Delivery</div>
+        <div class="social-links">
+          <a href="#" aria-label="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="تويتر"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="إنستغرام"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="login-modal-overlay" class="modal-overlay" aria-modal="true" role="dialog" aria-labelledby="login-heading">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close-btn" aria-label="إغلاق" id="close-modal-btn">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="">
+          <p class="login-heading" id="login-heading">تسجيل الدخول</p>
+          <div class="social-buttons">
+            <button class="google" type="button" onclick="window.location.href='#'" aria-label="تابع باستخدام جوجل">
+              <i class="fab fa-google"></i><span>تابع باستخدام جوجل</span>
+            </button>
+            <button class="facebook" type="button" onclick="window.location.href='#'" aria-label="تابع باستخدام فيسبوك">
+              <i class="fab fa-facebook-f"></i><span>تابع باستخدام فيسبوك</span>
+            </button>
+          </div>
+          <div class="line"><span>أو</span></div>
+          <form data-testid="form-login">
+            <div class="login-form-row">
+              <i class="fa fa-envelope"></i>
+              <input placeholder="البريد الإلكتروني" type="email" autocomplete="username" data-testid="input-email"
+                name="username" />
+            </div>
+            <div class="login-form-row">
+              <i class="fa fa-lock"></i>
+              <div class="password-input-wrapper">
+                <input placeholder="كلمة المرور" class="password-input" type="password" autocomplete="current-password"
+                  data-testid="input-password" name="password" id="password-input-field" />
+                <span class="showPassword" id="toggle-password">إظهار</span>
+              </div>
+            </div>
+            <div class="form-options">
+              <div class="forgot-password" data-testid="link-forgot-password">
+                نسيت كلمة المرور؟
+              </div>
+            </div>
+            <button class="login-button" data-testid="btn-login">
+              تسجيل الدخول
+            </button>
+            <div class="register-text">
+              <span data-testid="text-no-account">ليس لديك حساب؟</span>
+              <a href="./login_web.html" class="link-register" data-testid="link-register">إنشاء حساب</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ul id="userDropDown" aria-modal="true" role="combobox
+      aria-labelledby=" login-dropdown">
+    <li tabindex="0"><a href="./userprofile.html"> <i class="fa-solid fa-credit-card"></i> EGP 0.00</a></li>
+    <li tabindex="0"><a href="./userprofile.html"><i class="fa-solid fa-cart-shopping"></i>طلباتي السابقة</a></li>
+    <li tabindex="0"><a href="./userprofile.html"><i class="fa-solid fa-user"></i> معلومات الحساب</a></li>
+    <li tabindex="0"><a href="./userlocations.html"><i class="fa-solid fa-map-location-dot"></i> عناوين التوصيل </a>
+    </li>
+    <li tabindex="0" id="logOut"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج </li>
+  </ul>
+  <article id="mapModal">
+    <figure id="map-figure">
+      <div class="map-title">
+        <span id="closeMapModal" class="close">&times;</span>
+        <h2 id="maptitle"> إضافة عنوان جديد
+
+        </h2>
+      </div>
+
+      <figure id="map-shower">
+
+
+
+
+  <div class="map-search-box">
+    <input
+      type="text"
+      id="map-search-input"
+      placeholder="ابحث داخل الخريطة (مدينة، شارع...)"
+      aria-label="ابحث عن موقع داخل الخريطة"
+    />
+    <button id="map-search-btn"><i class="fa fa-search"></i></button>
+  </div>
+
+  <div class="map-content">
+    <div id="center-pin"></div>
+    <div id="map"></div>
+</div>
+<div class="mapBtns" id="mapLocationBtns">
+
+
+  <button id="goToCurrentLocation" class="current-location-btn">
+    📍 موقعي الحالي
+  </button>
+  <button id="confirmLocationBtn"><i class="fa-solid fa-location"></i> تأكيد الموقع </button>
+
+</div>
+</figure>
+
+
+<figure id="locationFormShower">
+      <form id="locationDetails">
+        <div class="dataField">
+          <label for="mobile">
+            معلومات الاتصال
+          </label>
+          <div class="locationDataField">
+            <div class="inputHolder">
+
+              <input type="tel" name="mobile" id="mobile" placeholder="رقم الهاتف المتنقل" required>
+              <span class="egyptNum"> | 20+</span>
+            </div>
+            <input type="tel" name="phone" id="phone" placeholder="رقم الهاتف الأرضي (إختياري)">
+
+          </div>
+
+        </div>
+        <div class="dataField">
+          <label for="state">
+            عنوان التوصيل </label>
+          <div class="locationDataField">
+
+            <select name="state" id="state" required>
+               <!-- <option value="">اختر المحافظة</option> -->
+
+            </select>
+            <select name="landmark" id="landmark" required>
+               <option value="">اختر المدينة</option>
+            </select>
+
+         <div class="gender-selection">
+  <input type="radio" name="locationType" id="apartmentType" value="apartment" hidden checked>
+  <label for="apartmentType" class="gender-btn"><i class="fa-solid fa-building"></i> شقة</label>
+
+  <input type="radio" name="locationType" id="houseType" value="house" hidden>
+  <label for="houseType" class="gender-btn"><i class="fa-solid fa-house"></i> منزل</label>
+
+  <input type="radio" name="locationType" id="officeType" value="office" hidden>
+  <label for="officeType" class="gender-btn"><i class="fa-solid fa-city"></i> مكتب</label>
+</div>
+
+
+            <input type="text" name="address" id="address" placeholder="إسم العنوان (إختياري)">
+            <input type="text" name="street" id="street" placeholder="إسم الشارع " required>
+              <input type="text" name="building" id="building" placeholder="إسم البناية " >
+              <input type="tel" name="floorNumber" id="floorNumber" placeholder="رقم الطابق">
+              <!-- depends if its apartment or department -->
+              <input type="tel" name="apartmentNumber" id="apartmentNumber" placeholder="رقم الشقة">
+
+              <input type="text" name="house" id="house" placeholder="إسم المنزل">
+              <input type="tel" name="departmentNumber" id="departmentNumber" placeholder=" المكتب">
+
+            <textarea name="instructions" id="instructions" placeholder="ارشادات إضافية (إختياري)"></textarea>
+
+
+
+
+
+
+
+
+          </div>
+
+        </div>
+
+      </form>
+       <div class="mapBtns" id="locationSetBtns">
+
+
+        <button id="backToMap" class="current-location-btn">
+          <i class="fa-solid fa-location-dot"></i>
+  عرض الخريطة         </button>
+        <button id="setLocationBtn" type="submit" form="locationDetails"><i class="fa-solid fa-location"></i> حفظ العنوان  </button>
+
+      </div>
+      </figure>
+
+
+
+
+    </figure>
+
+
+
+  </article>
+
+
+
+
+</body>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  flatpickr("#date", {
+    dateFormat: "Y-m-d"
+  });
+</script>
+
+<script src="./script/index.js" defer></script>
+
+<script src="./script/userLocationsMap.js" defer></script>
+<script defer>
+    // user profile settings
+      const profileHead = document.querySelector(".profile-head");
+      const dropDownBtn = document.querySelector("#dropDownBtn");
+      const dropDownMenu = document.querySelector(".profileSettings");
+      if (dropDownBtn) {
+        dropDownBtn.addEventListener("click", () => {
+          document.querySelector(".profile-head")?.classList.toggle("active");
+          dropDownMenu?.classList.toggle("active");
+          dropDownBtn.style.pointerEvents = "none";
+          setTimeout(() => {
+            dropDownBtn.style.pointerEvents = "auto";
+          }, 500);
+        });
+      }
+
+</script>
+</html>
