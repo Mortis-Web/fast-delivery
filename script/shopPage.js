@@ -19,7 +19,7 @@ dropDownBtns.forEach((btn) => {
 });
 
 /* ========== Shopping Cart Popup ========== */
-const cartShower = document.querySelector("#cartShower");
+const cartShower = document.querySelector("#cartShower .submit");
 const shoppingCartPopup = document.querySelector("#shoppingCart");
 const cartHolder = document.querySelector("#cartHolder");
 const closeCartBtn = document.querySelector("#closeCartBtn");

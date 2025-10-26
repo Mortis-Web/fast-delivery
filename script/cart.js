@@ -6,6 +6,7 @@ const cart = {
     localStorage.setItem("cartItems", JSON.stringify(this.items));
     updateCartUI();
     updateCartCounter(); // update the counter whenever cart changes
+    updateTotalPayAmount(); // update the totalPayAmount element
   },
   addItem(item) {
     const existing = this.items.find((i) => i.name === item.name);
@@ -45,6 +46,18 @@ function updateCartCounter() {
   cartItemsNumber.textContent = totalItems;
 }
 
+// ======= TOTAL PAY AMOUNT =======
+function updateTotalPayAmount() {
+  const totalPayAmountEl = document.querySelector("#totalPayAmount");
+  if (!totalPayAmountEl) return;
+  const subtotal = cart.items.reduce((sum, item) => {
+    const price = parseFloat(item.price.replace(/[^\d.]/g, ""));
+    return sum + price * item.amount;
+  }, 0);
+  totalPayAmountEl.textContent =
+    "المجموع: EGP " + (subtotal + cart.deliveryFee).toFixed(2);
+}
+
 // ======= UPDATE CART UI =======
 function updateCartUI() {
   const inCartItems = document.querySelector("#inCartItems");
@@ -60,6 +73,7 @@ function updateCartUI() {
   if (cart.items.length === 0) {
     emptyCart.style.display = "flex";
     inCartItems.style.display = "none";
+    updateTotalPayAmount();
     return;
   } else {
     emptyCart.style.display = "none";
@@ -111,8 +125,9 @@ function updateCartUI() {
   deliveryEl.textContent = cart.deliveryFee.toLocaleString() + " ج.م";
   totalEl.textContent = (subtotal + cart.deliveryFee).toLocaleString() + " ج.م";
 
-  // Update the counter
+  // Update the counter & total pay amount
   updateCartCounter();
+  updateTotalPayAmount();
 }
 
 // ======= ADD TO CART BUTTONS =======
