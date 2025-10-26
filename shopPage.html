@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fast Delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <link rel="stylesheet" href="css/css_web.css" />
+
+</head>
+<style>
+    #openedShopFoods {
+        padding-top: 125px;
+        padding-inline: 25px;
+        padding-bottom: 50px;
+        position: relative;
+        isolation: isolate;
+        margin: auto;
+        max-width: 1140px;
+        width: 100%;
+
+        h2 {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: start;
+            line-height: 1.2;
+        }
+
+        #filterIcon {
+            display: none;
+        }
+    }
+
+    .availableShop {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1rem;
+        /* border-bottom: 1px solid rgba(0, 0, 0, 0.25); */
+        padding: 1rem;
+        transition: var(--transition);
+
+        img {
+            width: 120px;
+            height: 120px;
+            aspect-ratio: 1;
+            object-position: center;
+            object-fit: cover;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            border-radius: 0.5rem;
+        }
+
+        &:hover {
+            background-color: whitesmoke;
+
+            .availableShopName {
+                color: var(--fd-blue);
+            }
+        }
+    }
+
+    .shopDelivery {
+        display: flex;
+        column-gap: 1rem;
+        flex-wrap: wrap;
+        font-size: 0.9rem;
+        align-items: center;
+        white-space: nowrap;
+    }
+
+    .shopPayMethods {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        /* width: fit-content; */
+        margin-top: 0.5rem;
+
+        img {
+            width: 40px;
+            object-fit: contain;
+            height: 30px;
+            border-radius: 0 !important;
+            border: none !important;
+        }
+    }
+
+    .availableShopDesc {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .availableShopName,
+    .shopFoods {
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        transition: var(--transition);
+    }
+
+
+
+    .shopRating {
+        display: flex;
+        gap: 0.25rem;
+        font-size: 0.9rem;
+        align-items: baseline;
+
+        i {
+            color: var(--fd-blue);
+        }
+    }
+
+
+
+    #shopListsOptions {
+        display: flex;
+        margin-block: 25px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        padding-inline: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        gap: 1rem;
+        box-sizing: border-box;
+        list-style: none;
+
+        li {
+            display: flex;
+            gap: 0.5rem;
+            text-align: center;
+            flex-basis: 25%;
+            position: relative;
+            font-weight: bold;
+            justify-content: center;
+            white-space: nowrap;
+            align-items: center;
+            cursor: pointer;
+            padding-bottom: 0.5rem;
+            transition: var(--transition);
+            font-size: 1.25rem;
+
+            i {
+                font-size: 1.5rem;
+                color: var(--fd-blue);
+            }
+
+            &:hover {
+                color: var(--fd-blue);
+            }
+
+        }
+    }
+
+
+
+    #shopLists li.active {
+        color: var(--fd-blue);
+        border-color: var(--fd-blue);
+
+        &:after {
+            content: '';
+            background-color: transparent;
+            z-index: -1;
+            border-bottom: 5px solid var(--fd-blue);
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+    }
+
+
+
+    #openedShopFoods {
+        .inputHolder {
+            position: relative;
+            width: 100%;
+            isolation: isolate;
+
+            .showPassword {
+                color: #444 !important;
+            }
+
+            input {
+                padding: 0.5rem 1rem;
+                border-radius: 0.25rem;
+                border: 1px solid rgba(0, 0, 0, 0.25);
+                width: 100%;
+            }
+
+            .showPassword {
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: fit-content;
+                font-size: 1.25rem;
+                bottom: 0;
+                margin: auto;
+            }
+        }
+    }
+
+    #shopGrid {
+        display: grid;
+        grid-template-columns: 65% 30%;
+        /* gap: 1rem; */
+    }
+
+    #shopFoodLists {
+        display: grid;
+        grid-template-columns: 30% 65%;
+        gap: 1rem;
+    }
+
+    #foodListsNav {
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        max-height: 450px;
+        overflow-y: auto;
+        top: 100px;
+        line-height: 1.2;
+        height: fit-content;
+        border-radius: 0.25rem;
+        padding: 0.5rem;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+
+        .foodNavLinks {
+            display: flex;
+            flex-direction: column;
+
+            a {
+                padding: 1rem 0.5rem;
+                transition: var(--transition);
+
+                &:hover {
+                    background-color: whitesmoke;
+                    color: var(--fd-blue);
+                }
+            }
+        }
+    }
+
+
+    #foodListsHolder {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .foodListTitle {
+        background-color: whitesmoke;
+        padding: 0.5rem;
+
+        i {
+            transition: var(--transition);
+            cursor: pointer;
+
+            &:hover {
+                rotate: 180deg;
+
+                color: var(--fd-blue);
+
+            }
+        }
+
+
+    }
+
+    .foodListTitle.active {
+        i {
+            color: var(--fd-blue);
+            rotate: 180deg;
+        }
+    }
+
+    .foodDrowdown {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        gap: 1rem;
+        transition: all 1000ms linear(0,
+                0.012 0.9%,
+                0.05 2%,
+                0.411 9.2%,
+                0.517 11.8%,
+                0.611 14.6%,
+                0.694 17.7%,
+                0.765 21.1%,
+                0.824 24.8%,
+                0.872 28.9%,
+                0.91 33.4%,
+                0.939 38.4%,
+                0.977 50.9%,
+                0.994 68.4%,
+                1);
+        transform-origin: bottom;
+        interpolate-size: allow-keywords;
+        overflow: hidden;
+        height: auto;
+    }
+
+    .foodDrowdown.active {
+        height: 0;
+    }
+
+    .foodList {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+
+
+    .foodItem {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: 1rem;
+        row-gap: 4px;
+        padding: 1rem 0.5rem;
+        cursor: pointer;
+        transition: var(--transition);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+        &:hover {
+            background-color: whitesmoke;
+
+            .foodName {
+                color: var(--fd-blue);
+            }
+        }
+    }
+
+    .foodImage {
+        display: flex;
+        min-width: 80px;
+        max-width: 80px;
+        height: 80px;
+        border-radius: 0.25rem;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 1;
+            border-radius: inherit;
+        }
+    }
+
+    .foodDetails {
+        display: flex;
+        align-items: center;
+        column-gap: 1rem;
+        row-gap: 4px;
+    }
+
+
+    .foodName {
+        font-size: 0.8rem;
+        transition: var(--transition);
+    }
+
+    .foodContent {
+        opacity: 0.8;
+        font-size: 0.8rem;
+        text-wrap: balance;
+        line-height: 1.2;
+    }
+
+    .foodNewPrice,
+    .foodOldPrice {
+        white-space: nowrap;
+        font-weight: bold;
+    }
+
+    .foodOldPrice {
+        opacity: 0.8;
+        text-decoration: line-through;
+    }
+
+    .addToCart {
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        height: 100%;
+        color: var(--fd-blue);
+        font-size: 1.5rem;
+
+        .addToCartBtn {
+            height: fit-content;
+            cursor: pointer;
+            transition: var(--transition);
+
+            &:hover {
+                color: var(--fd-red);
+                scale: 1.05;
+            }
+        }
+    }
+
+
+    #cartHolder {
+        display: flex;
+        flex-direction: column;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        max-width: 600px;
+        width: 100%;
+        position: sticky;
+        isolation: isolate;
+        top: 100px;
+        height: fit-content;
+    }
+
+    #closeCartBtn{
+        width: fit-content;
+        right: initial;
+        display: none;
+        left: 10px;
+    }
+
+    .shoppingCartTitle {
+        background-color: var(--fd-blue);
+        color: white;
+
+        padding: 0.5rem;
+    }
+
+
+    #emptyCart {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom-left-radius: inherit;
+        border-bottom-right-radius: inherit;        align-items: center;
+        text-align: center;
+        background-color: whitesmoke;
+        font-size: 1rem;
+        padding: 2rem;
+        font-weight: bold;
+        line-height: 1.2;
+
+        i {
+            font-size: 5rem;
+            color: #444;
+        }
+    }
+
+
+    #cartShower {
+        position: fixed;
+        bottom: 0;
+        color: white;
+        left: 0;
+        width: 100%;
+        display: none;
+        gap: 1rem;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        z-index: 100;
+        background-color: var(--fd-dark);
+
+        .submit {
+            padding-block: 0.25rem;
+            margin: 0;
+        }
+    }
+
+    #totalPayAmount {
+        white-space: nowrap;
+        font-size: 1rem;
+    }
+
+   #foodImageModal {
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    box-shadow: var(--shadow);
+    position: fixed;
+    z-index: 1000;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    pointer-events: none;
+
+    opacity: 0;
+    transform: translate(0, 0);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#foodImageModal.show {
+    opacity: 1;
+    transform: translate(5px, 5px); /* small shift for smooth effect */
+}
+
+#foodImageModal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+#foodImageModal::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-top: 1px solid rgba(0,0,0,0.125);
+  border-right: 1px solid rgba(0,0,0,0.125);
+  rotate: 45deg;
+  right: -16px;
+  top: var(--arrow-top,50%);
+  aspect-ratio: 1;
+  z-index: -1;
+}
+
+#inCartItems{
+     display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        justify-content: center;
+        font-size: 1rem;
+        background-color: white;
+        font-weight: bold;
+        line-height: 1.2;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        padding: 1rem 0rem;
+        border-bottom-left-radius: inherit;
+        border-bottom-right-radius: inherit;
+}
+
+.orderedItem{
+    display: flex;
+    gap: 0.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+    background-color: whitesmoke;
+}
+.removeCartItem{
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cartItemAmountHandlers{
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 0.25rem;
+    font-size: 0.9rem;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+.increase,.decrease{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.25rem;
+    border: none;
+    font-weight: bold;
+    height: 30px;
+    background-color: transparent;
+    font-size: 1rem;
+border-radius: inherit;
+transition: var(--transition);
+    color: var(--fd-blue);
+    &:hover{
+        background-color: var(--fd-blue);
+        color: white;
+    }
+}
+.increase{
+    border-right: 1px solid rgba(0, 0, 0, 0.125);
+
+}
+.decrease{
+    border-left: 1px solid rgba(0, 0, 0, 0.125);
+
+}
+.itemAmount{
+border-radius: inherit;
+    padding: 0.25rem;
+}
+
+#cartShopLabel{
+    /* padding-block: 0.5rem; */
+    margin-inline: 0.5rem;
+    font-weight: bold;
+}
+
+.preDeliveryFeeAmount,.deliveryAmount,.afterDeliveryFeeAmount{
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 0.5rem;
+    font-size: 0.9rem;
+    p{
+        display: flex;
+        gap: 2px;
+        align-items: center;
+    }
+}
+
+
+</style>
+
+<body>
+    <header class="header" role="banner">
+        <a href="./index.html" class="logo-container" aria-label="Fast Delivery - الصفحة الرئيسية">
+            <img src="logo.png" alt="Fast Delivery Logo" class="logo" />
+        </a>
+
+        <nav class="nav-links">
+            <a href="#" data-key="header_link_1">مطاعم</a>
+            <a href="#" data-key="header_link_2">عروض</a>
+            <a href="#" data-key="header_link_3">كن شريكاً</a>
+        </nav>
+
+        <div class="action-buttons">
+            <a href="./userprofile_en.html" class="lang-btn">
+                <i class="fa fa-globe"></i> EN
+            </a>
+            <button class="icon-btn" id="cartIcon" aria-label="السلة" role="button">
+                <i class="fa fa-shopping-basket"></i>
+                <span id="cartItemsNumber">0</span>
+            </button>
+            <button class="icon-btn" aria-label="تسجيل الدخول" data-key="login_btn" id="login-modal-btn">
+                <i class="fa fa-user"></i>
+            </button>
+        </div>
+    </header>
+
+    <section id="openedShopFoods">
+        <article id="foodImageModal">
+            <img src="" alt="zoomed image">
+        </article>
+
+
+        <span class="route"> <a href="./index.html">الرئيسية</a> <i class="fa-solid fa-angles-left"></i>
+            <a href="./openedShopFoods.html">{selectedLocation}</a> <i class="fa-solid fa-angles-left"></i> {shopName}
+        </span>
+
+        <a href="./shopDetailsPage.html" class="availableShop">
+            <img src="./images/101-min.jpg" alt="shop logo">
+            <div class="availableShopDesc">
+                <h3 class="availableShopName">one</h3>
+                <p class="shopFoods">
+                    Lorem ipsum dolor sit amet consectetur.
+                </p>
+                <span class="shopRating">
+                    <i class="fa-solid fa-face-smile"></i>جيد جداً
+                </span>
+
+                <div class="shopDelivery">
+                    <span class="deliveryTime">
+                        خلال <span class="timer">42</span> دقيقة
+                    </span>
+                    <span class="delieveryPayment">توصيل:&nbsp; مجاني</span>
+                    <span class="minPay"> الحد الأدني للطلب:&nbsp;50.00</span>
+                </div>
+
+                <div class="shopPayMethods">
+                    <img src="./images/visa_blue.webp" alt="visa">
+                    <img src="./images/logo-mastercard.svg" alt="mastercard">
+                    <img src="./images/logo-cash.svg" alt="cash">
+
+                </div>
+
+            </div>
+        </a>
+
+
+        <div id="shopLists">
+            <ul id="shopListsOptions">
+                <li class="active">
+                    <i class="fa-solid fa-utensils"></i>
+                    قائمة الطعام
+                </li>
+                <li>
+                    <i class="fa-solid fa-comments"></i>
+                    تقييم المطعم
+                </li>
+                <li>
+                    <i class="fa-solid fa-circle-info"></i>
+                    معلومات المطعم
+                </li>
+            </ul>
+
+
+
+
+            <section id="shopGrid">
+                <figure id="shopFoodLists">
+                    <article id="foodListsNav">
+                        <h3>فئات قائمة الطعام</h3>
+                        <div class="foodNavLinks">
+                            <a href="#1" title="1">1</a>
+                            <a href="#2" title="2">2</a>
+                            <a href="#3" title="3">3</a>
+                            <a href="#4" title="4">4</a>
+                            <a href="#5" title="5">5</a>
+                            <a href="#6" title="6">6</a>
+                            <a href="#7" title="7">7</a>
+                            <a href="#8" title="8">8</a>
+                            <a href="#9" title="9">9</a>
+                        </div>
+                    </article>
+
+                    <article id="foodListsHolder">
+                        <div class="inputHolder">
+                            <label for="selectedShopSearcher" class="showPassword"><i
+                                    class="fa-solid fa-magnifying-glass"></i></label>
+                            <input type="text" name="selectedShopSearcher" id="selectedShopSearcher"
+                                placeholder="البحث عن أصناف">
+                        </div>
+
+
+                        <div class="foodList" id="1">
+                            <h2 class="foodListTitle active">
+                                1 <span class="dropDownBtn"><i class="fa-solid fa-angles-down"></i></span>
+                            </h2>
+
+                            <ul class="foodDrowdown">
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/107-min (1)_11zon.jpg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing"><span class="foodNewPrice">EGP 180.00</span></div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/logo-mastercard.svg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">2</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing"><span class="foodNewPrice">EGP 180.00</span></div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/logo-mastercard.svg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">3</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing">
+
+                                            <span class="foodOldPrice">EGP 300.00</span>
+
+                                            <span class="foodNewPrice">EGP 180.00</span>
+                                        </div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/logo-mastercard.svg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">4</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+                                        <div class="foodPricing">
+                                            <span class="foodOldPrice">EGP 300.00</span>
+                                            <span class="foodNewPrice">EGP 180.00</span>
+                                        </div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="foodList" id="2">
+                            <h2 class="foodListTitle active">
+                                2 <span class="dropDownBtn"><i class="fa-solid fa-angles-down"></i></span>
+                            </h2>
+
+                            <ul class="foodDrowdown">
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/logo-mastercard.svg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName"> اون </h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing"><span class="foodNewPrice">EGP 180.00</span></div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/logo-mastercard.svg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">  فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing"><span class="foodNewPrice">EGP 180.00</span></div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/logo-mastercard.svg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس  </h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing">
+
+                                            <span class="foodOldPrice">EGP 300.00</span>
+
+                                            <span class="foodNewPrice">EGP 180.00</span>
+                                        </div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/logo-mastercard.svg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+                                        <div class="foodPricing">
+                                            <span class="foodOldPrice">EGP 300.00</span>
+                                            <span class="foodNewPrice">EGP 180.00</span>
+                                        </div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="foodList" id="3">
+                            <h2 class="foodListTitle active">
+                                3 <span class="dropDownBtn"><i class="fa-solid fa-angles-down"></i></span>
+                            </h2>
+
+                            <ul class="foodDrowdown">
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/logo-mastercard.svg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing"><span class="foodNewPrice">EGP 180.00</span></div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/logo-mastercard.svg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing"><span class="foodNewPrice">EGP 180.00</span></div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/107-min (1)_11zon.jpg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing">
+
+                                            <span class="foodOldPrice">EGP 300.00</span>
+
+                                            <span class="foodNewPrice">EGP 180.00</span>
+                                        </div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/107-min (1)_11zon.jpg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+                                        <div class="foodPricing">
+                                            <span class="foodOldPrice">EGP 300.00</span>
+                                            <span class="foodNewPrice">EGP 180.00</span>
+                                        </div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="foodList" id="4">
+                            <h2 class="foodListTitle active">
+                                4 <span class="dropDownBtn"><i class="fa-solid fa-angles-down"></i></span>
+                            </h2>
+
+                            <ul class="foodDrowdown">
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/107-min (1)_11zon.jpg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing"><span class="foodNewPrice">EGP 180.00</span></div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/107-min (1)_11zon.jpg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing"><span class="foodNewPrice">EGP 180.00</span></div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/107-min (1)_11zon.jpg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing">
+
+                                            <span class="foodOldPrice">EGP 300.00</span>
+
+                                            <span class="foodNewPrice">EGP 180.00</span>
+                                        </div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/107-min (1)_11zon.jpg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+                                        <div class="foodPricing">
+                                            <span class="foodOldPrice">EGP 300.00</span>
+                                            <span class="foodNewPrice">EGP 180.00</span>
+                                        </div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="foodList" id="5">
+                            <h2 class="foodListTitle active">
+                                5 <span class="dropDownBtn"><i class="fa-solid fa-angles-down"></i></span>
+                            </h2>
+
+                            <ul class="foodDrowdown">
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/107-min (1)_11zon.jpg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing"><span class="foodNewPrice">EGP 180.00</span></div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/107-min (1)_11zon.jpg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing"><span class="foodNewPrice">EGP 180.00</span></div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/107-min (1)_11zon.jpg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+
+                                        <div class="foodPricing">
+
+                                            <span class="foodOldPrice">EGP 300.00</span>
+
+                                            <span class="foodNewPrice">EGP 180.00</span>
+                                        </div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                                <li class="foodItem">
+                                    <span class="foodImage">
+                                        <img src="./images/107-min (1)_11zon.jpg" alt="food image">
+                                    </span>
+
+                                    <div class="foodDetails">
+                                        <span class="foodDesc">
+                                            <h4 class="foodName">ميكس اون فاير</h4>
+                                            <p class="foodContent">Lorem ipsum dolor sit amet consectetur adipisicing
+                                                elit.</p>
+                                        </span>
+                                        <div class="foodPricing">
+                                            <span class="foodOldPrice">EGP 300.00</span>
+                                            <span class="foodNewPrice">EGP 180.00</span>
+                                        </div>
+                                    </div>
+                                    <span class="addToCart">
+
+                                        <span class="addToCartBtn" title="اضف الي العربة"> <i
+                                                class="fa fa-plus-circle"></i></span>
+
+                                    </span>
+
+                                </li>
+                            </ul>
+                        </div>
+
+
+
+                    </article>
+                </figure>
+
+
+
+                <article id="shoppingCart">
+
+                    <div id="cartHolder">
+                        <span id="closeCartBtn" class="close">&times;</span>
+
+                        <h2 class="shoppingCartTitle">
+                            سلة مشترياتك
+                        </h2>
+                        <figure id="emptyCart">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <p>لا يوجد أصناف في سلة المشتريات</p>
+                        </figure>
+                        <figure id="inCartItems">
+                            <div id="cartShopLabel">
+                                برجر أون فاير
+                            </div>
+
+
+
+
+<div class="preDeliveryFeeAmount">
+    <p>المجموع الفرعي
+</p>
+<span class="subtotalAmount">15,000.00 ج.م</span>
+</div>
+<div class="deliveryAmount">
+    <p> رسوم التوصيل <i class="fa-solid fa-circle-info"></i>
+</p>
+<span class="deliveryFee">0.00 ج.م</span>
+</div>
+<div class="afterDeliveryFeeAmount">
+    <p>المبلغ الإجمالي
+</p>
+<span class="totalAmount">15,000.00 ج.م</span>
+</div>
+
+<button class="submit" type="button">
+    تنفيذ الطلب
+</button>
+                        </figure>
+                    </div>
+                    </div>
+
+                </article>
+
+            </section>
+
+
+
+
+        </div>
+
+
+
+
+
+    </section>
+
+
+
+
+
+    <footer class="footer" role="contentinfo">
+        <div class="content-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4 data-key="footer_col_1_title">Fast Delivery</h4>
+                    <a href="#" data-key="footer_col_1_link_1">وظائف</a>
+                    <a href="#" data-key="footer_col_1_link_2">الشروط والأحكام</a>
+                    <a href="#" data-key="footer_col_1_link_3">سياسة الخصوصية</a>
+                    <a href="#" data-key="footer_col_1_link_4">الأسئلة الشائعة</a>
+                </div>
+                <div class="footer-column">
+                    <h4 data-key="footer_col_2_title">مطاعم شهيرة</h4>
+                    <a href="#">ماكدونالدز</a>
+                    <a href="#">كنتاكي</a>
+                    <a href="#">بيتزا هت</a>
+                    <a href="#">برجر كنج</a>
+                </div>
+                <div class="footer-column">
+                    <h4 data-key="footer_col_3_title">مدن مصر</h4>
+                    <a href="#">دمنهور</a>
+                    <a href="#">طنطا</a>
+                    <a href="#">القاهره</a>
+                    <a href="#">الاسكندريه</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>© 2025 Fast Delivery</div>
+                <div class="social-links">
+                    <a href="#" aria-label="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="تويتر"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="إنستغرام"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <div id="cartShower">
+        <h3 id="totalPayAmount">
+            المجموع: EGP 12.98
+        </h3>
+        <button type="button" class="submit">
+            عرض السلة
+        </button>
+
+    </div>
+
+
+    <ul id="userDropDown" aria-modal="true" role="combobox
+      aria-labelledby=" login-dropdown">
+        <li tabindex="0"><a href="./userprofile.html"> <i class="fa-solid fa-credit-card"></i> EGP 0.00</a></li>
+        <li tabindex="0"><a href="./userprofile.html"><i class="fa-solid fa-cart-shopping"></i>طلباتي السابقة</a></li>
+        <li tabindex="0"><a href="./userprofile.html"><i class="fa-solid fa-user"></i> معلومات الحساب</a></li>
+        <li tabindex="0"><a href="./userlocations.html"><i class="fa-solid fa-map-location-dot"></i> عناوين التوصيل </a>
+        </li>
+        <li tabindex="0" id="logOut"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج </li>
+    </ul>
+
+
+</body>
+
+<script src="./script/index.js" defer></script>
+<script src="./script/shopPage.js" defer></script>
+<script src="./script/cart.js" defer></script>
+
+</html>

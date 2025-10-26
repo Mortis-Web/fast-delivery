@@ -78,6 +78,8 @@ section#userDashboard {
   list-style-type: none;
   border-left: 1px solid rgba(0, 0, 0, 0.2);
   height: fit-content;
+  position: sticky;
+  top: 100px;
 
   li {
     padding: 10px;
@@ -100,19 +102,6 @@ section#userDashboard {
   border-right: 2px solid var(--fd-blue);
 }
 
-.route {
-  display: flex;
-  gap: 1rem;
-  align-items: baseline;
-  color: #777;
-  i {
-    color: var(--fd-blue);
-    scale: 1.125;
-  }
-  a {
-    color: black !important;
-  }
-}
 
 .profileContainer form {
   padding-block: 10px;
@@ -156,31 +145,10 @@ section#userDashboard {
     display: flex;
     align-items: center;
     gap: 1rem;
-    input[type="checkbox"] {
-      width: fit-content;
-      scale: 1.5;
-      accent-color: var(--fd-blue);
-    }
+
   }
 }
 
-button[type="submit"] {
-  background-color: var(--fd-blue) !important;
-  color: white;
-  font-size: 1rem !important;
-  max-width: 250px;
-  width: 100%;
-  margin: auto;
-  border-width: 2px;
-  transition: var(--transition);
-  border-color: transparent !important;
-
-  &:hover {
-    border-color: var(--fd-blue) !important;
-    background-color: transparent !important;
-    color: var(--fd-blue) !important;
-  }
-}
 
 .editBtns {
   align-items: center;

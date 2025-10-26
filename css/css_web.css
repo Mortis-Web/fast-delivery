@@ -11,7 +11,7 @@
 }
 /* Works on Chrome, Edge, Safari */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -31,6 +31,7 @@
   margin: 0;
   padding: 0;
   font-family: "Cairo", "Arial", "Helvetica Neue", Helvetica, sans-serif;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -52,20 +53,42 @@ a {
   width: 100%;
   padding: 0 50px;
 }
+#cartItemsNumber{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: var(--fd-red);
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  transform: translate(25%,25%);
+}
+
+#cartIcon{
+  position: relative;
+  isolation: isolate;
+}
 
 .header {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 10px 50px;
+  padding: 6px 50px;
   background: linear-gradient(135deg, #fffbe6 0%, #ffffff 0%, #fffbe6 10%);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 100;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
+
 
 .header.scrolled {
   background: var(--fd-white);
@@ -652,7 +675,6 @@ a {
   color: var(--fd-dark);
 }
 
-
 .social-buttons button {
   width: 100%;
   padding: 10px;
@@ -871,7 +893,6 @@ button {
   align-items: center;
   isolation: isolate;
   list-style-type: none;
-  /* overflow: hidden; */
   li {
     width: 100%;
     display: flex;
@@ -880,13 +901,12 @@ button {
     cursor: pointer;
     overflow: hidden;
     transition: var(--transition);
-
     align-items: center;
+    border-radius: inherit;
     &:hover {
       a {
         color: var(--fd-blue);
         background-color: rgba(0, 0, 0, 0.05);
-        scale: 1.075;
       }
       color: red;
     }
@@ -1312,12 +1332,155 @@ button {
 .hidden {
   display: none;
 }
+
+.route {
+  display: flex;
+  column-gap: 1rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+  color: #777;
+  i {
+    color: var(--fd-blue);
+    scale: 1.125;
+  }
+  a {
+    color: black !important;
+  }
+}
+
+button[type="submit"],
+.submit {
+  background-color: var(--fd-blue) !important;
+  color: white;
+  font-size: 1rem !important;
+  max-width: 250px;
+  width: 100%;
+  margin: auto;
+  border-width: 2px;
+  transition: var(--transition);
+  border-color: transparent !important;
+  border-radius: 0.5rem;
+
+  &:hover {
+    border-color: var(--fd-blue) !important;
+    background-color: transparent !important;
+    color: var(--fd-blue) !important;
+  }
+}
+input[type="checkbox"] {
+  width: fit-content;
+  scale: 1.35;
+  max-width: 50px !important;
+  accent-color: var(--fd-blue);
+}
+
+.shopNavBtns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 100%;
+  gap: 1rem;
+  #shopNavLeft,
+  #shopNavRight {
+    background-color: whitesmoke;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+    border-radius: 0.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 0.25rem 0.75rem;
+    transition: var(--transition);
+    &:hover {
+      border-color: transparent;
+      background-color: var(--fd-blue);
+      color: white;
+    }
+  }
+}
+
+#shopNavNums {
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  align-items: center;
+  button {
+    border: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    transition: var(--transition);
+    &:hover {
+      border-color: transparent;
+      background-color: var(--fd-blue);
+      color: white;
+    }
+  }
+
+  button.active {
+    border-color: transparent;
+    background-color: var(--fd-blue);
+    color: white;
+  }
+}
+
+/* Pagination container */
+#shopNavNums {
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  align-items: center;
+}
+
+/* Page buttons (numbers) */
+#shopNavNums button.page-btn {
+  border: none;
+  background: white;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+/* Active page (highlighted) */
+#shopNavNums button.page-btn.active {
+  background-color: var(--fd-blue);
+  color: white;
+}
+
+/* Dots (...) — disabled ALWAYS */
+#shopNavNums button.dots {
+  border: none;
+  background: transparent;
+  padding: 0.75rem 1rem;
+  color: gray;
+  cursor: default;
+}
+
+/* Hover effect on normal page buttons */
+#shopNavNums button.page-btn:hover:not(.active) {
+  background-color: var(--fd-blue);
+  color: white;
+}
+
+/* Nav arrow buttons (Next & Prev) */
+.shopNavBtns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 100%;
+  gap: 1rem;
+}
+
 @media (max-width: 900px) {
   .content-container {
     padding: 0 20px;
   }
   .header {
-    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
   }
@@ -1458,6 +1621,7 @@ button {
       border-top: 0 !important;
       justify-content: center;
       align-items: center;
+      position: static !important;
       display: flex;
       flex-direction: column;
       height: 0;
@@ -1495,7 +1659,7 @@ button {
     border: none;
   }
   .profileSettings li.active {
-    border-right: 0;
+    border-right: 0 !important;
     border-bottom: 2px solid var(--fd-blue);
     max-width: 200px;
   }
@@ -1506,7 +1670,7 @@ button {
     border-radius: 6px;
     padding-inline: 10px;
     i {
-      display: block;
+      display: block !important;
     }
   }
   .editBtns {
@@ -1516,7 +1680,7 @@ button {
   }
   .profileContainer {
     padding-block: 0;
-    input,
+    input:not[type="checkbox"],
     .inputHolder,
     .birthday {
       max-width: 100% !important;
@@ -1525,6 +1689,133 @@ button {
   .dataField {
     gap: 0.5rem;
   }
+
+  #selectedLocationShops {
+    h2 {
+      background-color: whitesmoke;
+      padding: 0.75rem 0.5rem;
+      border-radius: 0.5rem;
+    }
+  }
+  .selectedLocationFilters {
+    grid-template-columns: 1fr !important;
+
+    .inputHolder {
+      max-width: 100% !important;
+    }
+    .filters {
+      position: static !important;
+      height: 0;
+      padding-inline: 1rem;
+      border-bottom-right-radius: 6px;
+      border-bottom-left-radius: 6px;
+      border: 1px solid transparent;
+      border-top: 0;
+      transition: all 1000ms
+        linear(
+          0,
+          0.012 0.9%,
+          0.05 2%,
+          0.411 9.2%,
+          0.517 11.8%,
+          0.611 14.6%,
+          0.694 17.7%,
+          0.765 21.1%,
+          0.824 24.8%,
+          0.872 28.9%,
+          0.91 33.4%,
+          0.939 38.4%,
+          0.977 50.9%,
+          0.994 68.4%,
+          1
+        );
+      transform-origin: bottom;
+      interpolate-size: allow-keywords;
+      overflow: hidden;
+    }
+    .submit {
+      max-width: 250px;
+      margin: auto;
+    }
+  }
+  .border {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  .selectedLocationCategories {
+    padding-bottom: 1rem;
+  }
+
+  .filters.active {
+    height: auto;
+    border-color: rgba(0, 0, 0, 0.25);
+  }
+  #filterIcon {
+    transition: var(--transition);
+    cursor: pointer;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      color: var(--fd-blue);
+    }
+  }
+  #filterIcon.active {
+    color: var(--fd-blue);
+  }
+  #shopGrid {
+    grid-template-columns: 1fr !important;
+  }
+  #foodImageModal{
+    display: none !important;
+  }
+
+  /* CART STYLES */
+#cartShower{
+  display: flex !important;
+}
+#shoppingCart{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  inset: 0;
+  display: flex;
+  overflow-y: auto;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s all ease;
+  pointer-events: none;
+  #closeCartBtn{
+    display: flex !important;
+  }
+}
+#shoppingCart.is-visible{
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  #cartHolder{
+    scale: 1 !important;
+    opacity: 1 !important;
+  }
+}
+
+
+
+#cartHolder{
+  scale: 0.9;
+  transition: 0.5s all ease;
+  opacity: 0;
+}
+
+
+
+
 }
 
 @media (max-width: 600px) {
@@ -1573,6 +1864,46 @@ button {
   .login_form {
     padding: 25px !important;
   }
+  #selectedLocationShops h2,
+  .profile-head {
+    font-size: 1.25rem !important;
+  }
+  #foodListsNav {
+    display: none !important;
+  }
+  #shopFoodLists {
+    grid-template-columns: 1fr !important;
+  }
+  #shopListsOptions li {
+    font-size: 1rem !important;
+    i {
+      display: none;
+    }
+  }
+  .availableShop {
+    img {
+      width: 80px !important;
+      height: 80px !important;
+    }
+    .shopDelivery {
+      font-size: 0.75rem !important;
+    }
+    .shopRating {
+      font-size: 0.75rem;
+    }
+    .shopFoods {
+      font-size: 0.8rem !important;
+    }
+    .availableShopName {
+      font-size: 1rem !important;
+    }
+  }
+  .shopPayMethods {
+    img {
+      width: 30px !important;
+      height: 30px !important;
+    }
+  }
 }
 @media (max-width: 480px) {
   #confirmLocationBtn {
@@ -1618,6 +1949,33 @@ button {
   #mapModal button {
     font-size: 0.8rem !important;
   }
+  #shopsHolder {
+    grid-template-columns: repeat(2, minmax(120px, 1fr)) !important;
+  }
+  .availableShop {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .shopRating,
+  .shopDelivery,
+  .trustBadge,
+  .shopPayMethods {
+    justify-content: center !important;
+  }
+  .foodItem,.foodDetails {
+    flex-wrap: wrap;
+  }
+  .addToCart{
+    align-items: start !important;
+    height: fit-content !important;
+  }
+  .foodItem:nth-child(even){
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border-radius: 0.25rem;
+  }
+
 }
 
 /* EN STYLES */
@@ -1642,11 +2000,11 @@ body[dir="ltr"] {
   }
 
   .profileSettings {
-    border-left: 0;
-    border-right: 1px solid rgba(0, 0, 0, 0.25);
+    border-left: 0 !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.25) !important;
   }
   .profileSettings li.active {
-    border-right: 0;
+    border-right: 0 !important;
     border-left: 2px solid var(--fd-blue);
   }
   .profileContainer form {

@@ -27,7 +27,6 @@ window.addEventListener("load", () => {
   }
 });
 
-
 if (locationBtn) locationBtn.addEventListener("click", openMapModal);
 
 // =======================
@@ -142,9 +141,18 @@ confirmLocationBtn.addEventListener("click", () => {
     Swal.fire("⚠️", "من فضلك اختر موقع من الخريطة", "warning");
     return;
   }
+
+  // ✅ Save to localStorage
   localStorage.setItem("selectedLocation", JSON.stringify(selectedLocation));
+
+  // ✅ Update input
   if (searchInput) searchInput.value = selectedLocation.name;
+
+  // ✅ Close modal
   closeMap();
+
+  // ✅ NEW → Navigate to shops page
+  window.location.href = "selectedLocationShops.html";
 });
 
 // =======================
@@ -198,11 +206,12 @@ function performSearch() {
       lng: null,
     };
     localStorage.setItem("selectedLocation", JSON.stringify(selectedLocation));
-    console.log("🔹 Manually entered location saved:", selectedLocation);
   }
 
   if (selectedLocation) {
     console.log("Searching near:", selectedLocation);
+    // ✅ Navigate to the shops page
+    window.location.href = "selectedLocationShops.html";
   } else {
     Swal.fire("⚠️", "من فضلك اختر موقعك أولًا", "warning");
   }
@@ -308,7 +317,6 @@ async function showSuggestions(query) {
     console.error("❌ Photon API Error:", error);
   }
 }
-
 
 // 🎯 Input listener (with smart delay to prevent spamming API)
 if (searchInput) {
