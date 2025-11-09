@@ -218,7 +218,7 @@ input[type="radio"] {
   gap: 1rem;
 }
 
-#emptyLocations {
+#noPreviousOrders {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -228,7 +228,7 @@ input[type="radio"] {
   min-height: 300px;
   color: #777;
   i {
-    font-size: 3rem;
+    font-size: 6rem;
     position: relative;
   }
   i::after {
@@ -236,9 +236,10 @@ input[type="radio"] {
     border-radius: 8px;
     rotate: 45deg;
     inset: 0;
+    top: -8px;
     margin: auto;
-    width: 8px;
-    height: calc(100% + 24px);
+    width: 10px;
+    height: calc(100% + 56px);
     background: linear-gradient(to right, #777 50%, white 50%);
     position: absolute;
   }
@@ -348,6 +349,78 @@ input[type="radio"] {
   display: none;
 }
 
+.orderHistory{
+  padding: 1rem;
+  overflow: hidden;
+}
+.dateFilters{
+  display: flex;
+  gap: 1rem;
+    overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  padding: 0.5rem 0rem;
+  user-select: none;
+  align-items: center;
+  span{
+    border-radius: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 0.25rem 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+    &:hover{
+        background-color: var(--fd-blue);
+    border-color: transparent;
+    color: white;
+  }
+
+  }
+  span.active{
+    background-color: var(--fd-blue);
+    border-color: transparent;
+    color: white;
+  }
+}
+.dateFilters.active{
+  cursor: grabbing;
+}
+
+.dateFilters::-webkit-scrollbar{
+  height: 0;
+}
+
+.ordersHolder{
+  display: flex;
+  flex-direction: column;
+}
+
+.previousOrder{
+  display: flex; justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+border-radius: 0.25rem;
+
+}
+.previousOrder:nth-child(odd){
+  background-color: whitesmoke;
+}
+
+.orderDates{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filteredDateOrders{
+  margin-top: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  padding-bottom: 1rem;
+}
+
   </style>
 </head>
 
@@ -382,23 +455,109 @@ input[type="radio"] {
       <article class="profileContainer">
         <ul class="profileSettings">
           <li><a href="userprofile.html">معلومات الحساب</a></li>
-          <li class="active"><a href="userlocations.html">عناوين التوصيل</a></li>
-          <li><a href="previousOrders.html"> طلباتي السابقة</a></li>
+          <li><a href="userlocations.html">عناوين التوصيل</a></li>
+          <li  class="active"><a href="previousOrders.html"> طلباتي السابقة</a></li>
           <li><a href="userprofile.html"> البطاقات المحفوظة</a></li>
           <li><a href="userprofile.html"> talabat Pay </a></li>
         </ul>
 
 
-        <div id="emptyLocations">
-          <i class="fa-solid fa-location-dot"></i>
-          <p>لا يوجد عنوان مسجل
-
-          </p>
-          <button id='userLocationBtn'>إضافة عنوان جديد</button>
+        <article class="orderHistory">
+            <div id="noPreviousOrders">
+<i class="fa-solid fa-cart-shopping"></i>
+<p>لا يوجد طلبات مسبقة</p>
         </div>
 
 
-        <figure id="locationList"></figure>
+
+
+<div class="orderDates">
+  <h2>سجل الطلبات</h2>
+  <div class="dateFilters">
+    <span>اليوم</span>
+    <span>الأمس</span>
+    <span>آخر 7 أيام</span>
+    <span>الشهر الماضي</span>
+    <span>العام الماضي</span>
+  </div>
+
+  <!-- اليوم -->
+  <figure class="filteredDateOrders">
+    <h3>اليوم</h3>
+    <div class="ordersHolder">
+      <article class="previousOrder">
+        <div class="previousOrderDetails">
+          <h3 class="shopName">مطعم البيتزا السريعة</h3>
+          <p class="orderedItem">بيتزا مارغريتا</p>
+          <p class="deliveryLocation">العنوان: شارع التحرير، وسط المدينة</p>
+        </div>
+        <div class="previousOrderDetails">
+          <h3 class="orderedItemPrice">120 ج.م</h3>
+          <p class="orderDate">الأحد — 2025/02/02</p>
+        </div>
+      </article>
+
+      <article class="previousOrder">
+        <div class="previousOrderDetails">
+          <h3 class="shopName">كوفي شوب الأصيل</h3>
+          <p class="orderedItem">قهوة أمريكانو + كرواسون</p>
+          <p class="deliveryLocation">العنوان: شارع النيل، المعادي</p>
+        </div>
+        <div class="previousOrderDetails">
+          <h3 class="orderedItemPrice">85 ج.م</h3>
+          <p class="orderDate">الأحد — 2025/02/02</p>
+        </div>
+      </article>
+    </div>
+  </figure>
+
+  <!-- الأمس -->
+  <figure class="filteredDateOrders">
+    <h3>الأمس</h3>
+    <div class="ordersHolder">
+      <article class="previousOrder">
+        <div class="previousOrderDetails">
+          <h3 class="shopName">مطعم البرجر الملكي</h3>
+          <p class="orderedItem">برجر دبل تشيز + بطاطس</p>
+          <p class="deliveryLocation">العنوان: شارع الثورة، مدينة نصر</p>
+        </div>
+        <div class="previousOrderDetails">
+          <h3 class="orderedItemPrice">150 ج.م</h3>
+          <p class="orderDate">السبت — 2025/02/01</p>
+        </div>
+      </article>
+
+      <article class="previousOrder">
+        <div class="previousOrderDetails">
+          <h3 class="shopName">مطعم السوشي الياباني</h3>
+          <p class="orderedItem">سوشي سيت صغير</p>
+          <p class="deliveryLocation">العنوان: شارع التحرير، وسط البلد</p>
+        </div>
+        <div class="previousOrderDetails">
+          <h3 class="orderedItemPrice">200 ج.م</h3>
+          <p class="orderDate">السبت — 2025/02/01</p>
+        </div>
+      </article>
+
+      <article class="previousOrder">
+        <div class="previousOrderDetails">
+          <h3 class="shopName">كافتيريا المدينة</h3>
+          <p class="orderedItem">سندوتش فلافل + عصير برتقال</p>
+          <p class="deliveryLocation">العنوان: شارع الملك فيصل، حلوان</p>
+        </div>
+        <div class="previousOrderDetails">
+          <h3 class="orderedItemPrice">50 ج.م</h3>
+          <p class="orderDate">السبت — 2025/02/01</p>
+        </div>
+      </article>
+    </div>
+  </figure>
+</div>
+
+
+        </article>
+
+
 
 
 
@@ -651,8 +810,6 @@ input[type="radio"] {
 </script>
 
 <script src="./script/index.js" defer></script>
-
-<script src="./script/userLocationsMap.js" defer></script>
 <script defer>
     // user profile settings
       const profileHead = document.querySelector(".profile-head");
@@ -670,4 +827,52 @@ input[type="radio"] {
       }
 
 </script>
+<script defer>
+  const slider = document.querySelector('.dateFilters');
+let isDown = false;
+let startX;
+let scrollLeft;
+
+slider.addEventListener('mousedown', (e) => {
+  isDown = true;
+  slider.classList.add('active');
+  startX = e.pageX - slider.offsetLeft;
+  scrollLeft = slider.scrollLeft;
+});
+
+slider.addEventListener('mouseleave', () => {
+  isDown = false;
+  slider.classList.remove('active');
+});
+
+slider.addEventListener('mouseup', () => {
+  isDown = false;
+  slider.classList.remove('active');
+});
+
+slider.addEventListener('mousemove', (e) => {
+  if (!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - slider.offsetLeft;
+  const walk = (x - startX) * 2; // scroll-fast multiplier
+  slider.scrollLeft = scrollLeft - walk;
+});
+
+// ✅ Touch support
+slider.addEventListener('touchstart', (e) => {
+  isDown = true;
+  startX = e.touches[0].pageX - slider.offsetLeft;
+  scrollLeft = slider.scrollLeft;
+});
+
+slider.addEventListener('touchend', () => (isDown = false));
+slider.addEventListener('touchmove', (e) => {
+  if (!isDown) return;
+  const x = e.touches[0].pageX - slider.offsetLeft;
+  const walk = (x - startX) * 2;
+  slider.scrollLeft = scrollLeft - walk;
+});
+
+</script>
+
 </html>
