@@ -226,5 +226,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ✅ استدعاء عند تحميل الصفحة
+  
   updateLoginBtnBehavior();
 });

@@ -417,7 +417,7 @@
         overflow: hidden;
         max-width: 600px;
         width: 100%;
-        position: sticky;
+        position: static;
         isolation: isolate;
         top: 100px;
         height: fit-content;
@@ -474,12 +474,35 @@
         z-index: 100;
         background-color: var(--fd-dark);
 
-        .submit {
-            padding-block: 0.25rem;
+        .submit{
             margin: 0;
+            justify-content: center;
+            text-align: center;
+        }
+
+
+    }
+
+    .submit
+     {
+        display: flex;
+        overflow: hidden;
+
+        a{
+        color: white;
+        font-weight: bold;
+        transition: inherit;
+        width: 100%;
+    }
+
+    &:hover{
+        a{
+            color: var(--fd-blue);
         }
     }
 
+
+}
     #totalPayAmount {
         white-space: nowrap;
         font-size: 1rem;
@@ -547,6 +570,7 @@
     gap: 0.5rem;
     border-top: 1px solid rgba(0, 0, 0, 0.125);
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    text-align: center;
 
     padding: 0.5rem;
     font-size: 0.75rem;
@@ -647,10 +671,10 @@ border-radius: inherit;
             <a href="./userprofile_en.html" class="lang-btn">
                 <i class="fa fa-globe"></i> EN
             </a>
-            <button class="icon-btn" id="cartIcon" aria-label="السلة" role="button">
+            <a href="./checkout.html" class="icon-btn" id="cartIcon" aria-label="السلة" role="button">
                 <i class="fa fa-shopping-basket"></i>
                 <span id="cartItemsNumber">0</span>
-            </button>
+            </a>
             <button class="icon-btn" aria-label="تسجيل الدخول" data-key="login_btn" id="login-modal-btn">
                 <i class="fa fa-user"></i>
             </button>
@@ -1296,6 +1320,11 @@ border-radius: inherit;
 </p>
 <span class="deliveryFee">0.00 ج.م</span>
 </div>
+<div class="deliveryAmount">
+    <p> رسوم الخدمة <i class="fa-solid fa-circle-info"></i>
+</p>
+<span class="deliveryFee">3.99 ج.م</span>
+</div>
 <div class="afterDeliveryFeeAmount">
     <p>المبلغ الإجمالي
 </p>
@@ -1378,16 +1407,15 @@ border-radius: inherit;
 
     </div>
 
-
-    <ul id="userDropDown" aria-modal="true" role="combobox
+ <ul id="userDropDown" aria-modal="true" role="combobox
       aria-labelledby=" login-dropdown">
-        <li tabindex="0"><a href="./userprofile.html"> <i class="fa-solid fa-credit-card"></i> EGP 0.00</a></li>
-        <li tabindex="0"><a href="./userprofile.html"><i class="fa-solid fa-cart-shopping"></i>طلباتي السابقة</a></li>
-        <li tabindex="0"><a href="./userprofile.html"><i class="fa-solid fa-user"></i> معلومات الحساب</a></li>
-        <li tabindex="0"><a href="./userlocations.html"><i class="fa-solid fa-map-location-dot"></i> عناوين التوصيل </a>
-        </li>
-        <li tabindex="0" id="logOut"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج </li>
-    </ul>
+    <li tabindex="0"><a href="./userprofile.html"> <i class="fa-solid fa-credit-card"></i> EGP 0.00</a></li>
+    <li tabindex="0"><a href="./previousOrders.html"><i class="fa-solid fa-cart-shopping"></i>طلباتي السابقة</a></li>
+    <li tabindex="0"><a href="./userprofile.html"><i class="fa-solid fa-user"></i> معلومات الحساب</a></li>
+    <li tabindex="0"><a href="./userlocations.html"><i class="fa-solid fa-map-location-dot"></i> عناوين التوصيل </a>
+    </li>
+    <li tabindex="0" id="logOut"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج </li>
+  </ul>
 
 
 </body>

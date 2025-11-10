@@ -22,7 +22,10 @@ dropDownBtns.forEach((btn) => {
 const cartShower = document.querySelector("#cartShower .submit");
 const shoppingCartPopup = document.querySelector("#shoppingCart");
 const cartHolder = document.querySelector("#cartHolder");
+const inCartItems = document.querySelector("#inCartItems");
 const closeCartBtn = document.querySelector("#closeCartBtn");
+const removeCartItem = document.querySelectorAll(".removeCartItem");
+
 
 cartShower.addEventListener("click", () => {
   shoppingCartPopup.classList.add("is-visible");
@@ -36,11 +39,13 @@ const closeCart = () => {
 
 closeCartBtn.addEventListener("click", closeCart);
 
-shoppingCartPopup.addEventListener("click", (e) => {
-  if (!cartHolder.contains(e.target)) {
-    closeCart();
-  }
-});
+// shoppingCartPopup.addEventListener("click", (e) => {
+//   if (!cartHolder.contains(e.target) && !inCartItems.contains(e.target)) {
+//     closeCart();
+//   }
+// });
+
+
 
 /* ========== Live Search Filter for Food Items ========== */
 const searchInput = document.getElementById("selectedShopSearcher");

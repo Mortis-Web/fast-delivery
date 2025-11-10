@@ -1966,6 +1966,16 @@ input[type="radio"] {
       height: 30px !important;
     }
   }
+
+    #shoppingCart{
+    padding: 0 !important;
+  }
+  #cartHolder,#inCartItems{
+    height: 100%;
+  }
+  #cartHolder{
+    border-radius: 0 !important;
+  }
 }
 @media (max-width: 480px) {
   #confirmLocationBtn {
@@ -2037,6 +2047,8 @@ input[type="radio"] {
     background-color: rgba(0, 0, 0, 0.1) !important;
     border-radius: 0.25rem;
   }
+
+
 
 }
 

@@ -245,7 +245,7 @@
     }
 
 
-#inCartItems{
+#checkoutCartItems{
      display: flex;
         flex-direction: column;
         gap: 1.5rem;
@@ -260,7 +260,8 @@
         border-bottom-right-radius: inherit;
         .submit{
             font-weight: bold;
-            max-width: 100%;
+            max-width: 500px;
+            margin: auto;
         }
 }
 
@@ -323,10 +324,10 @@
             <a href="./userprofile_en.html" class="lang-btn">
                 <i class="fa fa-globe"></i> EN
             </a>
-            <button class="icon-btn" id="cartIcon" aria-label="السلة" role="button">
+            <a href="./checkout.html" class="icon-btn" id="cartIcon" aria-label="السلة" role="button">
                 <i class="fa fa-shopping-basket"></i>
                 <span id="cartItemsNumber">0</span>
-            </button>
+            </a>
             <button class="icon-btn" aria-label="تسجيل الدخول" data-key="login_btn" id="login-modal-btn">
                 <i class="fa fa-user"></i>
             </button>
@@ -521,45 +522,35 @@
                             سلة مشترياتك
                         </h2>
 
-                        <figure id="inCartItems">
+                        <figure id="checkoutCartItems">
+  <div class="preDeliveryFeeAmount">
+    <p>المجموع الفرعي</p>
+    <span class="subtotalAmount"></span>
+  </div>
 
+  <div class="deliveryAmount">
+    <p>رسوم التوصيل <i class="fa-solid fa-circle-info"></i></p>
+    <span class="deliveryFee"></span>
+  </div>
 
+  <div class="deliveryAmount">
+    <p>رسوم الخدمة <i class="fa-solid fa-circle-info"></i></p>
+    <span class="deliveryFee"></span>
+  </div>
 
+  <div class="afterDeliveryFeeAmount">
+    <p>المبلغ الإجمالي</p>
+    <span class="totalAmount"></span>
+  </div>
 
-<div class="preDeliveryFeeAmount">
-    <p>المجموع الفرعي
-</p>
-<span class="subtotalAmount">15,000.00 ج.م</span>
-</div>
-<div class="deliveryAmount">
-    <p> رسوم التوصيل <i class="fa-solid fa-circle-info"></i>
-</p>
-<span class="deliveryFee">0.00 ج.م</span>
-</div>
-<div class="deliveryAmount">
-    <p> رسوم الخدمة <i class="fa-solid fa-circle-info"></i>
-</p>
-<span class="deliveryFee">3.99 ج.م</span>
-</div>
-<div class="afterDeliveryFeeAmount">
-    <p>المبلغ الإجمالي
-</p>
-<span class="totalAmount">15,000.00 ج.م</span>
-</div>
+  <div class="afterDeliveryFeeAmount">
+    <span id="wayOfPayment">الدفع من خلال البطاقة الإئتمانية</span>
+    <span class="totalAmount"></span>
+  </div>
 
+  <button class="submit" type="button">تنفيذ الطلب</button>
+</figure>
 
-<div class="afterDeliveryFeeAmount">
-    <span id="wayOfPayment">الدفع من خلال البطاقة الإئتمانية
-</span>
-<span class="totalAmount">15,000.00 ج.م
-</span>
-</div>
-
-<button class="submit" type="button">
-
-        تنفيذ الطلب
-</button>
-                        </figure>
                     </div>
                     </div>
 
@@ -641,7 +632,6 @@
 </body>
 
 <script src="./script/index.js" defer></script>
-<script src="./script/shopPage.js" defer></script>
 <script src="./script/cart.js" defer></script>
 
 </html>
