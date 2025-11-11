@@ -127,4 +127,28 @@ foodImages.forEach((img) => {
   img.addEventListener("mouseleave", () => {
     foodImageModal.classList.remove("show");
   });
+
+
+
+
+
+
+   const shopData = JSON.parse(localStorage.getItem("selectedShop"));
+  if (!shopData) return;
+
+  const shopEl = document.querySelector(".availableShop");
+  if (!shopEl) return;
+
+  // Replace default content
+  shopEl.id = shopData.id;
+  shopEl.querySelector("img").src = shopData.img;
+  shopEl.querySelector(".availableShopName").textContent = shopData.name;
+  shopEl.querySelector(".shopFoods").textContent = shopData.desc;
+  shopEl.querySelector(".shopRating").innerHTML = `<i class="fa-solid fa-face-smile"></i> ${shopData.rating}`;
+  shopEl.querySelector(".timer").textContent = shopData.deliveryTime;
+  shopEl.querySelector(".delieveryPayment").textContent = `توصيل: ${shopData.deliveryPayment}`;
+  shopEl.querySelector(".minPay").textContent = shopData.minPay;
+
+  // ✅ Save current shop ID for cart system
+  localStorage.setItem("currentShopId", shopData.id);
 });

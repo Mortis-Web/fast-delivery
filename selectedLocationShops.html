@@ -86,7 +86,8 @@
     flex-direction: column;
     gap: 1rem;
   }
-  .filters{
+
+  .filters {
     position: sticky;
     top: 30px;
     height: fit-content;
@@ -103,7 +104,7 @@
   }
 
 
-  .locationShops{
+  .locationShops {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -122,12 +123,14 @@
     gap: 1rem;
   }
 
-  .filterOptions{
+  .filterOptions {
     padding-inline: 0.5rem;
     max-height: 180px;
     overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
-  overscroll-behavior: contain;      /* prevent scroll chaining */
+    -webkit-overflow-scrolling: touch;
+    /* smooth scroll on iOS */
+    overscroll-behavior: contain;
+    /* prevent scroll chaining */
     touch-action: pan-y;
 
   }
@@ -163,10 +166,12 @@
 
     h5 {
       font-weight: 500 !important;
-      cursor: pointer; transition: var(--transition);
-    &:hover{
-      color: var(--fd-blue);
-    }
+      cursor: pointer;
+      transition: var(--transition);
+
+      &:hover {
+        color: var(--fd-blue);
+      }
 
     }
   }
@@ -213,7 +218,8 @@
     flex-direction: column;
   }
 
-  .availableShopName,.shopFoods {
+  .availableShopName,
+  .shopFoods {
     line-height: 1;
     margin-bottom: 0.5rem;
     transition: var(--transition);
@@ -271,7 +277,6 @@
     align-items: center;
     white-space: nowrap;
   }
-
 </style>
 
 <body>
@@ -291,9 +296,9 @@
         <i class="fa fa-globe"></i> EN
       </a>
       <a href="./checkout.html" class="icon-btn" id="cartIcon" aria-label="السلة" role="button">
-                <i class="fa fa-shopping-basket"></i>
-                <span id="cartItemsNumber">0</span>
-            </a>
+        <i class="fa fa-shopping-basket"></i>
+        <span id="cartItemsNumber">0</span>
+      </a>
       <button class="icon-btn" aria-label="تسجيل الدخول" data-key="login_btn" id="login-modal-btn">
         <i class="fa fa-user"></i>
       </button>
@@ -385,7 +390,7 @@
                 <label for="drinks">
                   مشروبات</label>
               </span>
-               <span class="filterOption">
+              <span class="filterOption">
                 <input type="checkbox" name="breakfast" id="breakfast">
                 <label for="breakfast">
                   الإفطار</label>
@@ -414,7 +419,7 @@
                 <label for="pizza">
                   البيتزا</label>
               </span>
-               <span class="filterOption">
+              <span class="filterOption">
                 <input type="checkbox" name="sweets" id="sweets">
                 <label for="sweets">
                   الحلويات</label>
@@ -459,11 +464,11 @@
           </span>
 
           <div class="mainFiltersLabels">
-            <h5 class="filterCategory active" id="alphabeticOrder">من الألف للياء</h5 >
+            <h5 class="filterCategory active" id="alphabeticOrder">من الألف للياء</h5>
             <h5 class="filterCategory" id="deliveryFeeOrder">
               رسوم التوصيل
-            </h5 >
-            <h5 class="filterCategory" id="deliveryTimeOrder">وقت التوصيل</h5 >
+            </h5>
+            <h5 class="filterCategory" id="deliveryTimeOrder">وقت التوصيل</h5>
             <h5 class="filterCategory" id="minPayOrder">الحد الأدنى للطلب</h5>
             <h5 class="filterCategory" id="ratingOrder">التقييم</h5>
 
@@ -471,7 +476,7 @@
         </article>
 
         <div class="allAvailableShops">
-          <a href="./shopPage.html" class="availableShop">
+          <a href="./shopPage.html" id="shop1" class="availableShop">
             <img src="./images/101-min.jpg" alt="shop logo">
             <div class="availableShopDesc">
               <h3 class="availableShopName">one</h3>
@@ -487,7 +492,7 @@
                   خلال <span class="timer">42</span> دقيقة
                 </span>
                 <span class="deliveryPayment">توصيل:&nbsp; مجاني</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
+                <span class="minPay"> الحد الأدني للطلب:&nbsp;50.00</span>
               </div>
               <div class="trustBadge">
                 <p>تتبع مباشر</p>
@@ -498,7 +503,7 @@
           </a>
 
 
-             <a href="./shopPage.html" class="availableShop">
+          <a href="./shopPage.html" id="shop2" class="availableShop">
             <img src="./images/5-min (1)_11zon.jpg" alt="shop logo">
             <div class="availableShopDesc">
               <h3 class="availableShopName">two</h3>
@@ -524,7 +529,7 @@
             </div>
           </a>
 
-             <a href="./shopPage.html" class="availableShop">
+          <a href="./shopPage.html" id="shop3" class="availableShop">
             <img src="./images/106-min (1)_11zon.jpg" alt="shop logo">
             <div class="availableShopDesc">
               <h3 class="availableShopName">three</h3>
@@ -552,401 +557,9 @@
 
 
 
-   <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
 
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
 
-              </div>
-            </div>
-          </a>
-
-            <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>
-            <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>
-            <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>
-            <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>
-            <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>
-            <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>
-            <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>
-           <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 10.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>
-           <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">120</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
+    <a href="./shopPage.html" id="shop4" class="availableShop">
             <img src="./images/102-min.jpg" alt="shop logo">
             <div class="availableShopDesc">
               <h3 class="availableShopName">four</h3>
@@ -962,295 +575,7 @@
                   خلال <span class="timer">42</span> دقيقة
                 </span>
                 <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;500000.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد جدا
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-meh"></i></i>عادي
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-meh"></i></i>عادي
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-meh"></i></i>عادي
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-meh"></i></i>عادي
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-meh"></i></i>عادي
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-meh"></i></i>عادي
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-meh"></i></i>عادي
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-meh"></i></i>عادي
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-meh"></i></i>عادي
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد جدا
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
-              </div>
-              <div class="trustBadge">
-                <p>تتبع مباشر</p>
-                <p class="circleBadge"> توصيل آمن</p>
-
-              </div>
-            </div>
-          </a>  <a href="./shopPage.html" class="availableShop">
-            <img src="./images/102-min.jpg" alt="shop logo">
-            <div class="availableShopDesc">
-              <h3 class="availableShopName">four</h3>
-              <p class="shopFoods">
-                Lorem ipsum dolor sit amet consectetur.
-              </p>
-              <span class="shopRating">
-                <i class="fa-solid fa-face-smile"></i>جيد جدا
-              </span>
-
-              <div class="shopDelivery">
-                <span class="deliveryTime">
-                  خلال <span class="timer">42</span> دقيقة
-                </span>
-                <span class="deliveryPayment">توصيل:&nbsp; 100.00</span>
-                <span class="minPay">  الحد الأدني للطلب:&nbsp;50.00</span>
+                <span class="minPay"> الحد الأدني للطلب:&nbsp;50.00</span>
               </div>
               <div class="trustBadge">
                 <p>تتبع مباشر</p>
@@ -1261,17 +586,17 @@
           </a>
         </div>
         <!-- Hidden by default -->
-<figure id="noShopsMatched" style="display: none; text-align:center; margin-top:20px;">
-  🚫 لا توجد مطاعم مطابقة للبحث
-</figure>
+        <figure id="noShopsMatched" style="display: none; text-align:center; margin-top:20px;">
+          🚫 لا توجد مطاعم مطابقة للبحث
+        </figure>
 
-<span class="shopNavBtns">
-  <button id="shopNavLeft"><i class="fa-solid fa-arrow-right"></i></button>
+        <span class="shopNavBtns">
+          <button id="shopNavLeft"><i class="fa-solid fa-arrow-right"></i></button>
 
-  <div id="shopNavNums"></div> <!-- This is your pagination holder -->
+          <div id="shopNavNums"></div> <!-- This is your pagination holder -->
 
-  <button id="shopNavRight"><i class="fa-solid fa-arrow-left"></i></button>
-</span>
+          <button id="shopNavRight"><i class="fa-solid fa-arrow-left"></i></button>
+        </span>
 
 
       </figure>
@@ -1396,7 +721,7 @@
 <script src="./script/cart.js" defer></script>
 
 <script defer>
-const filterIcon = document.querySelector("#filterIcon");
+  const filterIcon = document.querySelector("#filterIcon");
   const filterCategories = document.querySelector(".filters");
   if (filterIcon) {
     filterIcon.addEventListener("click", () => {
@@ -1407,7 +732,35 @@ const filterIcon = document.querySelector("#filterIcon");
         filterIcon.style.pointerEvents = "auto";
       }, 500);
     });
-  }</script>
+  }
+</script>
 
+<script defer>
+  document.addEventListener("DOMContentLoaded", () => {
+  const shops = document.querySelectorAll(".availableShop");
+
+  shops.forEach(shop => {
+    shop.addEventListener("click", (e) => {
+      const shopId = shop.id;
+
+      // Collect data for that shop
+      const shopData = {
+        id: shopId,
+        img: shop.querySelector("img")?.getAttribute("src"),
+        name: shop.querySelector(".availableShopName")?.textContent.trim(),
+        desc: shop.querySelector(".shopFoods")?.textContent.trim(),
+        rating: shop.querySelector(".shopRating")?.textContent.trim(),
+        deliveryTime: shop.querySelector(".timer")?.textContent.trim(),
+        deliveryPayment: shop.querySelector(".deliveryPayment")?.textContent.trim(),
+        minPay: shop.querySelector(".minPay")?.textContent.trim(),
+      };
+
+      // ✅ Save the selected shop data in localStorage
+      localStorage.setItem("selectedShop", JSON.stringify(shopData));
+    });
+  });
+});
+
+</script>
 
 </html>

@@ -1,112 +1,158 @@
 // ✅ Global Cart System — Runs on All Pages
 
 document.addEventListener("DOMContentLoaded", () => {
-function showCartToast(message = "تمت الإضافة إلى السلة!", options = {}) {
-  const {
-    background = "#ffc119", // toast background
-    color = "#fff",          // text color
-    icon = "success",
-  } = options;
+  let isSwalOpen = false;
+  function showCartToast(message = "تمت الإضافة إلى السلة!", options = {}) {
+    const {
+      background = "#ffc119", // toast background
+        color = "#fff", // text color
+        icon = "success",
+    } = options;
 
-  const progressColor = icon === "success" ? "#a5dc86" : "#ffeb3b";
+    const progressColor = icon === "success" ? "#a5dc86" : "#ffeb3b";
 
-  // Responsive position & scale
-  const isMobile = window.innerWidth <= 600;
-  const position = isMobile ? "top" : "top-end";
-  const width = isMobile ? "90%" : "auto";
-  const customPadding = isMobile ? "0.5em" : "";
+    // Responsive position & scale
+    const isMobile = window.innerWidth <= 600;
+    const position = isMobile ? "top" : "top-end";
+    const width = isMobile ? "90%" : "auto";
+    const customPadding = isMobile ? "0.5em" : "";
 
-  Swal.fire({
-    toast: true,
-    position: position,
-    icon: icon,
-    title: message,
-    showConfirmButton: false,
-    timer: 1500,
-    timerProgressBar: true,
-    background: background,
-    color: color,
-    width: width,
-    padding: customPadding,
-    customClass: {
-      timerProgressBar: 'custom-toast-progress'
-    },
-    didOpen: (toast) => {
-      toast.addEventListener("mouseenter", Swal.stopTimer);
-      toast.addEventListener("mouseleave", Swal.resumeTimer);
-    },
-  });
+    Swal.fire({
+      toast: true,
+      position: position,
+      icon: icon,
+      title: message,
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      background: background,
+      color: color,
+      width: width,
+      padding: customPadding,
+      customClass: {
+        timerProgressBar: 'custom-toast-progress'
+      },
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
 
-  // Inject custom style for this toast instance
-  const style = document.createElement("style");
-  style.textContent = `
+    // Inject custom style for this toast instance
+    const style = document.createElement("style");
+    style.textContent = `
     .swal2-container .custom-toast-progress {
       background: ${progressColor} !important;
     }
   `;
-  document.head.appendChild(style);
-}
+    document.head.appendChild(style);
+  }
 
 
   const cart = {
-  items: JSON.parse(localStorage.getItem("cartItems")) || [],
-  deliveryFee: 10,
-  serviceFee: 3.99,
+    items: JSON.parse(localStorage.getItem("cartItems")) || [],
+    deliveryFee: 10,
+    serviceFee: 3.99,
 
-  save() {
-    localStorage.setItem("cartItems", JSON.stringify(this.items));
-    this.saveSummary();
-    updateCartUI();
-    updateCartCounter();
-    updateTotalPayAmount();
-  },
+    save() {
+      localStorage.setItem("cartItems", JSON.stringify(this.items));
+      this.saveSummary();
+      updateCartUI();
+      updateCartCounter();
+      updateTotalPayAmount();
+    },
 
-  saveSummary() {
-    const subtotal = this.getSubtotal();
-    const summary = {
-      subtotal: subtotal.toFixed(2),
-      delivery: this.deliveryFee.toFixed(2),
-      service: this.serviceFee.toFixed(2),
-      total: (subtotal + this.deliveryFee + this.serviceFee).toFixed(2),
-    };
-    localStorage.setItem("cartSummary", JSON.stringify(summary));
-  },
+    saveSummary() {
+      const subtotal = this.getSubtotal();
+      const summary = {
+        subtotal: subtotal.toFixed(2),
+        delivery: this.deliveryFee.toFixed(2),
+        service: this.serviceFee.toFixed(2),
+        total: (subtotal + this.deliveryFee + this.serviceFee).toFixed(2),
+      };
+      localStorage.setItem("cartSummary", JSON.stringify(summary));
+    },
 
-  getSubtotal() {
-    return this.items.reduce((sum, item) => {
-      const price = parseFloat(item.price.replace(/[^\d.]/g, "")) || 0;
-      return sum + price * item.amount;
-    }, 0);
-  },
+    getSubtotal() {
+      return this.items.reduce((sum, item) => {
+        const price = parseFloat(item.price.replace(/[^\d.]/g, "")) || 0;
+        return sum + price * item.amount;
+      }, 0);
+    },
 
-  addItem(item) {
-    const existing = this.items.find((i) => i.id === item.id); // use id
-    if (existing) existing.amount += 1;
-    else this.items.push({ ...item, amount: 1 });
-    this.save();
-  },
 
-  removeItem(id) {
-    this.items = this.items.filter((i) => i.id !== id); // use id
-    this.save();
-  },
 
-  increaseItem(id) {
-    const existing = this.items.find((i) => i.id === id);
-    if (existing) {
-      existing.amount += 1;
+    addItem(item) {
+      if (isSwalOpen) return;
+      const currentShopId = localStorage.getItem("currentShopId");
+      const cartShopId = localStorage.getItem("cartShopId");
+
+      // ⚠️ If cart belongs to a different shop, confirm before replacing
+      if (cartShopId && cartShopId !== currentShopId) {
+          isSwalOpen = true;
+        Swal.fire({
+          title: "لا يمكنك الطلب من أكثر من متجر في نفس الوقت",
+          text: "هل تريد تفريغ السلة وإضافة هذا المنتج؟",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "نعم، تفريغ السلة",
+          cancelButtonText: "إلغاء",
+          reverseButtons: true,
+        }).then((result) => {
+            isSwalOpen = false;
+          if (result.isConfirmed) {
+            // Empty cart, set new shop ID, add product
+            this.items = [];
+            localStorage.setItem("cartShopId", currentShopId);
+            this.items.push({
+              ...item,
+              amount: 1
+            });
+            this.save();
+            showCartToast("تم تفريغ السلة وإضافة المنتج الجديد!");
+          } else {
+            // Do nothing
+            return;
+          }
+        });
+        return;
+      }
+
+      // ✅ If first time or same shop, proceed normally
+      if (!cartShopId) localStorage.setItem("cartShopId", currentShopId);
+
+      const existing = this.items.find((i) => i.id === item.id);
+      if (existing) existing.amount += 1;
+      else this.items.push({
+        ...item,
+        amount: 1
+      });
       this.save();
-    }
-  },
+    },
 
-  decreaseItem(id) {
-    const existing = this.items.find((i) => i.id === id);
-    if (!existing) return;
-    existing.amount -= 1;
-    if (existing.amount <= 0) this.removeItem(id);
-    else this.save();
-  },
-};
+
+    removeItem(id) {
+      this.items = this.items.filter((i) => i.id !== id); // use id
+      this.save();
+    },
+
+    increaseItem(id) {
+      const existing = this.items.find((i) => i.id === id);
+      if (existing) {
+        existing.amount += 1;
+        this.save();
+      }
+    },
+
+    decreaseItem(id) {
+      const existing = this.items.find((i) => i.id === id);
+      if (!existing) return;
+      existing.amount -= 1;
+      if (existing.amount <= 0) this.removeItem(id);
+      else this.save();
+    },
+  };
+
 
 
   /* ========== COUNTER ========== */
@@ -212,86 +258,90 @@ function showCartToast(message = "تمت الإضافة إلى السلة!", opt
   }
 
   /* ========== ADD TO CART BUTTONS ========== */
-function initAddToCartByCard() {
-  const foodItems = document.querySelectorAll(".foodItem");
+  function initAddToCartByCard() {
+    const foodItems = document.querySelectorAll(".foodItem");
 
-  foodItems.forEach((itemEl) => {
-    itemEl.addEventListener("click", (e) => {
-      // Ignore clicks on buttons inside the item
-      if (e.target.closest("button")) return;
+    foodItems.forEach((itemEl) => {
+      itemEl.addEventListener("click", (e) => {
+        // Ignore clicks on buttons inside the item
+        if (e.target.closest("button")) return;
 
-      const id = itemEl.getAttribute("id");
-      const name = itemEl.querySelector(".foodName")?.textContent.trim();
-      const price = itemEl.querySelector(".foodNewPrice")?.textContent.trim();
+        const id = itemEl.getAttribute("id");
+        const name = itemEl.querySelector(".foodName")?.textContent.trim();
+        const price = itemEl.querySelector(".foodNewPrice")?.textContent.trim();
 
-      if (id && name && price) {
-        // Load clicked IDs from localStorage
-        let clickedIds = JSON.parse(localStorage.getItem("clickedProductIds")) || [];
+        if (id && name && price) {
+          // Load clicked IDs from localStorage
+          let clickedIds = JSON.parse(localStorage.getItem("clickedProductIds")) || [];
 
-        // Only add to clicked IDs if not already present
-        const isNewClick = !clickedIds.includes(id);
-        if (isNewClick) {
-          clickedIds.push(id);
-          localStorage.setItem("clickedProductIds", JSON.stringify(clickedIds));
-        }
+          // Only add to clicked IDs if not already present
+          const isNewClick = !clickedIds.includes(id);
+          if (isNewClick) {
+            clickedIds.push(id);
+            localStorage.setItem("clickedProductIds", JSON.stringify(clickedIds));
+          }
 
-        // Add item to cart
-        cart.addItem({ id, name, price });
+          // Add item to cart
+          cart.addItem({
+            id,
+            name,
+            price
+          });
 
-        // Show toast ONLY if first time clicked
-        if (isNewClick) {
-          showCartToast(`تم إضافة "${name}" إلى السلة!`);
-        }
+          // Show toast ONLY if first time clicked
+          if (isNewClick) {
+            showCartToast(`تم إضافة "${name}" إلى السلة!`);
+          }
 
-        console.log("Clicked product IDs:", clickedIds);
-      }
-    });
-  });
-}
-
-
-// ✅ Function to empty the cart
-function attachEmptyCartButton(buttonSelector, options = {}) {
-  const btn = document.querySelector(buttonSelector);
-  if (!btn) return;
-
-  btn.addEventListener("click", () => {
-    const doEmpty = () => {
-      cart.items = [];
-      cart.save();
-      if (options.clearClickedIds) {
-        localStorage.setItem("clickedProductIds", JSON.stringify([]));
-      }
-      if (options.toastMessage) {
-        showCartToast(options.toastMessage);
-      }
-    };
-
-    if (options.confirm) {
-      Swal.fire({
-        title: options.confirmMessage || "هل أنت متأكد أنك تريد تفريغ السلة؟",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "نعم، تفريغ",
-        cancelButtonText: "إلغاء",
-        reverseButtons: true
-      }).then((result) => {
-        if (result.isConfirmed) {
-          doEmpty();
+          console.log("Clicked product IDs:", clickedIds);
         }
       });
-    } else {
-      doEmpty();
-    }
-  });
-}
+    });
+  }
 
-attachEmptyCartButton("#emptyCartBtn", {
-  confirm: true,
-  confirmMessage: "هل أنت متأكد أنك تريد تفريغ السلة؟",
-  toastMessage: "تم تفريغ السلة!",
-  clearClickedIds: true,
-});
+
+  // ✅ Function to empty the cart
+  function attachEmptyCartButton(buttonSelector, options = {}) {
+    const btn = document.querySelector(buttonSelector);
+    if (!btn) return;
+
+    btn.addEventListener("click", () => {
+      const doEmpty = () => {
+        cart.items = [];
+        cart.save();
+        if (options.clearClickedIds) {
+          localStorage.setItem("clickedProductIds", JSON.stringify([]));
+        }
+        if (options.toastMessage) {
+          showCartToast(options.toastMessage);
+        }
+      };
+
+      if (options.confirm) {
+        Swal.fire({
+          title: options.confirmMessage || "هل أنت متأكد أنك تريد تفريغ السلة؟",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "نعم، تفريغ",
+          cancelButtonText: "إلغاء",
+          reverseButtons: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            doEmpty();
+          }
+        });
+      } else {
+        doEmpty();
+      }
+    });
+  }
+
+  attachEmptyCartButton("#emptyCartBtn", {
+    confirm: true,
+    confirmMessage: "هل أنت متأكد أنك تريد تفريغ السلة؟",
+    toastMessage: "تم تفريغ السلة!",
+    clearClickedIds: true,
+  });
 
 
   /* ========== CHECKOUT PAGE LOADER ========== */
@@ -299,7 +349,12 @@ attachEmptyCartButton("#emptyCartBtn", {
     if (!window.location.pathname.includes("checkout")) return;
     const stored = localStorage.getItem("cartSummary");
     if (!stored) return;
-    const { subtotal, delivery, service, total } = JSON.parse(stored);
+    const {
+      subtotal,
+      delivery,
+      service,
+      total
+    } = JSON.parse(stored);
     const subtotalEl = document.querySelector(".subtotalAmount");
     const deliveryEl = document.querySelectorAll(".deliveryFee")[0];
     const serviceEl = document.querySelectorAll(".deliveryFee")[1];
