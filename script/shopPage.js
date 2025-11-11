@@ -102,9 +102,9 @@ foodImages.forEach((img) => {
 
     // If arrow would go out of modal bounds, shift modal
     if (arrowOffset < 10) {
-      top = imageCenterY - 15 - 10; // 10px padding
+      top = imageCenterY - 30 - 10; // 10px padding
     } else if (arrowOffset > modalHeight - 30) {
-      top = imageCenterY - modalHeight + 15 + 10; // 10px padding
+      top = imageCenterY - modalHeight + 30 + 10; // 10px padding
     }
 
     // Position popup

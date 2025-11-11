@@ -1,72 +1,113 @@
 // ✅ Global Cart System — Runs on All Pages
+
 document.addEventListener("DOMContentLoaded", () => {
-  /* ========== CART CORE ========== */
+function showCartToast(message = "تمت الإضافة إلى السلة!", options = {}) {
+  const {
+    background = "#ffc119", // toast background
+    color = "#fff",          // text color
+    icon = "success",
+  } = options;
+
+  const progressColor = icon === "success" ? "#a5dc86" : "#ffeb3b";
+
+  // Responsive position & scale
+  const isMobile = window.innerWidth <= 600;
+  const position = isMobile ? "top" : "top-end";
+  const width = isMobile ? "90%" : "auto";
+  const customPadding = isMobile ? "0.5em" : "";
+
+  Swal.fire({
+    toast: true,
+    position: position,
+    icon: icon,
+    title: message,
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+    background: background,
+    color: color,
+    width: width,
+    padding: customPadding,
+    customClass: {
+      timerProgressBar: 'custom-toast-progress'
+    },
+    didOpen: (toast) => {
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+  });
+
+  // Inject custom style for this toast instance
+  const style = document.createElement("style");
+  style.textContent = `
+    .swal2-container .custom-toast-progress {
+      background: ${progressColor} !important;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+
   const cart = {
-    items: JSON.parse(localStorage.getItem("cartItems")) || [],
-    deliveryFee: 10, // EGP (you can change dynamically)
-    serviceFee: 3.99, // EGP fixed or dynamic
+  items: JSON.parse(localStorage.getItem("cartItems")) || [],
+  deliveryFee: 10,
+  serviceFee: 3.99,
 
-    // ✅ Save cart state to localStorage + update UI
-    save() {
-      localStorage.setItem("cartItems", JSON.stringify(this.items));
-      this.saveSummary();
-      updateCartUI();
-      updateCartCounter();
-      updateTotalPayAmount();
-    },
+  save() {
+    localStorage.setItem("cartItems", JSON.stringify(this.items));
+    this.saveSummary();
+    updateCartUI();
+    updateCartCounter();
+    updateTotalPayAmount();
+  },
 
-    // ✅ Save price summary (used in checkout)
-    saveSummary() {
-      const subtotal = this.getSubtotal();
-      const summary = {
-        subtotal: subtotal.toFixed(2),
-        delivery: this.deliveryFee.toFixed(2),
-        service: this.serviceFee.toFixed(2),
-        total: (subtotal + this.deliveryFee + this.serviceFee).toFixed(2),
-      };
-      localStorage.setItem("cartSummary", JSON.stringify(summary));
-    },
+  saveSummary() {
+    const subtotal = this.getSubtotal();
+    const summary = {
+      subtotal: subtotal.toFixed(2),
+      delivery: this.deliveryFee.toFixed(2),
+      service: this.serviceFee.toFixed(2),
+      total: (subtotal + this.deliveryFee + this.serviceFee).toFixed(2),
+    };
+    localStorage.setItem("cartSummary", JSON.stringify(summary));
+  },
 
-    // ✅ Calculate subtotal
-    getSubtotal() {
-      return this.items.reduce((sum, item) => {
-        const price = parseFloat(item.price.replace(/[^\d.]/g, "")) || 0;
-        return sum + price * item.amount;
-      }, 0);
-    },
+  getSubtotal() {
+    return this.items.reduce((sum, item) => {
+      const price = parseFloat(item.price.replace(/[^\d.]/g, "")) || 0;
+      return sum + price * item.amount;
+    }, 0);
+  },
 
-    // ✅ Add new item or increase existing
-    addItem(item) {
-      const existing = this.items.find((i) => i.name === item.name);
-      if (existing) existing.amount += 1;
-      else this.items.push({ ...item, amount: 1 });
+  addItem(item) {
+    const existing = this.items.find((i) => i.id === item.id); // use id
+    if (existing) existing.amount += 1;
+    else this.items.push({ ...item, amount: 1 });
+    this.save();
+  },
+
+  removeItem(id) {
+    this.items = this.items.filter((i) => i.id !== id); // use id
+    this.save();
+  },
+
+  increaseItem(id) {
+    const existing = this.items.find((i) => i.id === id);
+    if (existing) {
+      existing.amount += 1;
       this.save();
-    },
+    }
+  },
 
-    // ✅ Remove an item completely
-    removeItem(name) {
-      this.items = this.items.filter((i) => i.name !== name);
-      this.save();
-    },
+  decreaseItem(id) {
+    const existing = this.items.find((i) => i.id === id);
+    if (!existing) return;
+    existing.amount -= 1;
+    if (existing.amount <= 0) this.removeItem(id);
+    else this.save();
+  },
+};
 
-    // ✅ Increase quantity
-    increaseItem(name) {
-      const existing = this.items.find((i) => i.name === name);
-      if (existing) {
-        existing.amount += 1;
-        this.save();
-      }
-    },
-
-    // ✅ Decrease quantity
-    decreaseItem(name) {
-      const existing = this.items.find((i) => i.name === name);
-      if (!existing) return;
-      existing.amount -= 1;
-      if (existing.amount <= 0) this.removeItem(name);
-      else this.save();
-    },
-  };
 
   /* ========== COUNTER ========== */
   function updateCartCounter() {
@@ -90,7 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateCartUI() {
     const inCart = document.querySelector("#inCartItems");
     const empty = document.querySelector("#emptyCart");
-    const cartHolder = document.querySelector("#cartHolder");
     const subtotalEl = document.querySelector(".subtotalAmount");
     const deliveryEl = document.querySelectorAll(".deliveryFee")[0];
     const serviceEl = document.querySelectorAll(".deliveryFee")[1];
@@ -108,14 +148,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (cart.items.length === 0) {
       empty.style.display = "flex";
-      cartHolder.style.position = "sticky"
       inCart.style.display = "none";
       cart.saveSummary();
       return;
     }
 
     empty.style.display = "none";
-    cartHolder.style.position = "static"
     inCart.style.display = "flex";
 
     const wrapper = document.createElement("div");
@@ -147,11 +185,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // ✅ Handlers
       article.querySelector(".increase").onclick = () =>
-        cart.increaseItem(item.name);
+        cart.increaseItem(item.id);
       article.querySelector(".decrease").onclick = () =>
-        cart.decreaseItem(item.name);
+        cart.decreaseItem(item.id);
       article.querySelector(".removeCartItem").onclick = () =>
-        cart.removeItem(item.name);
+        cart.removeItem(item.id);
     });
 
     if (subtotalEl)
@@ -174,18 +212,87 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ========== ADD TO CART BUTTONS ========== */
-  function initAddToCartButtons() {
-    const buttons = document.querySelectorAll(".addToCartBtn");
-    buttons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const itemEl = btn.closest(".foodItem");
-        if (!itemEl) return;
-        const name = itemEl.querySelector(".foodName")?.textContent.trim();
-        const price = itemEl.querySelector(".foodNewPrice")?.textContent.trim();
-        if (name && price) cart.addItem({ name, price });
-      });
+function initAddToCartByCard() {
+  const foodItems = document.querySelectorAll(".foodItem");
+
+  foodItems.forEach((itemEl) => {
+    itemEl.addEventListener("click", (e) => {
+      // Ignore clicks on buttons inside the item
+      if (e.target.closest("button")) return;
+
+      const id = itemEl.getAttribute("id");
+      const name = itemEl.querySelector(".foodName")?.textContent.trim();
+      const price = itemEl.querySelector(".foodNewPrice")?.textContent.trim();
+
+      if (id && name && price) {
+        // Load clicked IDs from localStorage
+        let clickedIds = JSON.parse(localStorage.getItem("clickedProductIds")) || [];
+
+        // Only add to clicked IDs if not already present
+        const isNewClick = !clickedIds.includes(id);
+        if (isNewClick) {
+          clickedIds.push(id);
+          localStorage.setItem("clickedProductIds", JSON.stringify(clickedIds));
+        }
+
+        // Add item to cart
+        cart.addItem({ id, name, price });
+
+        // Show toast ONLY if first time clicked
+        if (isNewClick) {
+          showCartToast(`تم إضافة "${name}" إلى السلة!`);
+        }
+
+        console.log("Clicked product IDs:", clickedIds);
+      }
     });
-  }
+  });
+}
+
+
+// ✅ Function to empty the cart
+function attachEmptyCartButton(buttonSelector, options = {}) {
+  const btn = document.querySelector(buttonSelector);
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    const doEmpty = () => {
+      cart.items = [];
+      cart.save();
+      if (options.clearClickedIds) {
+        localStorage.setItem("clickedProductIds", JSON.stringify([]));
+      }
+      if (options.toastMessage) {
+        showCartToast(options.toastMessage);
+      }
+    };
+
+    if (options.confirm) {
+      Swal.fire({
+        title: options.confirmMessage || "هل أنت متأكد أنك تريد تفريغ السلة؟",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "نعم، تفريغ",
+        cancelButtonText: "إلغاء",
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          doEmpty();
+        }
+      });
+    } else {
+      doEmpty();
+    }
+  });
+}
+
+attachEmptyCartButton("#emptyCartBtn", {
+  confirm: true,
+  confirmMessage: "هل أنت متأكد أنك تريد تفريغ السلة؟",
+  toastMessage: "تم تفريغ السلة!",
+  clearClickedIds: true,
+});
+
 
   /* ========== CHECKOUT PAGE LOADER ========== */
   function loadCheckoutSummary() {
@@ -204,7 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ========== INITIALIZE EVERYTHING ========== */
-  initAddToCartButtons();
+  initAddToCartByCard();
   updateCartUI();
   updateCartCounter();
   updateTotalPayAmount();
