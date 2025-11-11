@@ -1,7 +1,6 @@
 // ✅ Global Cart System — Runs on All Pages
 
 document.addEventListener("DOMContentLoaded", () => {
-  let isSwalOpen = false;
   function showCartToast(message = "تمت الإضافة إلى السلة!", options = {}) {
     const {
       background = "#ffc119", // toast background
@@ -83,13 +82,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     addItem(item) {
-      if (isSwalOpen) return;
       const currentShopId = localStorage.getItem("currentShopId");
       const cartShopId = localStorage.getItem("cartShopId");
 
       // ⚠️ If cart belongs to a different shop, confirm before replacing
       if (cartShopId && cartShopId !== currentShopId) {
-          isSwalOpen = true;
         Swal.fire({
           title: "لا يمكنك الطلب من أكثر من متجر في نفس الوقت",
           text: "هل تريد تفريغ السلة وإضافة هذا المنتج؟",
@@ -99,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
           cancelButtonText: "إلغاء",
           reverseButtons: true,
         }).then((result) => {
-            isSwalOpen = false;
           if (result.isConfirmed) {
             // Empty cart, set new shop ID, add product
             this.items = [];
