@@ -367,7 +367,7 @@ input[type="radio"] {
       <a href="./userlocations_en.html" class="lang-btn">
         <i class="fa fa-globe"></i> EN
       </a>
-      <a href="./checkout.html" class="icon-btn" id="cartIcon" aria-label="السلة" role="button">
+      <a href="./shopPage.html" class="icon-btn" id="cartIcon" aria-label="السلة" role="button">
                 <i class="fa fa-shopping-basket"></i>
                 <span id="cartItemsNumber">0</span>
             </a>
@@ -639,7 +639,57 @@ input[type="radio"] {
   </article>
 
 
+ <div id="cartShower">
+        <h3 id="totalPayAmount">
+        </h3>
+        <button type="button" class="submit">
+            عرض السلة
+        </button>
 
+    </div>
+
+       <article id="shoppingCart">
+  <div id="cartHolder">
+    <span id="closeCartBtn" class="close">&times;</span>
+
+    <h2 class="shoppingCartTitle">سلة مشترياتك</h2>
+
+    <!-- Empty cart message -->
+    <figure id="emptyCart">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <p>لا يوجد أصناف في سلة المشتريات</p>
+    </figure>
+
+    <!-- Cart items -->
+    <figure id="inCartItems">
+      <div class="preDeliveryFeeAmount">
+        <p>المجموع الفرعي</p>
+        <span class="subtotalAmount">0.00 ج.م</span>
+      </div>
+
+      <div class="deliveryAmount">
+        <p>رسوم التوصيل <i class="fa-solid fa-circle-info"></i></p>
+        <span class="deliveryFee">0.00 ج.م</span>
+      </div>
+
+
+
+      <div class="afterDeliveryFeeAmount">
+        <p>المبلغ الإجمالي</p>
+        <span class="totalAmount">0.00 ج.م</span>
+      </div>
+
+      <div class="confirmCartActions">
+        <button class="submit" type="button">
+          <a href="./checkout.html">تنفيذ الطلب</a>
+        </button>
+        <button type="button" id="emptyCartBtn" title="تفريغ السلة" aria-label="تفريغ السلة">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </figure>
+  </div>
+</article>
 
 </body>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -673,4 +723,28 @@ input[type="radio"] {
       }
 
 </script>
+
+<script defer>
+
+/* ========== Shopping Cart Popup ========== */
+const cartShower = document.querySelector("#cartShower .submit");
+const shoppingCartPopup = document.querySelector("#shoppingCart");
+const cartHolder = document.querySelector("#cartHolder");
+const inCartItems = document.querySelector("#inCartItems");
+const closeCartBtn = document.querySelector("#closeCartBtn");
+const removeCartItem = document.querySelectorAll(".removeCartItem");
+
+
+cartShower.addEventListener("click", () => {
+  shoppingCartPopup.classList.add("is-visible");
+  document.body.style.overflow = "hidden";
+});
+
+const closeCart = () => {
+  shoppingCartPopup.classList.remove("is-visible");
+  document.body.style.overflow = "auto";
+};
+
+closeCartBtn.addEventListener("click", closeCart);
+  </script>
 </html>

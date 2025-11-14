@@ -61,22 +61,42 @@
     .orderInfo {
         display: flex;
         flex-direction: column;
+        overflow-x:auto;
         gap: 0.5rem;
         padding: 1rem;
     }
 
+    .removeItem{
+        width: 30px;
+        height: 30px;
+        border-radius: 0.25rem !important;
+        transition: var(--transition);
+        border: 2px solid red;
+        grid-column: span 1 !important;
+        justify-self: center;
+        align-self: center;
+
+        &:hover{
+            background-color: transparent;
+            color: red;
+        }
+    }
+    
+
     .orderLabels,
     .orderStats {
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(7, 1fr);
         padding-inline: 0.25rem;
         text-align: center;
         gap: 0.5rem;
+        min-width: 400px;
 
         span {
             display: flex;
             flex-direction: column;
             line-height: 1;
+            justify-content: center;
             padding: 0.5rem 0;
         }
     }
@@ -89,15 +109,17 @@
     .orderStats {
         font-size: 0.9rem;
 
+
         .specialOrder {
             color: rgba(0, 0, 0, 0.5);
         }
 
+
     }
 
     .orderName {
-        grid-column: span 2;
-        text-align: start !important;
+        grid-column: span 2 ;
+        text-align: start ;
     }
 
     .checkoutLocation {
@@ -305,6 +327,20 @@
     align-items: center;
     flex-wrap: wrap;
 }
+
+.checkoutBox#payForOrder .submit{
+    margin: auto;
+    width: 100%;
+    max-width: 400px;
+    justify-content: center;
+    text-align: center;
+}
+
+#checkoutCart{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
 </style>
 
 
@@ -324,7 +360,7 @@
             <a href="./userprofile_en.html" class="lang-btn">
                 <i class="fa fa-globe"></i> EN
             </a>
-            <a href="./checkout.html" class="icon-btn" id="cartIcon" aria-label="السلة" role="button">
+            <a href="./shopPage.html" class="icon-btn" id="cartIcon" aria-label="السلة" role="button">
                 <i class="fa fa-shopping-basket"></i>
                 <span id="cartItemsNumber">0</span>
             </a>
@@ -339,10 +375,11 @@
     <section class="checkoutDetails">
         <div class="checkoutContainer">
             <span class="route"> <a href="./index.html">الرئيسية</a> <i class="fa-solid fa-angles-left"></i>
-                <a href="./openedShopFoods.html">{selectedLocation}</a><a href="shopDetails"> <i
-                        class="fa-solid fa-angles-left"></i> {shopName}</a>
+                <a href="./openedShopFoods.html">{selectedLocation}</a>
                 <i class="fa-solid fa-angles-left"></i> تنفيذ الطلب
             </span>
+
+            <div id="checkoutCart">
 
             <article class="checkoutBox">
                 <div class="checkoutBoxTitle">
@@ -369,6 +406,7 @@
                     </div>
                 </div>
             </article>
+            </div>
 
 
 
@@ -407,7 +445,7 @@
 
 
 
-            <article class="checkoutBox">
+            <article class="checkoutBox" id="payForOrder">
                 <div class="checkoutBoxTitle">
                     <h2>تفاصيل الدفع
                     </h2>
@@ -420,145 +458,8 @@
 
 
 
-                    <figure class="paymentDetails">
-                        <article class="credit">
-                            <h4>إختر طريقة الدفع</h4>
-                            <div class="creditInfo checkoutBox">
-                                <div class="checkoutBoxTitle">
-                                    <input type="checkbox" name="creditCard" id="creditCard" checked>
-                                    <img src="./images/checkout-cc.svg" alt="checkout">
-                                    بطاقة الائتمان
-                                </div>
 
-
-                                <form id="creditCardDetails">
-                                    <div class="inputHolder">
-                                        <label for="creditCardNumber">رقم البطاقة
-                                        </label>
-                                        <input type="tel" name="creditCardNumber" id="creditCardNumber">
-                                    </div>
-
-
-
-
-                                     <div class="inputHolder">
-                                        <label for="creditCardNumber">تاريخ إنتهاء صلاحية البطاقة
-                                        </label>
-                                    <div id="expireDate">
-                                        <select name="exp-month" required>
-  <option value="" disabled selected>MM</option>
-  <option value="01">01</option>
-  <option value="02">02</option>
-  <option value="03">03</option>
-  <option value="04">04</option>
-  <option value="05">05</option>
-  <option value="06">06</option>
-  <option value="07">07</option>
-  <option value="08">08</option>
-  <option value="09">09</option>
-  <option value="10">10</option>
-  <option value="11">11</option>
-  <option value="12">12</option>
-</select>
-
-<select name="exp-year" required>
-  <option value="" disabled selected>YY</option>
-  <option value="2025">2025</option>
-  <option value="2026">2026</option>
-  <option value="2027">2027</option>
-  <option value="2028">2028</option>
-  <option value="2029">2029</option>
-  <option value="2030">2030</option>
-  <option value="2031">2031</option>
-  <option value="2032">2032</option>
-  <option value="2033">2033</option>
-  <option value="2034">2034</option>
-  <option value="2035">2035</option>
-</select>
-
-
-                                    </div>
-
-
-                                </div>
-
-                                <div class="secretNumber">
-                                <div class="inputHolder">
-                                        <label for="creditCardNumber">رقم تحقق البطاقة
-                                        </label>
-                                        <input type="tel" name="creditCardNumber" id="creditCardNumber">
-                                    </div>
-                                    <img src="./images/cvv_guide.webp" alt="cvv">
-                                    </div>
-
-                                    <div class="saveDetails">
-                                        <input type="checkbox" name="saveDetails" id="saveDetails">
-                                        حفظ بيانات البطاقة للدفع السريع والآمن
-                                    </div>
-                                </form>
-
-                            </div>
-
-
-                            <div class="creditInfo checkoutBox">
-                                <div class="checkoutBoxTitle">
-                                    <input type="checkbox" name="creditCard" id="creditCard">
-                                    <img src="./images/logo-cash.svg" alt="checkout">
-                                    نقداً
-                                </div>
-                            </div>
-
-
-                            <div class="termsAndConditions">
-                            بطلبك من خلال بطاقة الائتمان أنت توافق علي <span >شروط و احكام الدفع</span>
-                        </div>
-                        </article>
-
-                                  <article id="shoppingCart">
-
-                    <div id="cartHolder">
-
-                        <h2 class="shoppingCartTitle">
-                            سلة مشترياتك
-                        </h2>
-
-                        <figure id="checkoutCartItems">
-  <div class="preDeliveryFeeAmount">
-    <p>المجموع الفرعي</p>
-    <span class="subtotalAmount"></span>
-  </div>
-
-  <div class="deliveryAmount">
-    <p>رسوم التوصيل <i class="fa-solid fa-circle-info"></i></p>
-    <span class="deliveryFee"></span>
-  </div>
-
-  <div class="deliveryAmount">
-    <p>رسوم الخدمة <i class="fa-solid fa-circle-info"></i></p>
-    <span class="deliveryFee"></span>
-  </div>
-
-  <div class="afterDeliveryFeeAmount">
-    <p>المبلغ الإجمالي</p>
-    <span class="totalAmount"></span>
-  </div>
-
-  <div class="afterDeliveryFeeAmount">
-    <span id="wayOfPayment">الدفع من خلال البطاقة الإئتمانية</span>
-    <span class="totalAmount"></span>
-  </div>
-
-  <button class="submit" type="button">تنفيذ الطلب</button>
-</figure>
-
-                    </div>
-                    </div>
-
-                </article>
-
-
-                    </figure>
-
+<button class="submit">تنفيذ الطلب</button>
 
                 </div>
 
@@ -631,7 +532,26 @@
 
 </body>
 
+
+<script src="./script/checkout.js" defer></script>
 <script src="./script/index.js" defer></script>
 <script src="./script/cart.js" defer></script>
 
+
+<script type="module">
+  import { renderCheckoutArticles } from './script/checkout.js';
+
+  document.addEventListener("DOMContentLoaded", () => {
+    if (window.cart) {
+      renderCheckoutArticles(window.cart);
+
+      // Re-render whenever cart changes
+      const originalSave = window.cart.save;
+      window.cart.save = function () {
+        originalSave.call(window.cart);
+        renderCheckoutArticles(window.cart);
+      };
+    }
+  });
+</script>
 </html>

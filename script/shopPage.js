@@ -1,4 +1,17 @@
 /* ========== Dropdown Toggle for Each Food List ========== */
+
+// Get URL params
+const urlParams = new URLSearchParams(window.location.search);
+const shopIdFromURL = urlParams.get("shopId");
+const shopAreaIdFromURL = urlParams.get("shopAreaId");
+
+// Save to localStorage for consistency
+if (shopIdFromURL) localStorage.setItem("currentShopId", shopIdFromURL);
+if (shopAreaIdFromURL) localStorage.setItem("currentShopAreaId", shopAreaIdFromURL);
+
+
+
+
 const dropDownBtns = document.querySelectorAll(".dropDownBtn");
 dropDownBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -133,22 +146,26 @@ foodImages.forEach((img) => {
 
 
 
-   const shopData = JSON.parse(localStorage.getItem("selectedShop"));
-  if (!shopData) return;
+ const shopData = JSON.parse(localStorage.getItem("selectedShop"));
+if (!shopData) return;
 
-  const shopEl = document.querySelector(".availableShop");
-  if (!shopEl) return;
+const shopEl = document.querySelector(".availableShop");
+if (!shopEl) return;
 
-  // Replace default content
-  shopEl.id = shopData.id;
-  shopEl.querySelector("img").src = shopData.img;
-  shopEl.querySelector(".availableShopName").textContent = shopData.name;
-  shopEl.querySelector(".shopFoods").textContent = shopData.desc;
-  shopEl.querySelector(".shopRating").innerHTML = `<i class="fa-solid fa-face-smile"></i> ${shopData.rating}`;
-  shopEl.querySelector(".timer").textContent = shopData.deliveryTime;
-  shopEl.querySelector(".delieveryPayment").textContent = `توصيل: ${shopData.deliveryPayment}`;
-  shopEl.querySelector(".minPay").textContent = shopData.minPay;
+// Populate shop card
+shopEl.id = shopData.id;
+shopEl.querySelector("img").src = shopData.img;
+shopEl.querySelector(".availableShopName").textContent = shopData.name;
+shopEl.querySelector(".shopFoods").textContent = shopData.desc;
+shopEl.querySelector(".shopRating").innerHTML = `<i class="fa-solid fa-face-smile"></i> ${shopData.rating}`;
+shopEl.querySelector(".timer").textContent = shopData.deliveryTime;
+shopEl.querySelector(".delieveryPayment").textContent = `توصيل: ${shopData.deliveryPayment}`;
+shopEl.querySelector(".minPay").textContent = shopData.minPay;
 
-  // ✅ Save current shop ID for cart system
-  localStorage.setItem("currentShopId", shopData.id);
+// Save current shop globally for cart
+localStorage.setItem("currentShopId", shopData.id);
+localStorage.setItem("currentShopName", shopData.name);
+localStorage.setItem("currentShopAreaId", shopData.areaId);
+
+
 });

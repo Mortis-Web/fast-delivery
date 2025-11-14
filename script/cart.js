@@ -1,6 +1,30 @@
 // ✅ Global Cart System — Runs on All Pages
 
 document.addEventListener("DOMContentLoaded", () => {
+
+
+  const placeIdEl = document.querySelector("#placeId");
+  const areaIdEl = document.querySelector("#areaId");
+  let deliveryFeeEl = document.querySelector("#deliveryFee");
+  const shopAreaIdEl = document.querySelector("#shopAreaId");
+  const shopIdEl = document.querySelector("#shopId"); // you said id="shopId"
+
+  const shopNameEl = document.querySelector("#shopName");
+
+// if (shopAreaIdEl) {
+//   localStorage.setItem("currentShopAreaId", shopAreaIdEl.textContent.trim());
+// }
+const areaDiscountEl = document.querySelector("#areaDiscountPercentage");
+let GLOBAL_AREA_DISCOUNT = areaDiscountEl
+  ? parseFloat(areaDiscountEl.textContent.trim().replace("%", "")) || 0
+  : 0;
+
+  let GLOBAL_PLACE_ID = placeIdEl ? placeIdEl.textContent.trim() : null;
+  let GLOBAL_AREA_ID = areaIdEl ? areaIdEl.textContent.trim() : null;
+  let GLOBAL_DELIVERY_FEE = deliveryFeeEl ? parseFloat(deliveryFeeEl.textContent.trim()) || 0 : 0;
+
+
+
   function showCartToast(message = "تمت الإضافة إلى السلة!", options = {}) {
     const {
       background = "#ffc119", // toast background
@@ -50,8 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const cart = {
     items: JSON.parse(localStorage.getItem("cartItems")) || [],
-    deliveryFee: 10,
-    serviceFee: 3.99,
+    deliveryFee: parseFloat(document.querySelector("#deliveryFee")?.textContent.trim()) || 0,
 
     save() {
       localStorage.setItem("cartItems", JSON.stringify(this.items));
@@ -61,92 +84,148 @@ document.addEventListener("DOMContentLoaded", () => {
       updateTotalPayAmount();
     },
 
-    saveSummary() {
-      const subtotal = this.getSubtotal();
-      const summary = {
-        subtotal: subtotal.toFixed(2),
-        delivery: this.deliveryFee.toFixed(2),
-        service: this.serviceFee.toFixed(2),
-        total: (subtotal + this.deliveryFee + this.serviceFee).toFixed(2),
-      };
-      localStorage.setItem("cartSummary", JSON.stringify(summary));
-    },
+
+saveSummary() {
+  const rawSubtotal = this.getSubtotal(); // raw sum of all items
+  const delivery = this.deliveryFee || 0;
+
+  // =====================================
+  // 💥 DELIVERY DISCOUNT LOGIC
+  // =====================================
+  let discountAmount = 0;
+  let discountedDelivery = delivery;
+
+ const uniqueShops = [...new Set(this.items.map(i => i.shopId))];
+
+// Apply discount to delivery ONLY if more than one shop
+if (uniqueShops.length > 1) {
+    discountAmount = delivery * (GLOBAL_AREA_DISCOUNT / 100);
+    discountedDelivery = delivery - discountAmount;
+}
+
+
+  // =====================================
+
+  const summary = {
+    subtotal: rawSubtotal.toFixed(2),         // raw subtotal of items
+    delivery: discountedDelivery.toFixed(2),  // delivery after discount
+    total: (rawSubtotal + discountedDelivery).toFixed(2), // total includes discounted delivery
+    discount: discountAmount.toFixed(2),      // only delivery discount
+  };
+
+  localStorage.setItem("cartSummary", JSON.stringify(summary));
+}
+
+
+,
 
     getSubtotal() {
       return this.items.reduce((sum, item) => {
-        const price = parseFloat(item.price.replace(/[^\d.]/g, "")) || 0;
+        const price = Number(item.price) || 0;
         return sum + price * item.amount;
       }, 0);
     },
 
 
-
     addItem(item) {
       const currentShopId = localStorage.getItem("currentShopId");
-      const cartShopId = localStorage.getItem("cartShopId");
+      const currentShopName = localStorage.getItem("currentShopName");
 
-      // ⚠️ If cart belongs to a different shop, confirm before replacing
-      if (cartShopId && cartShopId !== currentShopId) {
+      // Check if the shop already exists in the cart
+      const shopExists = this.items.some(i => i.shopId === currentShopId);
+
+      // ⚠️ Different shop, first product of a new shop
+      if (!shopExists && this.items.length > 0) {
+        const newItem = {
+          ...item,
+          amount: 1,
+          placeId: GLOBAL_PLACE_ID,
+          areaId: GLOBAL_AREA_ID,
+          deliveryFee: GLOBAL_DELIVERY_FEE,
+          shopId: currentShopId,
+          shopName: currentShopName,
+            shopAreaId: localStorage.getItem("currentShopAreaId"),
+        };
+
         Swal.fire({
-          title: "لا يمكنك الطلب من أكثر من متجر في نفس الوقت",
-          text: "هل تريد تفريغ السلة وإضافة هذا المنتج؟",
+          title: "منتج من متجر مختلف",
+          text: "هل تريد إضافة هذا المنتج من متجر آخر؟",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonText: "نعم، تفريغ السلة",
+          confirmButtonText: "نعم، أضف المنتج",
           cancelButtonText: "إلغاء",
           reverseButtons: true,
         }).then((result) => {
           if (result.isConfirmed) {
-            // Empty cart, set new shop ID, add product
-            this.items = [];
-            localStorage.setItem("cartShopId", currentShopId);
-            this.items.push({
-              ...item,
-              amount: 1
-            });
-            this.save();
-            showCartToast("تم تفريغ السلة وإضافة المنتج الجديد!");
-          } else {
-            // Do nothing
-            return;
+            cart.items.push(newItem); // ✅ use cart instead of this
+            cart.save(); // ✅ use cart.save()
+            showCartToast("تم إضافة المنتج من متجر مختلف!");
           }
         });
+
+        // Optional: update UI immediately
+        updateCartUI();
+        updateCartCounter();
+        updateTotalPayAmount();
+
+
+        console.log("Adding item to shop:", currentShopId, currentShopName);
+
+
         return;
       }
 
-      // ✅ If first time or same shop, proceed normally
-      if (!cartShopId) localStorage.setItem("cartShopId", currentShopId);
 
-      const existing = this.items.find((i) => i.id === item.id);
-      if (existing) existing.amount += 1;
-      else this.items.push({
-        ...item,
-        amount: 1
-      });
+
+      // ✅ Normal flow: find existing item by both id and shopId
+      const existing = this.items.find(i => i.id === item.id && i.shopId === currentShopId);
+      if (existing) {
+        existing.amount += 1;
+      } else {
+        this.items.push({
+          ...item,
+          amount: 1,
+          placeId: GLOBAL_PLACE_ID,
+          areaId: GLOBAL_AREA_ID,
+          deliveryFee: GLOBAL_DELIVERY_FEE,
+          shopId: currentShopId,
+          shopName: currentShopName,
+          shopAreaId: localStorage.getItem("currentShopAreaId"),
+
+        });
+      }
+
       this.save();
     },
 
 
-    removeItem(id) {
-      this.items = this.items.filter((i) => i.id !== id); // use id
+
+    removeItem(id, shopId) {
+      // Remove the specific product from a specific shop
+      this.items = this.items.filter(i => !(i.id === id && i.shopId === shopId));
       this.save();
     },
 
-    increaseItem(id) {
-      const existing = this.items.find((i) => i.id === id);
+    increaseItem(id, shopId) {
+      const existing = this.items.find(i => i.id === id && i.shopId === shopId);
       if (existing) {
         existing.amount += 1;
         this.save();
       }
     },
 
-    decreaseItem(id) {
-      const existing = this.items.find((i) => i.id === id);
+    decreaseItem(id, shopId) {
+      const existing = this.items.find(i => i.id === id && i.shopId === shopId);
       if (!existing) return;
+
       existing.amount -= 1;
-      if (existing.amount <= 0) this.removeItem(id);
-      else this.save();
-    },
+      if (existing.amount <= 0) {
+        this.removeItem(id, shopId);
+      } else {
+        this.save();
+      }
+    }
+
   };
 
 
@@ -163,57 +242,82 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateTotalPayAmount() {
     const el = document.querySelector("#totalPayAmount");
     if (!el) return;
-    const subtotal = cart.getSubtotal();
-    el.textContent =
-      "المجموع: EGP " +
-      (subtotal + cart.deliveryFee + cart.serviceFee).toFixed(2);
+
+    // Use cart summary if exists
+    const summary = JSON.parse(localStorage.getItem("cartSummary")) || {
+      subtotal: 0,
+      delivery: cart.deliveryFee,
+      total: 0
+    };
+
+    el.textContent = "المجموع: EGP " + Number(summary.total).toFixed(2);
   }
+
 
   /* ========== MAIN CART UI (Popup Cart) ========== */
   function updateCartUI() {
     const inCart = document.querySelector("#inCartItems");
     const empty = document.querySelector("#emptyCart");
-    const subtotalEl = document.querySelector(".subtotalAmount");
-    const deliveryEl = document.querySelectorAll(".deliveryFee")[0];
-    const serviceEl = document.querySelectorAll(".deliveryFee")[1];
-    const totalEl = document.querySelector(".totalAmount");
+    if (!inCart || !empty) return;
 
-    // If no UI (like checkout), just save summary
-    if (!inCart || !empty) {
-      cart.saveSummary();
-      return;
-    }
-
-    // Remove old wrapper
+    // Remove old wrapper if exists
     const oldWrapper = inCart.querySelector(".orderedItemsWrapper");
     if (oldWrapper) oldWrapper.remove();
 
+    // Show empty message if cart is empty
     if (cart.items.length === 0) {
       empty.style.display = "flex";
       inCart.style.display = "none";
       cart.saveSummary();
+      updateCartCounter();
+      updateTotalPayAmount();
       return;
     }
 
     empty.style.display = "none";
     inCart.style.display = "flex";
 
+    // Create wrapper for items
     const wrapper = document.createElement("div");
     wrapper.classList.add("orderedItemsWrapper");
-    inCart.insertBefore(
-      wrapper,
-      inCart.querySelector(".preDeliveryFeeAmount")
-    );
 
-    let subtotal = 0;
-    cart.items.forEach((item) => {
-      const priceNum = parseFloat(item.price.replace(/[^\d.]/g, "")) || 0;
-      const totalPrice = priceNum * item.amount;
-      subtotal += totalPrice;
+    const preDeliveryEl = inCart.querySelector(".preDeliveryFeeAmount");
+    if (preDeliveryEl) {
+      inCart.insertBefore(wrapper, preDeliveryEl);
+    } else {
+      inCart.appendChild(wrapper);
+    }
 
-      const article = document.createElement("article");
-      article.classList.add("orderedItem");
-      article.innerHTML = `
+    // Group items by shopId
+    const itemsByShop = {};
+    cart.items.forEach(item => {
+      if (!itemsByShop[item.shopId]) {
+        itemsByShop[item.shopId] = {
+          shopName: item.shopName || "المتجر",
+          items: []
+        };
+      }
+      itemsByShop[item.shopId].items.push(item);
+    });
+
+    // Render each shop group
+    Object.keys(itemsByShop).forEach(shopId => {
+      const group = itemsByShop[shopId];
+
+      // Shop label
+      const shopLabel = document.createElement("div");
+      shopLabel.classList.add("cartShopLabel");
+      shopLabel.textContent = group.shopName;
+      wrapper.appendChild(shopLabel);
+
+      // Render each product in shop
+      group.items.forEach(item => {
+        const priceNum = Number(item.price) || 0;
+        const totalPrice = priceNum * item.amount;
+
+        const article = document.createElement("article");
+        article.classList.add("orderedItem");
+        article.innerHTML = `
         <div class="cartItemAmountHandlers">
           <button class="decrease">-</button>
           <span class="itemAmount">${item.amount}</span>
@@ -223,35 +327,37 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="totalItemPrice">${totalPrice.toLocaleString()} ج.م</span>
         <span class="removeCartItem">✕</span>
       `;
-      wrapper.appendChild(article);
+        wrapper.appendChild(article);
 
-      // ✅ Handlers
-      article.querySelector(".increase").onclick = () =>
-        cart.increaseItem(item.id);
-      article.querySelector(".decrease").onclick = () =>
-        cart.decreaseItem(item.id);
-      article.querySelector(".removeCartItem").onclick = () =>
-        cart.removeItem(item.id);
+        // Buttons
+        article.querySelector(".increase").onclick = () => cart.increaseItem(item.id, item.shopId);
+        article.querySelector(".decrease").onclick = () => cart.decreaseItem(item.id, item.shopId);
+        article.querySelector(".removeCartItem").onclick = () => cart.removeItem(item.id, item.shopId);
+      });
     });
 
-    if (subtotalEl)
-      subtotalEl.textContent = subtotal.toLocaleString() + " ج.م";
-    if (deliveryEl)
-      deliveryEl.textContent = cart.deliveryFee.toLocaleString() + " ج.م";
-    if (serviceEl)
-      serviceEl.textContent = cart.serviceFee.toLocaleString() + " ج.م";
-    if (totalEl)
-      totalEl.textContent = (
-        subtotal +
-        cart.deliveryFee +
-        cart.serviceFee
-      ).toLocaleString() + " ج.م";
-
-    // Sync summary for checkout
+    // Update totals
     cart.saveSummary();
     updateCartCounter();
     updateTotalPayAmount();
+
+    // Update subtotal, delivery,  total in the popup
+    const summary = JSON.parse(localStorage.getItem("cartSummary")) || {
+      subtotal: 0,
+      delivery: cart.deliveryFee,
+      total: 0
+    };
+
+    const subtotalEl = document.querySelector(".subtotalAmount");
+    const deliveryEls = document.querySelectorAll(".deliveryFee");
+    const totalEl = document.querySelector(".totalAmount");
+
+    if (subtotalEl) subtotalEl.textContent = Number(summary.subtotal).toLocaleString() + " ج.م";
+    if (deliveryEls.length >= 1) deliveryEls[0].textContent = Number(summary.delivery).toFixed(2) + " ج.م";
+    if (totalEl) totalEl.textContent = Number(summary.total).toLocaleString() + " ج.م";
   }
+
+
 
   /* ========== ADD TO CART BUTTONS ========== */
   function initAddToCartByCard() {
@@ -279,10 +385,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // Add item to cart
           cart.addItem({
-            id,
+            id, // unique product ID
             name,
-            price
+            price: parseFloat(price.replace(/[^\d.]/g, "")),
+            placeId: GLOBAL_PLACE_ID,
+            areaId: GLOBAL_AREA_ID,
+            deliveryFee: GLOBAL_DELIVERY_FEE,
+            shopId: localStorage.getItem("currentShopId"),
+
+            shopName: localStorage.getItem("currentShopName"), // add this
+          shopAreaId: localStorage.getItem("currentShopAreaId"),
+
+
           });
+
 
           // Show toast ONLY if first time clicked
           if (isNewClick) {
@@ -348,18 +464,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const {
       subtotal,
       delivery,
-      service,
       total
     } = JSON.parse(stored);
     const subtotalEl = document.querySelector(".subtotalAmount");
     const deliveryEl = document.querySelectorAll(".deliveryFee")[0];
-    const serviceEl = document.querySelectorAll(".deliveryFee")[1];
     const totalEl = document.querySelector(".totalAmount");
     if (subtotalEl) subtotalEl.textContent = subtotal + " ج.م";
     if (deliveryEl) deliveryEl.textContent = delivery + " ج.م";
-    if (serviceEl) serviceEl.textContent = service + " ج.م";
     if (totalEl) totalEl.textContent = total + " ج.م";
   }
+
+  function loadCheckoutSummary() {
+    if (!window.location.pathname.includes("checkout")) return;
+
+    const stored = localStorage.getItem("cartSummary");
+    if (!stored) return;
+
+    const {
+      subtotal,
+      delivery,
+      total
+    } = JSON.parse(stored);
+
+    const subtotalEl = document.querySelector(".subtotalAmount");
+    const deliveryEls = document.querySelectorAll(".deliveryFee");
+    const totalEl = document.querySelector(".totalAmount");
+
+    if (subtotalEl) subtotalEl.textContent = subtotal + " ج.م";
+    if (deliveryEls.length >= 1) deliveryEls[0].textContent = delivery + " ج.م";
+    if (totalEl) totalEl.textContent = total + " ج.م";
+  }
+
 
   /* ========== INITIALIZE EVERYTHING ========== */
   initAddToCartByCard();
@@ -376,5 +511,44 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 300);
 
   // ✅ Make accessible globally for debugging
-  window.cart = cart;
+  // Make accessible globally for debugging
+window.cart = cart;
+
+// --- SMART CART ICON REDIRECT ---
+const cartIcon = document.querySelector("#cartIcon");
+
+function updateCartIconLink() {
+  if (!cartIcon) return;
+
+  if (cart.items.length === 0) {
+    // Cart is empty
+    const lastShopId = localStorage.getItem("currentShopId");
+
+    if (lastShopId) {
+      // Redirect to last visited shop
+      cartIcon.setAttribute("href", `./shopPage.html?shopId=${lastShopId}`);
+    } else {
+      // No history → go to all shops
+      cartIcon.setAttribute("href", "./allShops.html");
+    }
+  } else {
+    // Cart has items → go to checkout
+    cartIcon.setAttribute("href", "./checkout.html");
+  }
+}
+
+// Run once on page load
+updateCartIconLink();
+
+// Optional: update link whenever cart changes
+const originalSave = cart.save;
+cart.save = function () {
+  originalSave.call(cart);
+  updateCartIconLink();
+};
+
+
+
+
+
 });

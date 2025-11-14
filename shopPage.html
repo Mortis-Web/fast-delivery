@@ -489,7 +489,7 @@
     }
 
 
-    #cartShower {
+   body:has(#openedShopFoods) #cartShower {
         position: fixed;
         bottom: 0;
         color: white;
@@ -587,9 +587,9 @@
         font-size: 1rem;
         background-color: white;
         font-weight: bold;
+        padding-bottom: 1rem;
         line-height: 1.2;
         border: 1px solid rgba(0, 0, 0, 0.125);
-        padding: 1rem 0rem;
         border-bottom-left-radius: inherit;
         border-bottom-right-radius: inherit;
 }
@@ -607,18 +607,11 @@
     justify-content: space-between;
     background-color: whitesmoke;
 }
-.removeCartItem{
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    width: 1rem;
-    height: 1rem;
-    font-size: 1rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.cartItemAmountHandlers{
+    margin: 0 !important;
 }
+
 .cartItemAmountHandlers{
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.125);
@@ -661,10 +654,14 @@ border-radius: inherit;
     padding: 0.25rem;
 }
 
-#cartShopLabel{
+.cartShopLabel{
     /* padding-block: 0.5rem; */
     margin-inline: 0.5rem;
+    padding-block: 1rem;
     font-weight: bold;
+    text-align: center;
+    font-size: 1.125rem;
+
 }
 
 .preDeliveryFeeAmount,.deliveryAmount,.afterDeliveryFeeAmount{
@@ -725,7 +722,7 @@ border-radius: inherit;
             <a href="./userprofile_en.html" class="lang-btn">
                 <i class="fa fa-globe"></i> EN
             </a>
-            <a href="./checkout.html" class="icon-btn" id="cartIcon" aria-label="السلة" role="button">
+            <a href="./shopPage.html" class="icon-btn" id="cartIcon" aria-label="السلة" role="button">
                 <i class="fa fa-shopping-basket"></i>
                 <span id="cartItemsNumber">0</span>
             </a>
@@ -741,11 +738,29 @@ border-radius: inherit;
         </article>
 
 
-        <span class="route"> <a href="./index.html">الرئيسية</a> <i class="fa-solid fa-angles-left"></i>
+        <span class="route" >  <a href="./index.html">الرئيسية</a> <i class="fa-solid fa-angles-left"></i>
             <a href="./openedShopFoods.html">{selectedLocation}</a> <i class="fa-solid fa-angles-left"></i> {shopName}
+
+
+
+
+
         </span>
 
-        <a href="./shopDetailsPage.html" class="availableShop">
+        <a href="./shopDetailsPage.html"  class="availableShop">
+
+ <div id="placeId" hidden>0</div>
+            <div id="areaId" hidden>0</div>
+            <div id="userLocationId" hidden>0</div>
+            <div id="deliveryFee" hidden>10</div>
+            <div id="shopId" hidden>0</div>
+            <div id="shopAreaId" hidden>0</div>
+            <div id="areaDiscountPercentage" hidden>35%</div>
+
+
+
+
+
             <img src="./images/101-min.jpg" alt="shop logo">
             <div class="availableShopDesc">
                 <h3 class="availableShopName">one</h3>
@@ -1344,63 +1359,49 @@ border-radius: inherit;
 
 
 
-                <article id="shoppingCart">
+           <article id="shoppingCart">
+  <div id="cartHolder">
+    <span id="closeCartBtn" class="close">&times;</span>
 
-                    <div id="cartHolder">
-                        <span id="closeCartBtn" class="close">&times;</span>
+    <h2 class="shoppingCartTitle">سلة مشترياتك</h2>
 
-                        <h2 class="shoppingCartTitle">
-                            سلة مشترياتك
-                        </h2>
-                        <figure id="emptyCart">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            <p>لا يوجد أصناف في سلة المشتريات</p>
-                        </figure>
-                        <figure id="inCartItems">
-                            <div id="cartShopLabel">
-                                برجر أون فاير
-                            </div>
+    <!-- Empty cart message -->
+    <figure id="emptyCart">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <p>لا يوجد أصناف في سلة المشتريات</p>
+    </figure>
 
+    <!-- Cart items -->
+    <figure id="inCartItems">
+      <div class="preDeliveryFeeAmount">
+        <p>المجموع الفرعي</p>
+        <span class="subtotalAmount">0.00 ج.م</span>
+      </div>
 
-
-
-<div class="preDeliveryFeeAmount">
-    <p>المجموع الفرعي
-</p>
-<span class="subtotalAmount">15,000.00 ج.م</span>
-</div>
-<div class="deliveryAmount">
-    <p> رسوم التوصيل <i class="fa-solid fa-circle-info"></i>
-</p>
-<span class="deliveryFee">0.00 ج.م</span>
-</div>
-<div class="deliveryAmount">
-    <p> رسوم الخدمة <i class="fa-solid fa-circle-info"></i>
-</p>
-<span class="deliveryFee">3.99 ج.م</span>
-</div>
-<div class="afterDeliveryFeeAmount">
-    <p>المبلغ الإجمالي
-</p>
-<span class="totalAmount">15,000.00 ج.م</span>
-</div>
-
-<div class="confirmCartActions">
+      <div class="deliveryAmount">
+        <p>رسوم التوصيل <i class="fa-solid fa-circle-info"></i></p>
+        <span class="deliveryFee">0.00 ج.م</span>
+      </div>
 
 
-    <button class="submit" type="button">
-        <a href="./checkout.html">
 
-            تنفيذ الطلب
-        </a>
-    </button>
-    <button type="button" id="emptyCartBtn" title="تفريغ السلة" aria-label="تفريغ السلة"><i class="fa-solid fa-trash"></i></button>
-</div>
-                        </figure>
-                    </div>
-                    </div>
+      <div class="afterDeliveryFeeAmount">
+        <p>المبلغ الإجمالي</p>
+        <span class="totalAmount">0.00 ج.م</span>
+      </div>
 
-                </article>
+      <div class="confirmCartActions">
+        <button class="submit" type="button">
+          <a href="./checkout.html">تنفيذ الطلب</a>
+        </button>
+        <button type="button" id="emptyCartBtn" title="تفريغ السلة" aria-label="تفريغ السلة">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </figure>
+  </div>
+</article>
+
 
             </section>
 
@@ -1410,7 +1411,8 @@ border-radius: inherit;
 
 
 
-
+        </div>
+    </section>
 
 
     <footer class="footer" role="contentinfo">
